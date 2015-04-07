@@ -8,11 +8,11 @@
 		<input type="hidden" name="create_time" id="create_time" value="{CREATE_TIME}" />
 		<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
 		<dl>
-			<dt><label for="video_url">{L_VIDEO_URL}:</label></dt>
+			<dt><label for="video_url">{L_VIDEO_URL}{L_COLON}</label></dt>
 			<dd><input type="text" size="45" class="inputbox autowidth" name="video_url" id="video_url" tabindex="5" /></dd>
 		</dl>
 		<dl>
-			<dt><label>{L_VIDEO_SELECT_CAT}:</label></dt>
+			<dt><label>{L_VIDEO_SELECT_CAT}{L_COLON}</label></dt>
 			<dd><select name="cid">
 			<!-- BEGIN cat -->
 			<option value="{cat.VIDEO_CAT_ID}">{cat.VIDEO_CAT_TITLE}</option>

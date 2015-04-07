@@ -10,7 +10,7 @@
 <br class="clear" />
 	<div id="information" class="rules">
 		<div class="inner">
-			<strong>{L_INFORMATION}:</strong> {NO_ENTRY}
+			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
 		</div>
 	</div>
 <!-- ENDIF -->
@@ -30,10 +30,10 @@
 				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
 				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
 				<div class="content">
-					{L_VIDEO_AUTHOR}: {video.USERNAME} <br />
-					{L_VIDEO_CAT}: <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
-					{L_VIDEO_DATE}: {video.VIDEO_TIME} <br />
-					{L_VIDEO_VIEWS}: {video.VIDEO_VIEWS}
+					{L_VIDEO_AUTHOR}{L_COLON} {video.USERNAME} <br />
+					{L_VIDEO_CAT}{L_COLON} <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
+					{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME} <br />
+					{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
 				</div>
 			</div>
 		<!-- END video -->

@@ -62,16 +62,17 @@ class listener implements EventSubscriberInterface
 		$this->table_prefix = $table_prefix;
 
 	}
-
+	
+	
 	static public function getSubscribedEvents()
 	{
 		return array(
 		'core.user_setup'   => 'load_language_on_setup',
-		'core.page_header'	=> 'add_page_header_link',
-
+        'core.page_header'	=> 'add_page_header_link',
+			
 		);
 	}
-
+	
 public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
@@ -79,6 +80,7 @@ public function add_page_header_link($event)
 		));
 	}
 
+	
 		public function load_language_on_setup($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
@@ -88,5 +90,6 @@ public function add_page_header_link($event)
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
+	
 
 }

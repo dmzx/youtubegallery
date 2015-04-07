@@ -74,7 +74,7 @@ class render_helper
 		$this->phpEx = $phpEx;
 		$this->phpbb_log = $log;
 		$this->table_prefix = $table_prefix;
-
+		
 		$this->ext_root_path = 'ext/dmzx/youtubegallery';
 	}
 public function render_data_for_page($only_for_index = false)
@@ -116,7 +116,7 @@ $web_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? 
  * Get youtube video ID from URL
  * From: http://halgatewood.com/php-get-the-youtube-video-id-from-a-youtube-url/
  */
-function getYouTubeIdFromURL($url)
+function getYouTubeIdFromURL($url) 
 {
 	$pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
 	preg_match($pattern, $url, $matches);
@@ -125,7 +125,7 @@ function getYouTubeIdFromURL($url)
 }
 $youtube_id = getYouTubeIdFromURL($video_url);
 $url = "http://gdata.youtube.com/feeds/api/videos/". $youtube_id;
-//$doc = new DOMDocument();
+//$doc = new DOMDocument;
 //$doc->load($url);
 //$video_title = getElementsByTagName("title")->item(0)->nodeValue;
 
@@ -146,13 +146,13 @@ $current_time = time();
 
 $this->template->assign_vars(array(
 	'S_NEW_VIDEO'	 		=> $this->auth->acl_get('u_video_post') ? true : false,
-	'SCRIPT_NAME'			=> 'video',
+	'SCRIPT_NAME'			=> 'video',	
 	'U_VIDEO'				=> $this->helper->route('dmzx_youtubegallery_controller'),
 ));
 
 $this->template->assign_block_vars('navlinks', array(
 	'FORUM_NAME' 	=> ($this->user->lang['VIDEO_INDEX']),
-	'U_VIEW_FORUM'	=> $this->helper->route('dmzx_youtubegallery_controller'),
+	'U_VIEW_FORUM'	=> $this->helper->route('dmzx_youtubegallery_controller'),	
 ));
 
 switch ($mode)
@@ -165,6 +165,7 @@ switch ($mode)
 		}
 
 		$redirect_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit'));
+		
 
 		// Is a guest?!
 		if ($this->user->data['user_id'] == ANONYMOUS)
@@ -190,7 +191,7 @@ switch ($mode)
 		$sql = 'SELECT * FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . '
 				ORDER BY video_cat_id DESC';
 		$result = $this->db->sql_query($sql);
-
+		
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 		$this->template->assign_block_vars('cat', array(
@@ -250,6 +251,7 @@ switch ($mode)
 		}
 	break;
 
+
 	case 'delete':
 		if (!$this->auth->acl_get('u_video_delete'))
 		{
@@ -280,7 +282,7 @@ switch ($mode)
 			));
 			confirm_box(false, $this->user->lang['DELETE_VIDEO'], $s_hidden_fields);
 			trigger_error($this->user->lang['ERROR']);
-
+		
 		}
 	break;
 
@@ -328,14 +330,15 @@ switch ($mode)
 		'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
 		'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
 		'VIDEO_LINK' 		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-
+		
+		
 		'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos&amp;user_id=' . $row['user_id'])),
-		'U_DELETE'			=> $this->auth->acl_get('u_video_delete') &&  $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
+		'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 		'S_BBCODE_FLASH'	=> $flash_status,
 		'FLASH_STATUS'		=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
 		'S_VIDEO_WIDTH'		=> $this->config['video_width'],
 		'S_VIDEO_HEIGHT'	=> $this->config['video_height'],
-	));
+	));	
 	}
 	$this->db->sql_freeresult($result);
 
@@ -378,7 +381,7 @@ switch ($mode)
 	$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 	$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
 
-	while ($row = $db->sql_fetchrow($result))
+	while ($row = $this->db->sql_fetchrow($result))
 	{
 
 		$page_title	= $row['video_cat_title'];
@@ -409,19 +412,19 @@ switch ($mode)
 	$this->template->assign_vars(array(
 //		'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
 	//	'PAGE_NUMBER'		=> on_page($videorow['video_count'], $sql_limit, $sql_start),
-	//	'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($user->lang['LIST_VIDEOS'], $videorow['video_count']),
+		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 	));
 	//End pagination
 
 	$this->template->assign_vars(array(
-		'CAT_NAME'			=> $page_title,
+		'CAT_NAME'			=> $page_titles,
 	));
 
-	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title);
+	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_titles);
 	$template_html = 'video_cat.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title),
+		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_titles),
 	));
 	break;
 
@@ -524,13 +527,14 @@ switch ($mode)
 	$l_total_category_s = ($total_categories == 0) ? 'TOTAL_CATEGORY_ZERO' : 'TOTAL_CATEGORIES_OTHER';
 
 	$this->template->assign_vars(array(
-		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
+		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),		
 		'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 		'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
 		'S_DISPLAY_POST_INFO'	=> (($this->auth->acl_get('u_video_post') || $this->user->data['user_id'] == ANONYMOUS)) ? true : false,
 	));
+
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 	$pagination_url = $this->helper->route('dmzx_youtubegallery_controller');
@@ -586,7 +590,7 @@ switch ($mode)
 	break;
 }
 
-if (!$row)
+if (!$row) 
 {
 	$this->template->assign_vars(array(
 		'NO_ENTRY'	=> ($this->user->lang['NO_VIDEOS']),
@@ -601,10 +605,5 @@ $this->template->set_filenames(array(
 
 page_footer();
 
-		// Return for: \$this->helper->render(filename, lang_title);
-		//return array(
-		//	'filename'		=> 'video_body.html',
-		//	'lang_title'	=> $this->user->lang['VIDEO_INDEX'],
-		//);
 	}
 }

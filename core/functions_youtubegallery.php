@@ -62,4 +62,6 @@ class functions_youtubegallery
 		$this->table_prefix = $table_prefix;
 	}
 
+
+	
 }
