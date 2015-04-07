@@ -1,0 +1,45 @@
+<!-- INCLUDE overall_header.html -->
+<form method="post" id="postform" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<fieldset class="fields2">
+		<input type="hidden" name="username" id="username" value="{S_USERNAME}" />
+		<input type="hidden" name="user_id" id="user_id" value="{S_USER_ID}" />
+		<input type="hidden" name="create_time" id="create_time" value="{CREATE_TIME}" />
+		<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+		<dl>
+			<dt><label for="video_url">{L_VIDEO_URL}:</label></dt>
+			<dd><input type="text" size="45" class="inputbox autowidth" name="video_url" id="video_url" tabindex="5" /></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_VIDEO_SELECT_CAT}:</label></dt>
+			<dd><select name="cid">
+			<!-- BEGIN cat -->
+			<option value="{cat.VIDEO_CAT_ID}">{cat.VIDEO_CAT_TITLE}</option>
+			<!-- END cat -->
+			</select></dd>
+		</dl>
+	</fieldset>
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+
+<div class="panel bg2" style="clear: both;">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<fieldset class="submit-buttons">
+		{S_HIDDEN_FIELDS}
+		<input type="submit" name="submit" id="submit" value="{L_SUBMIT}" class="button1" tabindex="9" />
+		{S_FORM_TOKEN}
+	</fieldset>
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+</form>
+
+	<div class="rules">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<strong>{L_VIDEOS_TIP}</strong><br />
+			{L_VIDEOS_TIPS}
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+<!-- INCLUDE jumpbox.html -->
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,92 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- BEGIN video -->
+	<div id="p{video.VIDEO_ID}" class="post bg3">
+		<div class="inner"><span class="corners-top"><span></span></span>
+
+		<div class="postbody">
+				<!-- IF video.U_DELETE -->
+				<ul class="profile-icons">
+					<li class="delete-icon"><a href="{video.U_DELETE}" title="{L_DELETE_POST}"><span>{L_DELETE_POST}</span></a></li>
+				</ul>
+				<!-- ENDIF -->
+
+			<h3 class="first"><a href="#v{video.VIDEO_ID}">{video.VIDEO_TITLE}</a></h3>
+			<p class="author">{L_VIDEO_ADD_BY} <strong>{video.USERNAME}</strong> &raquo; {video.VIDEO_TIME}</p>
+
+			<div class="content" style="text-align: center;">
+				<div id="ytplayer"></div>
+					<script type="text/javascript">
+					// <![CDATA[
+					// Load the IFrame Player API code asynchronously.
+					var tag = document.createElement('script');
+					tag.src = "https://www.youtube.com/player_api";
+					var firstScriptTag = document.getElementsByTagName('script')[0];
+					firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+					// Replace the 'ytplayer' element with an <iframe> and
+					// YouTube player after the API code downloads.
+					var player;
+					function onYouTubePlayerAPIReady() {
+						player = new YT.Player('ytplayer', {
+							height: '{video.S_VIDEO_HEIGHT}',
+							width: '{video.S_VIDEO_WIDTH}',
+							videoId: '{video.YOUTUBE_ID}'
+						});
+					}
+					// ]]>
+					</script>
+
+					<br /><br />
+					<a href="{video.YOUTUBE_VIDEO}" onclick="this.target= '_blank';return true;"><img src="{BOARD_URL}ext/dmzx/youtubegallery/styles/prosilver/theme/images/youtube.png" alt="{L_VIDEO_WATCH}" /> {L_VIDEO_WATCH}</a>
+			</div>
+		</div>
+
+		<dl class="postprofile" id="profile{video.VIDEO_ID}">
+		<dd><strong>{L_VIDEO_ADD_BY}:</strong> {video.USERNAME} (<a href="{video.U_USER_VIDEOS}" title="{L_USER_VIDEOS}">{TOTAL_VIDEOS}</a>)</dd>
+		<dd><strong>{L_VIDEO_VIEWS}:</strong> {video.VIDEO_VIEWS}</dd>
+			<!--dd>
+				<ul class="profile-icons">
+					<li class="pm-icon"><a href="{video.U_PM}" title="{L_PRIVATE_MESSAGE}"><span>{L_PRIVATE_MESSAGE}</span></a></li>
+				</ul>
+			</dd-->
+		</dl>
+		<div class="back2top"><a href="#wrap" class="top" title="{L_BACK_TO_TOP}">{L_BACK_TO_TOP}</a></div>
+
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+<div class="panel bg1">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<h3>{L_VIDEO_LINKS}</h3>
+
+	<fieldset class="fields2">
+	<dl>
+		<dt><label>{L_VIDEO_LINK}:</label></dt>
+		<dd><input type="text" class="inputbox" value="{video.VIDEO_LINK}" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+	</dl>
+	<dl>
+		<dt><label>{L_VIDEO_LINK_YOUTUBE}:</label></dt>
+		<dd><input type="text" class="inputbox" value="{video.YOUTUBE_VIDEO}" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+	</dl>
+	<dl>
+		<dt><label>{L_VIDEO_BBCODE}:</label></dt>
+		<dd><input type="text" class="inputbox" value="[url={video.VIDEO_LINK}]{video.VIDEO_TITLE}[/url]" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+	</dl>
+	<!-- IF video.S_BBCODE_FLASH -->
+	<dl>
+		<dt><label>{L_VIDEO_EMBED}:</label><br /><span>{video.FLASH_STATUS}</span></dt>
+		<dd><input type="text" class="inputbox" value="[flash=425,344]http://www.youtube.com/v/{video.YOUTUBE_ID}[/flash]" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+	</dl>
+	<!-- ENDIF -->
+	</fieldset>
+
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+<!-- END video -->
+
+<p></p><p><a href="{U_VIDEO}" class="left-box {S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO} {L_VIDEO_INDEX}</a></p>
+
+<br />
+
+<!-- INCLUDE overall_footer.html -->

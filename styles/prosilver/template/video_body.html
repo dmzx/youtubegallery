@@ -1,0 +1,126 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF not S_IS_BOT -->
+	<div class="buttons">
+		<div class="video-icon" title="{L_VIDEO_SUBMIT}"><a href="{U_VIDEO_SUBMIT}"><span></span>{L_VIDEO_SUBMIT}</a></div>
+	</div>
+<!-- ENDIF -->
+
+<!-- IF not .video -->
+<br class="clear" />
+	<div id="information" class="rules">
+		<div class="inner">
+			<strong>{L_INFORMATION}:</strong> {NO_ENTRY}
+		</div>
+	</div>
+<!-- ENDIF -->
+
+<br class="clear" />
+
+<div id="tabs">
+	<ul>
+		<li class="activetab"><a href="#"><span>{L_NEWEST_VIDEOS}</span></a></li>
+		<!-- IF not S_IS_BOT and S_USER_LOGGED_IN --><li><a href="{U_MY_VIDEOS}"><span>{L_MY_VIDEOS}</span></a></li><!-- ENDIF -->
+	</ul>
+</div>
+<div class="panel bg3">
+	<div class="inner">
+		<!-- BEGIN video -->
+			<div id="video{video.VIDEO_ID}" class="video_item">
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
+				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
+				<div class="content">
+					{L_VIDEO_AUTHOR}: {video.USERNAME} <br />
+					{L_VIDEO_CAT}: <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
+					{L_VIDEO_DATE}: {video.VIDEO_TIME} <br />
+					{L_VIDEO_VIEWS}: {video.VIDEO_VIEWS}
+				</div>
+			</div>
+		<!-- END video -->
+
+	</div>
+</div>
+
+<div class="topic-actions">
+	<div class="buttons">
+		<!-- IF not S_IS_BOT --><div class="video-icon" title="{L_VIDEO_SUBMIT}"><a href="{U_VIDEO_SUBMIT}"><span></span>{L_VIDEO_SUBMIT}</a></div><!-- ENDIF -->
+	</div>
+
+		<div class="pagination">
+			{TOTAL_VIDEOS}
+			<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
+		</div>
+</div>
+
+<br />
+
+<script type="text/javascript">
+// <![CDATA[
+var panels_index = new Array('category-panel', 'statistics-panel');
+
+function subpanels_index(p)
+{
+	var i, e, t;
+
+	if (typeof(p) == 'string')
+	{
+		show_panel = p;
+	}
+
+	for (i = 0; i < panels_index.length; i++)
+	{
+		e = document.getElementById(panels_index[i]);
+		t = document.getElementById(panels_index[i] + '-tab');
+
+		if (e)
+		{
+			if (panels_index[i] == show_panel)
+			{
+				e.style.display = 'block';
+				if (t)
+				{
+					t.className = 'activetab';
+				}
+			}
+			else
+			{
+				e.style.display = 'none';
+				if (t)
+				{
+					t.className = '';
+				}
+			}
+		}
+	}
+}
+
+// ]]>
+</script>
+
+<div id="tabs">
+	<ul>
+		<li class="activetab" id="category-panel-tab"><a name="category" href="#category-panel-tab" onclick="subpanels_index('category-panel'); return false;"><span>{L_VIDEO_CATS}</span></a></li>
+
+		<li class="" id="statistics-panel-tab"><a name="statistics" href="#statistics-panel" onclick="subpanels_index('statistics-panel'); return false;"><span>{L_STATISTICS}</span></a></li>
+	</ul>
+</div>
+
+<div id="panel-tab" class="panel bg3">
+	<div class="inner">
+
+	<div id="category-panel" style="display: block;">
+	<h3>{L_VIDEO_CATS}</h3>
+		<p><!-- BEGIN videocat -->&bull; <a href="{videocat.U_CAT}" id="cat{videocat.VIDEO_CAT_ID}">{videocat.VIDEO_CAT_TITLE}</a> <!-- END videocat --></p>
+	</div>
+
+	<div id="statistics-panel" style="display: none;">
+		<h3>{L_STATISTICS}</h3>
+		<p>{TOTAL_VIDEOS} &bull; {TOTAL_CATEGORIES}</p>
+	</div>
+
+	</div>
+</div>
+
+<br />
+
+<!-- INCLUDE overall_footer.html -->

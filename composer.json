@@ -1,0 +1,37 @@
+{
+	"name": "dmzx/youtubegallery",
+	"type": "phpbb-extension",
+	"description": "This extension adds a new page to your phpBB3, on this page is possible add YouTube videos simply by submitting the video URL and watch the videos directly on your phpBB3.",
+	"homepage": "http://www.dmzx-web.net",
+	"version": "0.0.1",
+	"time": "2015-04-06",
+	"keywords": ["phpbb", "extension", "youtubegallery"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "dmzx",
+			"homepage": "http://www.dmzx-web.net",
+			"email": "info@dmzx-web.net",
+			"role": "Extension Developer"
+		},
+		{
+			"name": "_Vinny_",
+			"homepage": "http://www.suportephpbb.com.br",
+			"role": "Author"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"extra": {
+		"display-name": "Youtube Videos Gallery",
+		"soft-require": {
+		   "phpbb/phpbb": "3.1.*"
+		},
+		"version-check": {
+			"host": "www.phpbb.com",
+			"directory": "/customise/db/extension/",
+			"filename": "version_check"
+		}
+	}
+}

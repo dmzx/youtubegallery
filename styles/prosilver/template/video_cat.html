@@ -1,0 +1,45 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF not .video -->
+<br class="clear" />
+	<div id="information" class="rules">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<strong>{L_INFORMATION}:</strong> {NO_ENTRY}
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+<!-- ENDIF -->
+
+<br class="clear" />
+
+<div id="tabs">
+	<ul>
+		<li class="activetab"><a href="#"><span>{CAT_NAME}</span></a></li>
+	</ul>
+</div>
+<div class="panel bg3">
+	<div class="inner"><span class="corners-top"><span></span></span>
+		<!-- BEGIN video -->
+			<div id="video{video.VIDEO_ID}" class="video_item">
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
+				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
+				<div class="content">
+					{L_VIDEO_AUTHOR}: {video.USERNAME} <br />
+					{L_VIDEO_DATE}: {video.VIDEO_TIME} <br />
+					{L_VIDEO_VIEWS}: {video.VIDEO_VIEWS}
+				</div>
+			</div>
+		<!-- END video -->
+
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+
+<div class="topic-actions">
+	<div class="pagination">
+		{TOTAL_VIDEOS}
+		<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
+	</div>
+</div>
+
+<br />
+
+<!-- INCLUDE overall_footer.html -->

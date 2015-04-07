@@ -1,0 +1,42 @@
+h3.center {
+	text-align: center;
+}
+
+.video_item {
+	float: left;
+	margin-right: 14px;
+	width: 400px;
+}
+
+.video_item .content{
+	font-size: 1.1em;
+}
+
+.video_item img {
+	display: inline-block; 
+	float: left;
+	height: 72px;
+	padding: 10px 10px 20px 0;
+	position: relative; 
+	vertical-align: middle;
+	width: 96px;
+}
+
+.video-icon span	{ background: url("./images/button_video_new.gif") 0 0 no-repeat; }
+
+.buttons div.video-icon		{ width: 96px; height: 25px; }
+
+.rtl .icon-videos {
+	background-position: 100% 50%;
+	padding: 1px 17px 0 0;
+}
+
+.icon-videos {
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	background-image: none;
+	padding: 1px 0 0 1px;
+}
+
+.icon-videos		{ background-image: url("./images/icon_videos.gif"); }
+
