@@ -52,6 +52,7 @@ $lang = array_merge($lang, array(
 	'NEWEST_VIDEOS'			=> 'Newest Videos',
 	'NO_VIDEOS'				=> 'This page has no videos.',
 	'NO_CATEGORIES'			=> 'This page has no categories.',
+	'RETURN_TO_VIDEO_INDEX' => 'Return to Video Gallery',
 	'SEARCH_VIDEOS'			=> 'Search Videos',
 	'TOTAL_CATEGORIES_OTHER'=> 'Total categories <strong>%d</strong>',
 	'TOTAL_CATEGORY_ZERO'	=> 'Total categories <strong>0</strong>',
@@ -85,13 +86,13 @@ $lang = array_merge($lang, array(
 
 	// Install
 	'INSTALL_TEST_CAT'		=> 'Uncategorized',
-	
+
 	// Permissions
 	'ACL_U_VIDEO_VIEW_FULL'	=> 'Can view Video Gallery',
 	'ACL_U_VIDEO_VIEW'		=> 'Can view videos',
 	'ACL_U_VIDEO_DELETE'	=> 'Can delete own videos',
 	'ACL_U_VIDEO_POST'		=> 'Can post videos',
-	
+
 	// View Video
 	'FLASH_IS_OFF'			=> '[flash] is <em>OFF</em>',
 	'FLASH_IS_ON'			=> '[flash] is <em>ON</em>',

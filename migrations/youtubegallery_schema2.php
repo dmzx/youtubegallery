@@ -4,7 +4,7 @@
 * @package phpBB Extension - Youtube Videos Gallery
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author Galandas - http://phpbb3world.com
+* @Author _Vinny_ - http://www.suportephpbb.com.br
 *
 */
 
@@ -21,7 +21,6 @@ class youtubegallery_schema2 extends \phpbb\db\migration\migration
 			array('config.add', array('enable_video_share', true)),
 			array('config.add', array('video_width', '640')),
 			array('config.add', array('video_height', '390')),
-
 
 			array('permission.add', array('u_video_view_full')),
 			array('permission.add', array('u_video_view')),

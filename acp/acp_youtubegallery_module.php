@@ -21,7 +21,7 @@ class acp_youtubegallery_module
 		global $phpbb_root_path, $phpbb_admin_path, $phpEx, $table_prefix;
 
 	//	$user->add_lang('mods/info_acp_video');
-        $this->table_prefix = $table_prefix;
+		$this->table_prefix = $table_prefix;
 		switch ($mode)
 		{
 			default:
@@ -81,7 +81,7 @@ class acp_youtubegallery_module
 						'S_LEGEND'		=> true,
 						'LEGEND'		=> (isset($user->lang[$vars])) ? $user->lang[$vars] : $vars)
 					);
-	
+
 					continue;
 				}
 				$type = explode(':', $vars['type']);
@@ -111,7 +111,6 @@ class acp_youtubegallery_module
 			}
 		break;
 
-
 			case 'cat':
 				$user->add_lang(array('posting'));
 				$this->tpl_name = 'acp_video_cat';
@@ -119,7 +118,7 @@ class acp_youtubegallery_module
 
 				$form_key = 'acp_video_cat';
 				add_form_key($form_key);
-				
+
 				include ($phpbb_root_path . 'includes/functions_user.' . $phpEx);
 
 				$form_action = $this->u_action. '&amp;action=add';
@@ -134,7 +133,7 @@ class acp_youtubegallery_module
 					'video_cat_id'				=> $video_cat_id,
 					'video_cat_title'			=> $video_cat_title,
 				);
-				
+
 				switch ($action)
 				{
 					case 'add':
@@ -144,7 +143,7 @@ class acp_youtubegallery_module
 					}
 					else
 					{
-						$db->sql_query('INSERT INTO ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE .' ' . $db->sql_build_array('INSERT', $sql_ary));
+						$db->sql_query('INSERT INTO ' . $this->table_prefix . \dmzx\youtubegallery\core\render_helper::VIDEO_CAT_TABLE .' ' . $db->sql_build_array('INSERT', $sql_ary));
 						trigger_error($user->lang['ACP_CATEGORY_CREATED'] . adm_back_link($this->u_action));
 					}
 					break;
@@ -153,11 +152,11 @@ class acp_youtubegallery_module
 						$form_action = $this->u_action. '&amp;action=update';
 						$lang_mode = $user->lang['ACP_CATEGORY_EDIT'];
 						$sql = 'SELECT *
-							FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . ' 
+							FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\render_helper::VIDEO_CAT_TABLE . '
 							WHERE video_cat_id = '.(int) request_var('id', '');
 						$result = $db->sql_query_limit($sql,1);
 						$row = $db->sql_fetchrow($result);
-		 
+
 						$template->assign_vars(array(
 							'S_EDIT_MODE'		=> true,
 							'VIDEO_CAT_ID'		=> $row['video_cat_id'],
@@ -166,14 +165,14 @@ class acp_youtubegallery_module
 					break;
 
 					case 'update':
-					
+
 					if ($video_cat_title == '')
 					{
 						trigger_error($user->lang['ACP_VIDEO_CAT_TITLE_TITLE'] . adm_back_link($this->u_action), E_USER_WARNING);
 					}
 					else
 					{
-						$db->sql_query('UPDATE ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . ' WHERE VIDEO_CAT_ID = ' . $video_cat_id);
+						$db->sql_query('UPDATE ' . $this->table_prefix . \dmzx\youtubegallery\core\render_helper::VIDEO_CAT_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . ' WHERE VIDEO_CAT_ID = ' . $video_cat_id);
 						trigger_error($user->lang['ACP_CATEGORY_UPDATED'] . adm_back_link($this->u_action));
 					}
 					break;
@@ -181,7 +180,7 @@ class acp_youtubegallery_module
 					case 'delete':
 						if (confirm_box(true))
 						{
-							$sql = 'DELETE FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . '
+							$sql = 'DELETE FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\render_helper::VIDEO_CAT_TABLE . '
 								WHERE video_cat_id = '.(int)request_var('id', '');
 							$db->sql_query($sql);
 							trigger_error($user->lang['ACP_CATEGORY_DELETED'] . adm_back_link($this->u_action));
@@ -200,7 +199,7 @@ class acp_youtubegallery_module
 				// Start output the page
 				//
 				$sql = 'SELECT *
-					FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . ' 
+					FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\render_helper::VIDEO_CAT_TABLE . '
 					ORDER by video_cat_id';
 				$result = $db->sql_query($sql);
 				while ($row = $db->sql_fetchrow($result))

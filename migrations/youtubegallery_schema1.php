@@ -4,7 +4,7 @@
 * @package phpBB Extension - Youtube Videos Gallery
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author Galandas - http://phpbb3world.com
+* @Author _Vinny_ - http://www.suportephpbb.com.br
 *
 */
 
@@ -12,7 +12,7 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_schema1 extends \phpbb\db\migration\migration
 {
-	
+
 	public function update_schema()
 	{
 		return array(
@@ -32,7 +32,7 @@ class youtubegallery_schema1 extends \phpbb\db\migration\migration
 				'PRIMARY_KEY'	=> 'video_id',
 
 			)),
-	    );
+		);
 	}
 	public function revert_schema()
 	{
@@ -42,5 +42,5 @@ class youtubegallery_schema1 extends \phpbb\db\migration\migration
 			),
 		);
 	}
-	
+
 }

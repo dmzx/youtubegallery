@@ -11,9 +11,19 @@
 namespace dmzx\youtubegallery\core;
 
 class render_helper
+
 {
-	/** @var \dmzx\youtubegallery\core\functions_youtubegallery */
-	protected $functions_youtubegallery;
+	/**
+	 * CONSTANTS SECTION
+	 *
+	 * To access them, you need to use the class.
+	 *
+	 */
+	const VIDEO_TABLE	= 'video';
+	const VIDEO_CAT_TABLE	= 'video_cat';
+	/**
+	 * End of constants
+	 */
 
 	/** @var \phpbb\config\config */
 	protected $config;
@@ -46,7 +56,6 @@ class render_helper
 	/**
 	 * Constructor
 	 *
-	 * @param \dmzx\youtubegallery\core\functions_youtubegallery	$functions_youtubegallery
 	 * @param \phpbb\config\config				$config
 	 * @param \phpbb\controller\helper			$helper
 	 * @param \phpbb\template\template			$template
@@ -59,9 +68,8 @@ class render_helper
 	 * @param									$phpEx
 	 * @param									$table_prefix
 	 */
-	public function __construct(\dmzx\youtubegallery\core\functions_youtubegallery $functions_youtubegallery, \phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\log\log_interface $log, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, \phpbb\request\request $request, $phpbb_root_path, $phpEx, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\log\log_interface $log, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, \phpbb\request\request $request, $phpbb_root_path, $phpEx, $table_prefix)
 	{
-		$this->functions_youtubegallery = $functions_youtubegallery;
 		$this->config = $config;
 		$this->helper = $helper;
 		$this->template = $template;
@@ -74,7 +82,7 @@ class render_helper
 		$this->phpEx = $phpEx;
 		$this->phpbb_log = $log;
 		$this->table_prefix = $table_prefix;
-		
+
 		$this->ext_root_path = 'ext/dmzx/youtubegallery';
 	}
 public function render_data_for_page($only_for_index = false)
@@ -116,7 +124,7 @@ $web_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? 
  * Get youtube video ID from URL
  * From: http://halgatewood.com/php-get-the-youtube-video-id-from-a-youtube-url/
  */
-function getYouTubeIdFromURL($url) 
+function getYouTubeIdFromURL($url)
 {
 	$pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
 	preg_match($pattern, $url, $matches);
@@ -125,9 +133,9 @@ function getYouTubeIdFromURL($url)
 }
 $youtube_id = getYouTubeIdFromURL($video_url);
 $url = "http://gdata.youtube.com/feeds/api/videos/". $youtube_id;
-//$doc = new DOMDocument;
-//$doc->load($url);
-//$video_title = getElementsByTagName("title")->item(0)->nodeValue;
+$doc = new \DOMDocument;
+$doc->load($url);
+$video_title = $doc->getElementsByTagName("title")->item(0)->nodeValue;
 
 $sql_ary = array(
 	'video_id'			=> $video_id,
@@ -146,13 +154,13 @@ $current_time = time();
 
 $this->template->assign_vars(array(
 	'S_NEW_VIDEO'	 		=> $this->auth->acl_get('u_video_post') ? true : false,
-	'SCRIPT_NAME'			=> 'video',	
+	'SCRIPT_NAME'			=> 'video',
 	'U_VIDEO'				=> $this->helper->route('dmzx_youtubegallery_controller'),
 ));
 
 $this->template->assign_block_vars('navlinks', array(
 	'FORUM_NAME' 	=> ($this->user->lang['VIDEO_INDEX']),
-	'U_VIEW_FORUM'	=> $this->helper->route('dmzx_youtubegallery_controller'),	
+	'U_VIEW_FORUM'	=> $this->helper->route('dmzx_youtubegallery_controller'),
 ));
 
 switch ($mode)
@@ -165,7 +173,6 @@ switch ($mode)
 		}
 
 		$redirect_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit'));
-		
 
 		// Is a guest?!
 		if ($this->user->data['user_id'] == ANONYMOUS)
@@ -188,10 +195,10 @@ switch ($mode)
 		add_form_key('postform');
 
 		// List of categories
-		$sql = 'SELECT * FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . '
+		$sql = 'SELECT * FROM ' . $this->table_prefix . self::VIDEO_CAT_TABLE . '
 				ORDER BY video_cat_id DESC';
 		$result = $this->db->sql_query($sql);
-		
+
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 		$this->template->assign_block_vars('cat', array(
@@ -237,7 +244,7 @@ switch ($mode)
 				}
 				else
 				{
-					$this->db->sql_query('INSERT INTO ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
+					$this->db->sql_query('INSERT INTO ' . $this->table_prefix . self::VIDEO_TABLE .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 					$u_action = $this->helper->route('dmzx_youtubegallery_controller');
 
 					$meta_info = $this->helper->route('dmzx_youtubegallery_controller');
@@ -251,7 +258,6 @@ switch ($mode)
 		}
 	break;
 
-
 	case 'delete':
 		if (!$this->auth->acl_get('u_video_delete'))
 		{
@@ -262,7 +268,7 @@ switch ($mode)
 
 		if (confirm_box(true))
 		{
-			$sql = 'DELETE FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE . '
+			$sql = 'DELETE FROM ' . $this->table_prefix . self::VIDEO_TABLE . '
 					WHERE video_id = '. $video_id;
 			$this->db->sql_query($sql);
 
@@ -282,7 +288,7 @@ switch ($mode)
 			));
 			confirm_box(false, $this->user->lang['DELETE_VIDEO'], $s_hidden_fields);
 			trigger_error($this->user->lang['ERROR']);
-		
+
 		}
 	break;
 
@@ -295,7 +301,7 @@ switch ($mode)
 	// Update video view... but only for humans
 	if (isset($this->user->data['session_page']) && !$this->user->data['is_bot'])
 	{
-		$sql = 'UPDATE ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE . '
+		$sql = 'UPDATE ' . $this->table_prefix . self::VIDEO_TABLE . '
 			SET video_views = video_views + 1
 			WHERE video_id = '.$video_id;
 		$this->db->sql_query($sql);
@@ -304,7 +310,7 @@ switch ($mode)
 	$sql_ary = array(
 		'SELECT'	=> 'v.*, u.*',
 		'FROM'		=> array(
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE			=> 'v',
+			$this->table_prefix . self::VIDEO_TABLE			=> 'v',
 			USERS_TABLE			=> 'u',
 		),
 		'WHERE'		=> 'v.video_id = '.(int) $video_id .' and u.user_id = v.user_id',
@@ -329,21 +335,19 @@ switch ($mode)
 		'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
 		'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
 		'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
-		'VIDEO_LINK' 		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-		
-		
-		'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos&amp;user_id=' . $row['user_id'])),
-		'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
+		'VIDEO_LINK' 		=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+		'U_USER_VIDEOS' 	=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos&amp;user_id=' . $row['user_id'])),
+		'U_DELETE'			=> $delete_allowed , $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 		'S_BBCODE_FLASH'	=> $flash_status,
 		'FLASH_STATUS'		=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
 		'S_VIDEO_WIDTH'		=> $this->config['video_width'],
 		'S_VIDEO_HEIGHT'	=> $this->config['video_height'],
-	));	
+	));
 	}
 	$this->db->sql_freeresult($result);
 
 	// Count the videos user video ...
-	$sql = 'SELECT COUNT(video_id) AS total_videos FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE . ' WHERE user_id = '. (int)$user_id;
+	$sql = 'SELECT COUNT(video_id) AS total_videos FROM ' . $this->table_prefix . self::VIDEO_TABLE . ' WHERE user_id = '. (int) $user_id;
 	$result = $this->db->sql_query($sql);
 	$total_videos = (int) $this->db->sql_fetchfield('total_videos');
 	$this->db->sql_freeresult($result);
@@ -362,16 +366,17 @@ switch ($mode)
 	break;
 
 	case 'cat';
+
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
-//	$pagination_url = append_sid("{$phpbb_root_path}video.$phpEx", "mode=cat&amp;cid=$video_cat_id");
+	//$pagination_url = append_sid("{$phpbb_root_path}video.$phpEx", "mode=cat&amp;cid=$video_cat_id");
 
 	$sql_ary = array(
 		'SELECT'	=> 'v.*,
 		ct.video_cat_title,ct.video_cat_id,
 		u.username,u.user_colour,u.user_id',
 		'FROM'		=> array(
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE			=> 'v',
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE		=> 'ct',
+			$this->table_prefix . self::VIDEO_TABLE			=> 'v',
+			$this->table_prefix . self::VIDEO_CAT_TABLE		=> 'ct',
 			USERS_TABLE			=> 'u',
 		),
 		'WHERE'		=> 'v.video_cat_id = '. $video_cat_id .' AND ct.video_cat_id = '. $video_cat_id .' AND v.user_id = u.user_id',
@@ -383,7 +388,6 @@ switch ($mode)
 
 	while ($row = $this->db->sql_fetchrow($result))
 	{
-
 		$page_title	= $row['video_cat_title'];
 
 		$this->template->assign_block_vars('video', array(
@@ -403,29 +407,30 @@ switch ($mode)
 	$this->db->sql_freeresult($result);
 
 	// We need another query for the video count
-	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE .' WHERE video_cat_id = '. (int)$video_cat_id;
+	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . self::VIDEO_TABLE .' WHERE video_cat_id = '. (int)$video_cat_id;
 	$result = $this->db->sql_query($sql);
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
 
 	//Start pagination
 	$this->template->assign_vars(array(
-//		'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
+	//'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
 	//	'PAGE_NUMBER'		=> on_page($videorow['video_count'], $sql_limit, $sql_start),
 		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 	));
 	//End pagination
 
 	$this->template->assign_vars(array(
-		'CAT_NAME'			=> $page_titles,
+		'CAT_NAME'			=> $page_title,
 	));
 
-	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_titles);
+	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title);
 	$template_html = 'video_cat.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_titles),
+		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title),
 	));
+
 	break;
 
 	case 'user_videos';
@@ -442,8 +447,8 @@ switch ($mode)
 		ct.video_cat_title,ct.video_cat_id,
 		u.username,u.user_colour,u.user_id',
 		'FROM'		=> array(
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE			=> 'v',
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE		=> 'ct',
+			$this->table_prefix . self::VIDEO_TABLE			=> 'v',
+			$this->table_prefix . self::VIDEO_CAT_TABLE		=> 'ct',
 			USERS_TABLE			=> 'u',
 		),
 		'WHERE'		=> 'u.user_id = v.user_id AND ct.video_cat_id = v.video_cat_id AND u.user_id = '. $user_id,
@@ -474,7 +479,7 @@ switch ($mode)
 	$this->db->sql_freeresult($result);
 
 	// We need another query for the video count
-	$sql = 'SELECT COUNT(*) as video_count FROM '. $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE .' WHERE user_id = '. $user_id;
+	$sql = 'SELECT COUNT(*) as video_count FROM '. $this->table_prefix . self::VIDEO_TABLE .' WHERE user_id = '. $user_id;
 	$result = $this->db->sql_query($sql);
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
@@ -497,7 +502,7 @@ switch ($mode)
 
 	default:
 	//Listing categories
-	$sql = 'SELECT * FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . " ORDER BY video_cat_id";
+	$sql = 'SELECT * FROM ' . $this->table_prefix . self::VIDEO_CAT_TABLE . " ORDER BY video_cat_id";
 	$res = $this->db->sql_query($sql);
 	while($row = $this->db->sql_fetchrow($res))
 	{
@@ -509,13 +514,13 @@ switch ($mode)
 	}
 
 	// Count the videos ...
-	$sql = 'SELECT COUNT(video_id) AS total_videos FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE;
+	$sql = 'SELECT COUNT(video_id) AS total_videos FROM ' . $this->table_prefix . self::VIDEO_TABLE;
 	$result = $this->db->sql_query($sql);
 	$total_videos = (int) $this->db->sql_fetchfield('total_videos');
 	$this->db->sql_freeresult($result);
 
 	// Count the videos categories ...
-	$sql = 'SELECT COUNT(video_cat_id) AS total_categories FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE . '';
+	$sql = 'SELECT COUNT(video_cat_id) AS total_categories FROM ' . $this->table_prefix . self::VIDEO_CAT_TABLE . '';
 	$result = $this->db->sql_query($sql);
 	$total_categories = (int) $this->db->sql_fetchfield('total_categories');
 	$this->db->sql_freeresult($result);
@@ -527,14 +532,13 @@ switch ($mode)
 	$l_total_category_s = ($total_categories == 0) ? 'TOTAL_CATEGORY_ZERO' : 'TOTAL_CATEGORIES_OTHER';
 
 	$this->template->assign_vars(array(
-		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),		
+		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
 		'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 		'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
 		'S_DISPLAY_POST_INFO'	=> (($this->auth->acl_get('u_video_post') || $this->user->data['user_id'] == ANONYMOUS)) ? true : false,
 	));
-
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 	$pagination_url = $this->helper->route('dmzx_youtubegallery_controller');
@@ -544,8 +548,8 @@ switch ($mode)
 		ct.video_cat_title,ct.video_cat_id,
 		u.username,u.user_colour,u.user_id',
 		'FROM'		=> array(
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE			=> 'v',
-			$this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_CAT_TABLE		=> 'ct',
+			$this->table_prefix . self::VIDEO_TABLE			=> 'v',
+			$this->table_prefix . self::VIDEO_CAT_TABLE		=> 'ct',
 			USERS_TABLE			=> 'u',
 		),
 		'WHERE'		=> 'ct.video_cat_id = v.video_cat_id AND u.user_id = v.user_id',
@@ -574,7 +578,7 @@ switch ($mode)
 	$this->db->sql_freeresult($result);
 
 	// We need another query for the video count
-	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . \dmzx\youtubegallery\core\functions_youtubegallery::VIDEO_TABLE;
+	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . self::VIDEO_TABLE;
 	$result = $this->db->sql_query($sql);
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
@@ -590,7 +594,7 @@ switch ($mode)
 	break;
 }
 
-if (!$row) 
+if (!$row)
 {
 	$this->template->assign_vars(array(
 		'NO_ENTRY'	=> ($this->user->lang['NO_VIDEOS']),

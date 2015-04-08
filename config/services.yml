@@ -5,20 +5,9 @@ services:
             - @dmzx.youtubegallery.render_helper
             - @controller.helper
             - @request
-    dmzx.youtubegallery.functions_youtubegallery:
-        class: dmzx\youtubegallery\core\functions_youtubegallery
-        arguments:
-            - @template
-            - @user
-            - @auth
-            - @log
-            - @dbal.conn
-            - @cache
-            - %core.table_prefix%
     dmzx.youtubegallery.render_helper:
         class: dmzx\youtubegallery\core\render_helper
         arguments:
-            - @dmzx.youtubegallery.functions_youtubegallery
             - @config
             - @controller.helper
             - @template
@@ -30,11 +19,10 @@ services:
             - @request
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%			
+            - %core.table_prefix%
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
-            - @dmzx.youtubegallery.render_helper
             - @auth
             - @config
             - @controller.helper
@@ -43,6 +31,6 @@ services:
             - @dbal.conn
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%			
+            - %core.table_prefix%
         tags:
             - { name: event.listener }
