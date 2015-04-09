@@ -1,7 +1,7 @@
 <!-- INCLUDE overall_header.html -->
 <form method="post" id="postform" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
+	<div class="inner">
 	<fieldset class="fields2">
 		<input type="hidden" name="username" id="username" value="{S_USERNAME}" />
 		<input type="hidden" name="user_id" id="user_id" value="{S_USER_ID}" />
@@ -20,25 +20,25 @@
 			</select></dd>
 		</dl>
 	</fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+	</div>
 </div>
 
 <div class="panel bg2" style="clear: both;">
-	<div class="inner"><span class="corners-top"><span></span></span>
+	<div class="inner">
 	<fieldset class="submit-buttons">
 		{S_HIDDEN_FIELDS}
 		<input type="submit" name="submit" id="submit" value="{L_SUBMIT}" class="button1" tabindex="9" />
 		{S_FORM_TOKEN}
 	</fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+	</div>
 </div>
 </form>
 
 	<div class="rules">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 			<strong>{L_VIDEOS_TIP}</strong><br />
 			{L_VIDEOS_TIPS}
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
 
 <!-- INCLUDE jumpbox.html -->
