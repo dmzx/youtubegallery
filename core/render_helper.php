@@ -357,11 +357,11 @@ switch ($mode)
 		'TOTAL_VIDEOS'		=> $total_videos,
 	));
 
-	$l_title = $page_title;
+	$l_title = ($this->user->lang['VIEW_VIDEO'] . ' - ' . $page_title);
 	$template_html = 'video_view.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> $page_title,
+		'FORUM_NAME' 	=> ($this->user->lang['VIEW_VIDEO'] . ' - ' . $page_title),
 	));
 
 	break;
@@ -425,11 +425,11 @@ switch ($mode)
 		'CAT_NAME'			=> $page_title,
 	));
 
-	$l_title = $page_title;
+	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title);
 	$template_html = 'video_cat.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> $page_title,
+		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title),
 	));
 
 	break;
@@ -534,12 +534,11 @@ switch ($mode)
 
 	$this->template->assign_vars(array(
 		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
-		'VIDEOSUBMIT' 	=> $this->auth->acl_get('u_video_post'),
 		'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 		'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
-	//	'S_DISPLAY_POST_INFO'	=> (($this->auth->acl_get('u_video_post') || $this->user->data['user_id'] == ANONYMOUS)) ? true : false,
+		'S_DISPLAY_POST_INFO'	=> (($this->auth->acl_get('u_video_post') || $this->user->data['user_id'] == ANONYMOUS)) ? true : false,
 	));
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
