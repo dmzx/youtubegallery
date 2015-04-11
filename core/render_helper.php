@@ -357,11 +357,11 @@ switch ($mode)
 		'TOTAL_VIDEOS'		=> $total_videos,
 	));
 
-	$l_title = ($this->user->lang['VIEW_VIDEO'] . ' - ' . $page_title);
+	$l_title = $page_title;
 	$template_html = 'video_view.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> ($this->user->lang['VIEW_VIDEO'] . ' - ' . $page_title),
+		'FORUM_NAME' 	=> $page_title,
 	));
 
 	break;
@@ -425,11 +425,11 @@ switch ($mode)
 		'CAT_NAME'			=> $page_title,
 	));
 
-	$l_title = ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title);
+	$l_title = $page_title;
 	$template_html = 'video_cat.html';
 
 	$this->template->assign_block_vars('navlinks', array(
-		'FORUM_NAME' 	=> ($this->user->lang['VIEW_CAT'] . ' - ' . $page_title),
+		'FORUM_NAME' 	=> $page_title,
 	));
 
 	break;
