@@ -343,7 +343,7 @@ switch ($mode)
 		'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
 		'VIDEO_LINK' 		=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 		'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
-		'U_DELETE'			=> $delete_allowed , $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
+		'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 		'DELETE_ALLOW'		=> $delete_allowed,
 		'S_BBCODE_FLASH'	=> $flash_status,
 		'FLASH_STATUS'		=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
