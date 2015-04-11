@@ -19,8 +19,8 @@
 
 <div id="tabs">
 	<ul>
-		<li class="activetab"><a href="#"><span>{L_NEWEST_VIDEOS}</span></a></li>
-		<!-- IF not S_IS_BOT and S_USER_LOGGED_IN --><li><a href="{U_MY_VIDEOS}"><span>{L_MY_VIDEOS}</span></a></li><!-- ENDIF -->
+		<li class="tab activetab"><a href="#">{L_NEWEST_VIDEOS}</a></li>
+		<!-- IF not S_IS_BOT and S_USER_LOGGED_IN --><li class="tab"><a href="{U_MY_VIDEOS}">{L_MY_VIDEOS}</a></li><!-- ENDIF -->
 	</ul>
 </div>
 <div class="panel bg3">
@@ -54,72 +54,31 @@
 
 <br />
 
-<script type="text/javascript">
-// <![CDATA[
-var panels_index = new Array('category-panel', 'statistics-panel');
+		<div id="tabs" class="sub-panels" data-show-panel="category-panel" role="tablist">
+			<ul>
+				<li id="category-panel-tab" class="tab activetab">
+					<a href="#tabs" data-subpanel="category-panel" role="tab" aria-controls="category-panel"><span>{L_VIDEO_CATS}</span></a>
+				</li>
+				<li id="statistics-panel-tab" class="tab">
+					<a href="#tabs" data-subpanel="statistics-panel" role="tab" aria-controls="statistics-panel">{L_STATISTICS}<strong id="file-total-progress"><strong id="file-total-progress-bar"></strong></strong></a>
+				</li>
+			</ul>
+		</div>
 
-function subpanels_index(p)
-{
-	var i, e, t;
+		<div class="panel bg3 panel-container" id="category-panel">
+			<div class="inner">
+				<h3>{L_VIDEO_CATS}</h3>
+				<p><!-- BEGIN videocat -->&bull; <a href="{videocat.U_CAT}" id="cat{videocat.VIDEO_CAT_ID}">{videocat.VIDEO_CAT_TITLE}</a> <!-- END videocat --></p>
+			</div>
+		</div>
 
-	if (typeof(p) == 'string')
-	{
-		show_panel = p;
-	}
 
-	for (i = 0; i < panels_index.length; i++)
-	{
-		e = document.getElementById(panels_index[i]);
-		t = document.getElementById(panels_index[i] + '-tab');
-
-		if (e)
-		{
-			if (panels_index[i] == show_panel)
-			{
-				e.style.display = 'block';
-				if (t)
-				{
-					t.className = 'activetab';
-				}
-			}
-			else
-			{
-				e.style.display = 'none';
-				if (t)
-				{
-					t.className = '';
-				}
-			}
-		}
-	}
-}
-
-// ]]>
-</script>
-
-<div id="tabs">
-	<ul>
-		<li class="activetab" id="category-panel-tab"><a name="category" href="#category-panel-tab" onclick="subpanels_index('category-panel'); return false;"><span>{L_VIDEO_CATS}</span></a></li>
-
-		<li class="" id="statistics-panel-tab"><a name="statistics" href="#statistics-panel" onclick="subpanels_index('statistics-panel'); return false;"><span>{L_STATISTICS}</span></a></li>
-	</ul>
-</div>
-
-<div id="panel-tab" class="panel bg3">
-	<div class="inner">
-
-	<div id="category-panel" style="display: block;">
-	<h3>{L_VIDEO_CATS}</h3>
-		<p><!-- BEGIN videocat -->&bull; <a href="{videocat.U_CAT}" id="cat{videocat.VIDEO_CAT_ID}">{videocat.VIDEO_CAT_TITLE}</a> <!-- END videocat --></p>
-	</div>
-
-	<div id="statistics-panel" style="display: none;">
-		<h3>{L_STATISTICS}</h3>
-		<p>{TOTAL_VIDEOS} &bull; {TOTAL_CATEGORIES}</p>
-	</div>
-
-	</div>
-</div>
+		<div class="panel bg3 panel-container" id="statistics-panel">
+			<div class="inner">
+				<h3>{L_STATISTICS}</h3>
+				<p>{TOTAL_VIDEOS} &bull; {TOTAL_CATEGORIES}</p>
+			</div>
+		</div>
 
 <br />
 
