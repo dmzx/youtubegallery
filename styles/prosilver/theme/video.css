@@ -22,8 +22,6 @@ h3.center {
 	width: 96px;
 }
 
-.video-icon span	{ background: url("./images/button_video_new.gif") 0 0 no-repeat; }
-
 .buttons div.video-icon		{ width: 96px; height: 25px; }
 
 .rtl .icon-videos {
