@@ -20,7 +20,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'VIDEO_INDEX'			=> 'Video Gallery',
 	'VIDEO_SELECT_CAT'		=> 'Select a category',
-	'VIDEO_SUBMIT'			=> 'New video',
+	'VIDEO_SUBMIT'			=> 'New Video',
 	'VIDEO_URL'				=> 'Enter Video URL',
 	'VIDEO_URL_EXPLAIN'		=> '',
 	'VIDEOS_TIP'			=> 'Help and Suggestions',
