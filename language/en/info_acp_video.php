@@ -88,13 +88,13 @@ $lang = array_merge($lang, array(
 
 	// Install
 	'INSTALL_TEST_CAT'		=> 'Uncategorized',
-	
+
 	// Permissions
 	'ACL_U_VIDEO_VIEW_FULL'	=> 'Can view Video Gallery',
 	'ACL_U_VIDEO_VIEW'		=> 'Can view videos',
 	'ACL_U_VIDEO_DELETE'	=> 'Can delete own videos',
 	'ACL_U_VIDEO_POST'		=> 'Can post videos',
-	
+
 	// View Video
 	'FLASH_IS_OFF'			=> '[flash] is <em>OFF</em>',
 	'FLASH_IS_ON'			=> '[flash] is <em>ON</em>',

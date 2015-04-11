@@ -29,7 +29,7 @@ class youtubegallery_sample extends \phpbb\db\migration\migration
 				'video_cat_id'		=> 1,
 				'video_cat_title'	=> 'Uncategorized',
 				),
-				
+
 		);
 
 		// Insert sample PM data

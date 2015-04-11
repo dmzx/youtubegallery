@@ -22,7 +22,6 @@ class youtubegallery_schema2 extends \phpbb\db\migration\migration
 			array('config.add', array('video_width', '640')),
 			array('config.add', array('video_height', '390')),
 
-
 			array('permission.add', array('u_video_view_full')),
 			array('permission.add', array('u_video_view')),
 			array('permission.add', array('u_video_delete')),

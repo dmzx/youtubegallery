@@ -287,10 +287,10 @@ switch ($mode)
 				'video_id' 	=> $video_id,
 			));
 			confirm_box(false, $this->user->lang['DELETE_VIDEO'], $s_hidden_fields);
-			
+
 			$meta_info = $this->helper->route('dmzx_youtubegallery_controller');
 			$message = $this->user->lang['RETURN_TO_VIDEO_INDEX'];
-			
+
 			meta_refresh(3, $meta_info);
 			$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
 			trigger_error($message);
