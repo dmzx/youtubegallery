@@ -44,6 +44,7 @@ $lang = array_merge($lang, array(
 	'VIDEO_CATEGORIES'		=> 'Categories',
 	'VIDEO_CREATED'			=> 'This video has been added successfully.',
 	'VIDEO_DATE'			=> 'Date',
+	'VIDEO_DELETE'			=> 'Delete video',
 	'VIDEO_DELETED'			=> 'This video has been deleted successfully.',
 	'PAGE_RETURN'			=>'%sReturn to the videos page%s',
 	'DELETE_VIDEO'			=> 'Are you sure you want to delete this video?',
