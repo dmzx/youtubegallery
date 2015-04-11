@@ -540,7 +540,7 @@ switch ($mode)
 
 	$this->template->assign_vars(array(
 		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
-		'VIDEOSUBMIT' 	=> $this->auth->acl_get('u_video_post'),
+		'VIDEOSUBMIT' 	    => $this->auth->acl_get('u_video_post'),
 		'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 		'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
@@ -594,7 +594,7 @@ switch ($mode)
 	$this->template->assign_vars(array(
 	//	'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
 	//	'PAGE_NUMBER'		=> on_page($videorow['video_count'], $sql_limit, $sql_start),
-	//	'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($user->lang['LIST_VIDEOS'], $videorow['video_count']),
+		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 	));
 	//End pagination
 
