@@ -12,9 +12,9 @@ namespace dmzx\youtubegallery\acp;
 
 class acp_youtubegallery_info
  {
-	function module()
-	{
-		 return array(
+    function module()
+    {
+         return array(
 			'filename'	=> '\dmzx\youtubegallery\acp\acp_youtubegallery_module',
 			'title'		=> 'ACP_NEWS_TITLE',
 			'modes'		=> array(

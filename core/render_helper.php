@@ -104,6 +104,7 @@ $video_id	= $this->request->variable('id', 0);
 $video_url = $this->request->variable('video_url', '', true);
 $video_title = $this->request->variable('video_title', '', true);
 $video_cat_id = $this->request->variable('cid', 0);
+$video_cat_ids = $this->request->variable('id', 0);
 $username = $this->request->variable('username', '', true);
 $user_id = $this->request->variable('user_id', 0);
 $youtube_id = $this->request->variable('youtube_id', '', true);
@@ -379,7 +380,7 @@ switch ($mode)
 			$this->table_prefix . self::VIDEO_CAT_TABLE		=> 'ct',
 			USERS_TABLE			=> 'u',
 		),
-		'WHERE'		=> 'v.video_cat_id = '. $video_cat_id .' AND ct.video_cat_id = '. $video_cat_id .' AND v.user_id = u.user_id',
+		'WHERE'		=> 'v.video_cat_id = '. $video_cat_ids .' AND ct.video_cat_id = '. $video_cat_ids .' AND v.user_id = u.user_id',
 		'ORDER_BY'	=> 'v.video_id DESC',
 	);
 
@@ -407,7 +408,7 @@ switch ($mode)
 	$this->db->sql_freeresult($result);
 
 	// We need another query for the video count
-	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . self::VIDEO_TABLE .' WHERE video_cat_id = '. (int)$video_cat_id;
+	$sql = 'SELECT COUNT(*) as video_count FROM ' . $this->table_prefix . self::VIDEO_TABLE .' WHERE video_cat_id = '. (int)$video_cat_ids;
 	$result = $this->db->sql_query($sql);
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);

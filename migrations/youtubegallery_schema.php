@@ -12,11 +12,10 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_schema extends \phpbb\db\migration\migration
 {
-
+	
 	public function update_schema()
 	{
 		return array(
-
 			'add_tables'	=> array(
 				$this->table_prefix . 'video_cat'	=> array(
 				'COLUMNS' => array(
@@ -24,17 +23,9 @@ class youtubegallery_schema extends \phpbb\db\migration\migration
 					'video_cat_title'	=> array('VCHAR:255', ''),
 				),
 				'PRIMARY_KEY'	=> 'video_cat_id',
-				)),
-
-				'table_insert'	=> array(
-			$this->table_prefix . 'video_cat'	=> array(
-				array(
-					'video_cat_id'		=> 1,
-					'video_cat_title'	=> 'Uncategorized',
-					),
-				)),
-
-		);
+				)),	
+		
+	    );
 	}
 	public function revert_schema()
 	{
@@ -44,5 +35,5 @@ class youtubegallery_schema extends \phpbb\db\migration\migration
 			),
 		);
 	}
-
+	
 }

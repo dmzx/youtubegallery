@@ -19,7 +19,7 @@ services:
             - @request
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%
+            - %core.table_prefix%			
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
@@ -31,6 +31,6 @@ services:
             - @dbal.conn
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%
+            - %core.table_prefix%			
         tags:
             - { name: event.listener }
