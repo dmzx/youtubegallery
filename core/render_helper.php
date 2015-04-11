@@ -534,6 +534,7 @@ switch ($mode)
 
 	$this->template->assign_vars(array(
 		'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
+		'VIDEOSUBMIT' 	=> $this->auth->acl_get('u_video_post'),
 		'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
