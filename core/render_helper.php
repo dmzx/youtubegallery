@@ -335,7 +335,7 @@ switch ($mode)
 		'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
 		'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
 		'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
-		'VIDEO_LINK' 		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+		'VIDEO_LINK' 		=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 		'U_USER_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
 		'U_DELETE'			=> $delete_allowed , $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 		'S_BBCODE_FLASH'	=> $flash_status,
