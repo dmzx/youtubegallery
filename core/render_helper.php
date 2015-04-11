@@ -119,7 +119,6 @@ $submit = (isset($_POST['submit'])) ? true : false;
 
 // Determine board url - we may need it later
 $board_url = generate_board_url() . '/';
-$web_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $this->phpbb_root_path;
 
 /**
  * Get youtube video ID from URL
