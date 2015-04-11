@@ -69,7 +69,7 @@ class listener implements EventSubscriberInterface
 
 		);
 	}
-	
+
 	public function add_page_viewonline($event)
 	{
 	global $user, $phpbb_container, $phpEx;
@@ -79,7 +79,6 @@ class listener implements EventSubscriberInterface
 		$event['location_url'] = $phpbb_container->get('controller.helper')->route('dmzx_youtubegallery_controller');
 	   }
 	}
-	
 
 	public function add_page_header_link($event)
 	{
