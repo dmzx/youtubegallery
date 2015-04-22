@@ -12,6 +12,12 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_sample extends \phpbb\db\migration\migration
 {
+	static public function depends_on()
+	{
+		return array(
+			'\dmzx\youtubegallery\migrations\youtubegallery_schema',
+		);
+	}
 
 	public function update_data()
 	{
