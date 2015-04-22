@@ -141,7 +141,7 @@ class admin_controller
 				$this->new_config[$config_name] = $config_value = $cfg_array[$config_name];
 				if ($submit)
 				{
-					if(!set_config($config_name, $config_value))
+					if(!$this->config->set($config_name, $config_value))
 					{
 						$error = true;
 					}
