@@ -16,11 +16,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 * Admin controller
 */
 class admin_controller
-{	
+{
 	protected $video_table;
 
 	protected $video_cat_table;
-	
+
 	protected $config;
 
 	/** @var \phpbb\controller\helper */
@@ -104,14 +104,14 @@ class admin_controller
 			{
 				trigger_error($this->user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 			}
-			
-		  // Add option settings change action to the admin log
-		  $this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_VIDEO_SETTINGS');
+
+			// Add option settings change action to the admin log
+			$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_VIDEO_SETTINGS');
 
 		}
-		
+
 		// Set the options the user configured
-			  $display_vars = array(
+				$display_vars = array(
 						'vars'	=> array(
 						'legend1'				=> 'ACP_VIDEO_GENERAL_SETTINGS',
 						'video_width'				=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
@@ -120,7 +120,7 @@ class admin_controller
 						'legend5'					=> 'ACP_SUBMIT_CHANGES',
 					)
 				);
-			
+
 			$this->new_config = $this->config;
 			$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc(request_var('config', array('' => ''), true)) : $this->new_config;
 			$error = array();
@@ -131,7 +131,7 @@ class admin_controller
 			validate_config_vars($display_vars['vars'], $cfg_array, $error);
 			$submit = (isset($_POST['submit'])) ? true : false;
 			$form_name = 'acp_video';
-					
+
 			foreach ($display_vars['vars'] as $config_name => $null)
 			{
 				if (!isset($cfg_array[$config_name]) || strpos($config_name, 'legend') !== false)
@@ -159,7 +159,7 @@ class admin_controller
 						'S_LEGEND'		=> true,
 						'LEGEND'		=> (isset($this->user->lang[$vars])) ? $this->user->lang[$vars] : $vars)
 					);
-	
+
 					continue;
 				}
 				$type = explode(':', $vars['type']);
@@ -186,9 +186,9 @@ class admin_controller
 					)
 				);
 				unset($display_vars['vars'][$config_key]);
-			}	
-	}	
-	
+			}
+	}
+
 	public function display_cat()
 	{
 				$form_key = 'acp_video_cat';
@@ -279,8 +279,8 @@ class admin_controller
 					'U_ACTION'		=> $form_action,
 					'L_MODE_TITLE'	=> $lang_mode,
 					));
-	}	
-		
+	}
+
 	/**
 	* Set page url
 	*

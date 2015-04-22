@@ -13,12 +13,12 @@ services:
             - @dbal.conn
             - @cache
             - @request
-            - @pagination			
+            - @pagination
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - %dmzx.youtubegallery.table.video%	
-            - %dmzx.youtubegallery.table.video_cat%	
+            - %dmzx.youtubegallery.table.video%
+            - %dmzx.youtubegallery.table.video_cat%
     dmzx.youtubegallery.admin.controller:
         class: dmzx\youtubegallery\controller\admin_controller
         arguments:
@@ -31,12 +31,12 @@ services:
             - @dbal.conn
             - @cache
             - @request
-            - @pagination			
+            - @pagination
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - %dmzx.youtubegallery.table.video%	
-            - %dmzx.youtubegallery.table.video_cat%				
+            - %dmzx.youtubegallery.table.video%
+            - %dmzx.youtubegallery.table.video_cat%
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
@@ -48,6 +48,6 @@ services:
             - @dbal.conn
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%			
+            - %core.table_prefix%
         tags:
             - { name: event.listener }

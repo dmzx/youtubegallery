@@ -21,34 +21,34 @@ class acp_youtubegallery_module
 
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('dmzx.youtubegallery.admin.controller');
-        
+
 		// Requests
 		$action = $request->variable('action', '');
 		if ($request->is_set_post('add'))
 		{
 			$action = 'add';
 		}
-		
+
 		// Make the $u_action url available in the admin controller
 		$admin_controller->set_page_url($this->u_action);
-		
+
 		switch ($mode)
 		{
-			case 'settings':			
-			   // Load a template from adm/style for our ACP page
+			case 'settings':
+				// Load a template from adm/style for our ACP page
 				$this->tpl_name = 'acp_video';
 				// Set the page title for our ACP page
 				$this->page_title = $user->lang['ACP_VIDEO'];
 				// Load the display settings handle in the admin controller
-				$admin_controller->display_settings();		
-	     	break;
+				$admin_controller->display_settings();
+		 	break;
 
 			case 'cat':
-			    // Load a template from adm/style for our ACP page
+				// Load a template from adm/style for our ACP page
 				$this->tpl_name = 'acp_video_cat';
 				// Set the page title for our ACP page
 				$this->page_title = $user->lang['ACP_VIDEO_CATEGORY'];
-				// Load the display cat handle in the admin controller			
+				// Load the display cat handle in the admin controller
 				$admin_controller->display_cat();
 			break;
 		}

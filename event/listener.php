@@ -59,36 +59,34 @@ class listener implements EventSubscriberInterface
 		$this->table_prefix = $table_prefix;
 
 	}
-	
-	
+
 	static public function getSubscribedEvents()
 	{
 		return array(
 		'core.viewonline_overwrite_location'	=> 'add_page_viewonline',
-		'core.user_setup'   => 'load_language_on_setup',
-        'core.page_header'	=> 'add_page_header_link',
-			
+		'core.user_setup'	=> 'load_language_on_setup',
+		'core.page_header'	=> 'add_page_header_link',
+
 		);
 	}
-	
+
 	public function add_page_viewonline($event)
 	{
 	global $user, $phpbb_container, $phpEx;
-	   if (strrpos($event['row']['session_page'], 'app.' . $phpEx . '/video') === 0)
-	   {
+		if (strrpos($event['row']['session_page'], 'app.' . $phpEx . '/video') === 0)
+		{
 		$event['location'] = $user->lang('VIDEO_INDEX');
 		$event['location_url'] = $phpbb_container->get('controller.helper')->route('dmzx_youtubegallery_controller');
-	   }
+		}
 	}
-	
-    public function add_page_header_link($event)
+
+	public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
 			'U_VIDEO' => $this->controller_helper->route('dmzx_youtubegallery_controller'),
 		));
 	}
 
-	
 		public function load_language_on_setup($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
@@ -98,6 +96,5 @@ class listener implements EventSubscriberInterface
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
-	
 
 }

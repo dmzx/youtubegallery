@@ -33,7 +33,7 @@ $lang = array_merge($lang, array(
 	<br />
 	<strong>Warning: this page isn’t for uploading videos to Youtube!</strong>',
 	'UNAUTHED'				=> 'Non sei autorizzato a visualizzare questa pagina.',
-	'VIDEO_UNAUTHED'		=> 'Non sei autorizzato a visualizzare  questo video.',
+	'VIDEO_UNAUTHED'		=> 'Non sei autorizzato a visualizzare	questo video.',
 	'INVALID_VIDEO'			=> 'Il video che hai selezionato non esiste.',
 	'VIDEO'					=> 'Video',
 	'VIDEO_EXPLAIN'			=> 'Guarda la galleria di video di Youtube',
@@ -82,7 +82,7 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_CAT_ADD'		=> 'Aggiungi nuova Categoria',
 	'ACP_VIDEO_CAT_TITLE'	=> 'Titolo Categoria',
 	'ACP_VIDEO_CAT_TITLE_EXPLAIN'	=> 'Inserire il titolo della categoria.',
-	'ACP_VIDEO_CAT_TITLE_TITLE'	=> 'Devi inserire un  <strong>nome</strong> per questa categoria.',
+	'ACP_VIDEO_CAT_TITLE_TITLE'	=> 'Devi inserire un	<strong>nome</strong> per questa categoria.',
 	'ACP_VIDEO_OVERVIEW'	=> 'Categorie Video',
 	'ACP_VIDEO_OVERVIEW_EXPLAIN'	=> 'Qui è possibile gestire le categorie video della piattaforma.',
 
