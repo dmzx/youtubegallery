@@ -122,7 +122,7 @@ class admin_controller
 				);
 
 			$this->new_config = $this->config;
-			$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc(request_var('config', array('' => ''), true)) : $this->new_config;
+			$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc($this->request->variable('config', array('' => ''), true)) : $this->new_config;
 			$error = array();
 			if (sizeof($error))
 			{
@@ -196,9 +196,9 @@ class admin_controller
 				include ($this->phpbb_root_path . 'includes/functions_user.' . $this->phpEx);
 				$form_action = $this->u_action. '&amp;action=add';
 				$lang_mode		= $this->user->lang['ACP_VIDEO_CATEGORY'];
-				$video_cat_id 	= request_var('video_cat_id', 0);
-				$video_cat_title = request_var('video_cat_title', '', true);
-				$action		= (isset($_POST['add'])) ? 'add' : ((isset($_POST['delete'])) ? 'delete' : request_var('action', ''));
+				$video_cat_id 	= $this->request->variable('video_cat_id', 0);
+				$video_cat_title = $this->request->variable('video_cat_title', '', true);
+				$action		= (isset($_POST['add'])) ? 'add' : ((isset($_POST['delete'])) ? 'delete' : $this->request->variable('action', ''));
 				//Make SQL Array
 				$sql_ary = array(
 					'video_cat_id'				=> $video_cat_id,
@@ -222,7 +222,7 @@ class admin_controller
 						$lang_mode = $this->user->lang['ACP_CATEGORY_EDIT'];
 						$sql = 'SELECT *
 							FROM ' . $this->video_cat_table . '
-							WHERE video_cat_id = '.(int) request_var('id', '');
+							WHERE video_cat_id = '.(int) $this->request->variable('id', '');
 						$result = $this->db->sql_query_limit($sql,1);
 						$row = $this->db->sql_fetchrow($result);
 						$this->template->assign_vars(array(
@@ -246,7 +246,7 @@ class admin_controller
 						if (confirm_box(true))
 						{
 							$sql = 'DELETE FROM ' . $this->video_cat_table . '
-								WHERE video_cat_id = '.(int)request_var('id', '');
+								WHERE video_cat_id = '.(int)$this->request->variable('id', '');
 							$this->db->sql_query($sql);
 							trigger_error($this->user->lang['ACP_CATEGORY_DELETED'] . adm_back_link($this->u_action));
 						}
