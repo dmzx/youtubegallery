@@ -14,9 +14,6 @@
 <!-- ENDIF -->
 
 <form id="acp_video" method="post" action="{U_ACTION}">
-<!--
-<p<!-- IF S_VERSIONNEW --> style="color: #FF0000;"<!-- ENDIF -->><strong>{L_ACP_VERSION_CURRENT}:</strong> {S_VERSIONCURRENT}</p>
-<!-- IF S_VERSIONNEW --><p><strong>{L_ACP_VERSION_NEW}:</strong> <a href="{U_VERSIONCHECK}" title="{L_MORE_INFORMATION}" style="color: #228822;" onclick="window.open(this.href);return false;">{S_VERSIONNEW}</a></p><!-- ENDIF --> -->
 
 <!-- BEGIN options -->
 	<!-- IF options.S_LEGEND -->
@@ -28,7 +25,7 @@
 	<!-- ELSE -->
 
 		<dl>
-			<dt><label for="{options.KEY}">{options.TITLE}:</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
+			<dt><label for="{options.KEY}">{options.TITLE}{L_COLON}</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
 			<dd>{options.CONTENT}</dd>
 		</dl>
 

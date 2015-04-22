@@ -1,12 +1,8 @@
+imports:
+    - { resource: tables.yml }
 services:
     dmzx.youtubegallery.controller:
         class: dmzx\youtubegallery\controller\youtubegallery
-        arguments:
-            - @dmzx.youtubegallery.render_helper
-            - @controller.helper
-            - @request
-    dmzx.youtubegallery.render_helper:
-        class: dmzx\youtubegallery\core\render_helper
         arguments:
             - @config
             - @controller.helper
@@ -17,9 +13,30 @@ services:
             - @dbal.conn
             - @cache
             - @request
+            - @pagination
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
+            - %dmzx.youtubegallery.table.video%
+            - %dmzx.youtubegallery.table.video_cat%
+    dmzx.youtubegallery.admin.controller:
+        class: dmzx\youtubegallery\controller\admin_controller
+        arguments:
+            - @config
+            - @controller.helper
+            - @template
+            - @log
+            - @user
+            - @auth
+            - @dbal.conn
+            - @cache
+            - @request
+            - @pagination
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - %dmzx.youtubegallery.table.video%
+            - %dmzx.youtubegallery.table.video_cat%
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
