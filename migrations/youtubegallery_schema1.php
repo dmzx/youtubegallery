@@ -42,5 +42,4 @@ class youtubegallery_schema1 extends \phpbb\db\migration\migration
 			),
 		);
 	}
-
 }

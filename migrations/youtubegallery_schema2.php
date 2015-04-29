@@ -37,5 +37,4 @@ class youtubegallery_schema2 extends \phpbb\db\migration\migration
 			array('permission.permission_set', array('ADMINISTRATORS', 'u_video_post', 'group')),
 		);
 	}
-
 }

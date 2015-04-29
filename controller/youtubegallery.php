@@ -377,7 +377,7 @@ switch ($mode)
 	case 'cat';
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
-	//$pagination_url = append_sid("{$phpbb_root_path}video.$phpEx", "mode=cat&amp;cid=$video_cat_id");
+	$pagination_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $video_cat_ids));
 
 	$sql_ary = array(
 		'SELECT'	=> 'v.*,
@@ -421,15 +421,11 @@ switch ($mode)
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
 
-	//Start pagination
-	$this->template->assign_vars(array(
-	//'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
-	//	'PAGE_NUMBER'		=> on_page($videorow['video_count'], $sql_limit, $sql_start),
-		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
-	));
-	//End pagination
+	$start = $this->request->variable('start', 0);
+	$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
 
 	$this->template->assign_vars(array(
+		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 		'CAT_NAME'			=> $page_title,
 	));
 
@@ -449,7 +445,7 @@ switch ($mode)
 	));
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
-//	$pagination_url = append_sid("{$phpbb_root_path}video.$phpEx", "mode=user_videos&amp;user_id=$user_id");
+	$pagination_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos', 'user_id' => $user_id));
 
 	$sql_ary = array(
 		'SELECT'	=> 'v.*,
@@ -493,13 +489,12 @@ switch ($mode)
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
 
-	//Start pagination
+	$start = $this->request->variable('start', 0);
+	$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
+
 	$this->template->assign_vars(array(
-	//	'PAGINATION'		=> generate_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start),
-	//	'PAGE_NUMBER'		=> on_page($videorow['video_count'], $sql_limit, $sql_start),
 		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 	));
-	//End pagination
 
 	$l_title = ($this->user->lang['USER_VIDEOS'] . ' - ' . $page_title);
 	$template_html = 'video_search.html';
@@ -547,7 +542,6 @@ switch ($mode)
 		'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 		'TOTAL_VIDEOS'		=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 		'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
-	//	'S_DISPLAY_POST_INFO'	=> (($this->auth->acl_get('u_video_post') || $this->user->data['user_id'] == ANONYMOUS)) ? true : false,
 	));
 
 	$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
@@ -593,13 +587,12 @@ switch ($mode)
 	$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 	$this->db->sql_freeresult($result);
 
-	//Start pagination
+	$start = $this->request->variable('start', 0);
+	$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
+
 	$this->template->assign_vars(array(
-		'PAGINATION'		=> $this->pagination->generate_template_pagination($pagination_url, $videorow['video_count'], $sql_limit, $sql_start, true),
-		'PAGE_NUMBER'		=> $this->pagination->on_page($videorow['video_count'], $sql_limit, $sql_start),
 		'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
 	));
-	//End pagination
 
 	break;
 }
