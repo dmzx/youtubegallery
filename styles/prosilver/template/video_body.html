@@ -1,8 +1,10 @@
 <!-- INCLUDE overall_header.html -->
 
 <!-- IF not S_IS_BOT and VIDEOSUBMIT -->
-	<div class="buttons">
-		<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+	<div class="action-bar top">
+		<div class="buttons">
+			<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+		</div>
 	</div>
 <!-- ENDIF -->
 
@@ -13,9 +15,8 @@
 			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
 		</div>
 	</div>
-<!-- ENDIF -->
-
 <br class="clear" />
+<!-- ENDIF -->
 
 <div id="tabs">
 	<ul>
@@ -41,20 +42,26 @@
 	</div>
 </div>
 
-<div class="topic-actions">
-	<div class="buttons">
-		<!-- IF not S_IS_BOT and VIDEOSUBMIT --><a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a><!-- ENDIF -->
-	</div>
+	<div class="action-bar bottom">
 
+	<!-- IF not S_IS_BOT and VIDEOSUBMIT -->
+		<div class="buttons">
+			<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF .pagination or TOTAL_VIDEOS -->
 	<div class="pagination">
-	{TOTAL_VIDEOS}
-			<!-- IF .pagination -->
-				<!-- INCLUDE pagination.html -->
-			<!-- ELSE -->
-				&bull; {PAGE_NUMBER}
-			<!-- ENDIF -->
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
 	</div>
-</div>
+	<!-- ENDIF -->
+
+	</div>
 
 <br />
 
