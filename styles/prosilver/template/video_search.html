@@ -23,7 +23,7 @@
 			<div id="video{video.VIDEO_ID}" class="video_item">
 				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
 				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
-				<div class="content">
+				<div>
 					{L_VIDEO_CAT}{L_COLON} <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
 					{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME} <br />
 					{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
@@ -34,16 +34,20 @@
 	</div>
 </div>
 
-<div class="topic-actions">
+	<div class="action-bar bottom">
+
+	<!-- IF .pagination or TOTAL_VIDEOS -->
 	<div class="pagination">
-	{TOTAL_VIDEOS}
-			<!-- IF .pagination -->
-				<!-- INCLUDE pagination.html -->
-			<!-- ELSE -->
-				&bull; {PAGE_NUMBER}
-			<!-- ENDIF -->
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
 	</div>
-</div>
+	<!-- ENDIF -->
+
+	</div>
 <!-- ENDIF -->
 
 <p class="jumpbox-return"><a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_VIDEO_INDEX}</a></p>
