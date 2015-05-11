@@ -134,10 +134,12 @@ function getYouTubeIdFromURL($url)
 	return isset($matches[1]) ? $matches[1] : false;
 }
 $youtube_id = getYouTubeIdFromURL($video_url);
-$url = "http://gdata.youtube.com/feeds/api/videos/". $youtube_id;
-$doc = new \DOMDocument;
-$doc->load($url);
-$video_title = $doc->getElementsByTagName("title")->item(0)->nodeValue;
+$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$youtube_id}&key=AIzaSyD-Zbq1gtL0GojKrBFTS117mdu8jsh8QHA&type=video&part=snippet");
+
+$json = json_decode($jsonURL);
+if(isset($json->items[0]->snippet)){
+$video_title = $json->items[0]->snippet->title;
+}
 
 $sql_ary = array(
 	'video_id'			=> $video_id,
