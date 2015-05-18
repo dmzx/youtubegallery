@@ -2,12 +2,6 @@ h3.center {
 	text-align: center;
 }
 
-.video_item {
-	float: left;
-	margin-right: 14px;
-	width: 400px;
-}
-
 .video_item .content{
 	font-size: 1.1em;
 }

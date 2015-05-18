@@ -19,13 +19,15 @@
 <div class="panel bg3">
 	<div class="inner">
 		<!-- BEGIN video -->
-			<div id="video{video.VIDEO_ID}" class="video_item">
+			<div id="video{video.VIDEO_ID}" class="video_item <!-- IF video.S_ROW_COUNT is even -->column1<!-- ELSE -->column2<!-- ENDIF -->">
+			<div class="inner">
 				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
 				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
 				<div>
 					{L_VIDEO_AUTHOR}{L_COLON} {video.USERNAME} <br />
 					{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME} <br />
 					{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
+				</div>
 				</div>
 			</div>
 		<!-- END video -->
