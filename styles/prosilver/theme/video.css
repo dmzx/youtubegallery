@@ -2,15 +2,12 @@ h3.center {
 	text-align: center;
 }
 
-<<<<<<< HEAD
 
 
 .video_item .content{
 	font-size: 1.1em;
 }
 
-=======
->>>>>>> origin/master
 .video_item img {
 	display: inline-block; 
 	float: left;
@@ -36,3 +33,4 @@ h3.center {
 }
 
 .icon-videos		{ background-image: url("./images/icon_videos.gif"); }
+
