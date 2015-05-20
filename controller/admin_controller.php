@@ -105,17 +105,21 @@ class admin_controller
 				trigger_error($this->user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 			}
 
+			// Set the options the user configured
+			$this->set_options();
+
 			// Add option settings change action to the admin log
 			$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_VIDEO_SETTINGS');
 
 		}
 
-		// Set the options the user configured
+				// Set the options the user configured
 				$display_vars = array(
 						'vars'	=> array(
 						'legend1'				=> 'ACP_VIDEO_GENERAL_SETTINGS',
 						'video_width'				=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
 						'video_height'				=> array('lang' => 'ACP_VIDEO_HEIGHT',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
+						'google_api_key'				=> array('lang' => 'ACP_GOOGLE_KEY',	'validate' => 'string',	'type' => 'text:40:40', 'explain' => true),
 
 						'legend5'					=> 'ACP_SUBMIT_CHANGES',
 					)
@@ -187,6 +191,19 @@ class admin_controller
 				);
 				unset($display_vars['vars'][$config_key]);
 			}
+	}
+
+	/**
+	* Set the options a user can configure
+	*
+	* @return null
+	* @access protected
+	*/
+	protected function set_options()
+	{
+
+		$this->config->set('google_api_key', $this->request->variable('google_api_key',0));
+
 	}
 
 	public function display_cat()

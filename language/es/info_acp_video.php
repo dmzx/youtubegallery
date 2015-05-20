@@ -61,6 +61,8 @@ $lang = array_merge($lang, array(
 	'TOTAL_VIDEOS_OTHER'	=> 'Vídeos totales <strong>%d</strong>',
 	'TOTAL_VIDEO_ZERO'		=> 'Vídeos totales <strong>0</strong>',
 	'USER_VIDEOS'			=> 'Buscar vídeos de usuarios',
+	'NO_KEY_ADMIN'				=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
+	'NO_KEY_USER'				=> 'Dear user, the gallery will be unavailable. Please come back later.',
 
 	// ACP
 	'ACP_VIDEO'				=> 'Galería de Vídeos',
@@ -72,6 +74,8 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_HEIGHT'		=> 'Altura del Vídeo',
 	'ACP_VIDEO_WIDTH'		=> 'Anchura del Vídeo',
 	'ACP_VERSION_CURRENT'	=> 'Versión',
+	'ACP_GOOGLE_KEY'		=> 'Google Public API key',
+	'ACP_GOOGLE_KEY_EXPLAIN'=> 'In order to use Video Gallery, you must create a <strong>Google Public API key</strong>. Please, visit <a href="https://console.developers.google.com/">Google Developers Console</a> to generate the key. If you have trouble to generate your key, read the guide <a href="https://developers.google.com/console/help/new/#generatingdevkeys">Google Developers Console Help: API keys</a>. Until you set up your key, the gallery will be unavailable.',
 
 	// ACP Categories
 	'ACP_CATEGORY_CREATED'	=> 'Está categoría ha sido añadida correctamente.',

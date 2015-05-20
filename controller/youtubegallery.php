@@ -122,6 +122,18 @@ $submit = (isset($_POST['submit'])) ? true : false;
 $board_url = generate_board_url() . '/';
 $web_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $this->phpbb_root_path;
 
+if (!$this->config['google_api_key'])
+{
+	if ($this->auth->acl_get('a_'))
+	{
+		trigger_error($this->user->lang['NO_KEY_ADMIN']);
+	}
+	else
+	{
+		trigger_error($this->user->lang['NO_KEY_USER']);
+	}
+}
+
 /**
  * Get youtube video ID from URL
  * From: http://halgatewood.com/php-get-the-youtube-video-id-from-a-youtube-url/
@@ -134,7 +146,7 @@ function getYouTubeIdFromURL($url)
 	return isset($matches[1]) ? $matches[1] : false;
 }
 $youtube_id = getYouTubeIdFromURL($video_url);
-$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$youtube_id}&key=AIzaSyD-Zbq1gtL0GojKrBFTS117mdu8jsh8QHA&type=video&part=snippet");
+$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$youtube_id}&key={$this->config['google_api_key']}&type=video&part=snippet");
 
 $json = json_decode($jsonURL);
 if(isset($json->items[0]->snippet)){
