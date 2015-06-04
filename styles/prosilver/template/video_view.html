@@ -1,20 +1,19 @@
 <!-- INCLUDE overall_header.html -->
 
-<!-- BEGIN video -->
-	<div id="p{video.VIDEO_ID}" class="post bg3">
+	<div id="p{VIDEO_ID}" class="post bg3">
 		<div class="inner">
 
 		<div class="postbody">
 				<!-- IF video.U_DELETE and video.DELETE_ALLOW -->
 				<ul class="post-buttons">
 					<li>
-						<a href="{video.U_DELETE}" title="{L_VIDEO_DELETE}" class="button icon-button delete-icon"><span>{L_VIDEO_DELETE}</span></a>
+						<a href="{U_DELETE}" title="{L_VIDEO_DELETE}" class="button icon-button delete-icon"><span>{L_VIDEO_DELETE}</span></a>
 					</li>
 				</ul>
 				<!-- ENDIF -->
 
-			<h3 class="first"><a href="#v{video.VIDEO_ID}">{video.VIDEO_TITLE}</a></h3>
-			<p class="author">{L_VIDEO_ADD_BY} <strong>{video.USERNAME}</strong> &raquo; {video.VIDEO_TIME}</p>
+			<h3 class="first"><a href="#v{VIDEO_ID}">{VIDEO_TITLE}</a></h3>
+			<p class="author">{L_VIDEO_ADD_BY} <strong>{USERNAME}</strong> &raquo; {VIDEO_TIME}</p>
 
 			<div class="content" style="text-align: center;">
 				<div id="ytplayer"></div>
@@ -31,25 +30,25 @@
 					var player;
 					function onYouTubePlayerAPIReady() {
 						player = new YT.Player('ytplayer', {
-							height: '{video.S_VIDEO_HEIGHT}',
-							width: '{video.S_VIDEO_WIDTH}',
-							videoId: '{video.YOUTUBE_ID}'
+							height: '{S_VIDEO_HEIGHT}',
+							width: '{S_VIDEO_WIDTH}',
+							videoId: '{YOUTUBE_ID}'
 						});
 					}
 					// ]]>
 					</script>
 
 					<br /><br />
-					<a href="{video.YOUTUBE_VIDEO}" onclick="this.target= '_blank';return true;"><img src="{BOARD_URL}ext/dmzx/youtubegallery/styles/prosilver/theme/images/youtube.png" alt="{L_VIDEO_WATCH}" /> {L_VIDEO_WATCH}</a>
+					<a href="{YOUTUBE_VIDEO}" onclick="this.target= '_blank';return true;"><img src="{BOARD_URL}ext/dmzx/youtubegallery/styles/prosilver/theme/images/youtube.png" alt="{L_VIDEO_WATCH}" /> {L_VIDEO_WATCH}</a>
 			</div>
 		</div>
 
-		<dl class="postprofile" id="profile{video.VIDEO_ID}">
-		<dd><strong>{L_VIDEO_ADD_BY}{L_COLON}</strong> {video.USERNAME} (<a href="{video.U_USER_VIDEOS}" title="{L_USER_VIDEOS}">{TOTAL_VIDEOS}</a>)</dd>
-		<dd><strong>{L_VIDEO_VIEWS}{L_COLON}</strong> {video.VIDEO_VIEWS}</dd>
+		<dl class="postprofile" id="profile{VIDEO_ID}">
+		<dd><strong>{L_VIDEO_ADD_BY}{L_COLON}</strong> {USERNAME} (<a href="{U_USER_VIDEOS}" title="{L_USER_VIDEOS}">{TOTAL_VIDEOS}</a>)</dd>
+		<dd><strong>{L_VIDEO_VIEWS}{L_COLON}</strong> {VIDEO_VIEWS}</dd>
 			<!--dd>
 				<ul class="profile-icons">
-					<li class="pm-icon"><a href="{video.U_PM}" title="{L_PRIVATE_MESSAGE}"><span>{L_PRIVATE_MESSAGE}</span></a></li>
+					<li class="pm-icon"><a href="{U_PM}" title="{L_PRIVATE_MESSAGE}"><span>{L_PRIVATE_MESSAGE}</span></a></li>
 				</ul>
 			</dd-->
 		</dl>
@@ -65,27 +64,26 @@
 	<fieldset class="fields2">
 	<dl>
 		<dt><label>{L_VIDEO_LINK}{L_COLON}</label></dt>
-		<dd><input type="text" class="inputbox" value="{video.VIDEO_LINK}" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+		<dd><input type="text" class="inputbox" value="{VIDEO_LINK}" title="{VIDEO_TITLE}" onclick="select()" /></dd>
 	</dl>
 	<dl>
 		<dt><label>{L_VIDEO_LINK_YOUTUBE}{L_COLON}</label></dt>
-		<dd><input type="text" class="inputbox" value="{video.YOUTUBE_VIDEO}" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+		<dd><input type="text" class="inputbox" value="{YOUTUBE_VIDEO}" title="{VIDEO_TITLE}" onclick="select()" /></dd>
 	</dl>
 	<dl>
 		<dt><label>{L_VIDEO_BBCODE}{L_COLON}</label></dt>
-		<dd><input type="text" class="inputbox" value="[url={video.VIDEO_LINK}]{video.VIDEO_TITLE}[/url]" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+		<dd><input type="text" class="inputbox" value="[url={VIDEO_LINK}]{VIDEO_TITLE}[/url]" title="{VIDEO_TITLE}" onclick="select()" /></dd>
 	</dl>
-	<!-- IF video.S_BBCODE_FLASH -->
+	<!-- IF S_BBCODE_FLASH -->
 	<dl>
-		<dt><label>{L_VIDEO_EMBED}{L_COLON}</label><br /><span>{video.FLASH_STATUS}</span></dt>
-		<dd><input type="text" class="inputbox" value="[flash=425,344]http://www.youtube.com/v/{video.YOUTUBE_ID}[/flash]" title="{video.VIDEO_TITLE}" onclick="select()" /></dd>
+		<dt><label>{L_VIDEO_EMBED}{L_COLON}</label><br /><span>{FLASH_STATUS}</span></dt>
+		<dd><input type="text" class="inputbox" value="[flash=425,344]{VIDEO_LINK_FLASH}[/flash]" title="{VIDEO_TITLE}" onclick="select()" /></dd>
 	</dl>
 	<!-- ENDIF -->
 	</fieldset>
 
 	</div>
 </div>
-<!-- END video -->
 
 <p class="jumpbox-return"><a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_VIDEO_INDEX}</a></p>
 
