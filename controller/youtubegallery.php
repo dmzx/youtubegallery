@@ -422,7 +422,7 @@ switch ($mode)
 			'U_VIEW_VIDEO'	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 			'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 			'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-			'YOUTUBE_ID'	=> censor_text($row['youtube_id']),
+			'S_VIDEO_THUMBNAIL'	=> 'http://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
 		));
 	}
 	$this->db->sql_freeresult($result);
@@ -495,7 +495,7 @@ switch ($mode)
 			'U_VIEW_VIDEO'	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 			'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 			'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-			'YOUTUBE_ID'	=> censor_text($row['youtube_id']),
+			'S_VIDEO_THUMBNAIL'	=> 'http://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
 		));
 	}
 	$this->db->sql_freeresult($result);
