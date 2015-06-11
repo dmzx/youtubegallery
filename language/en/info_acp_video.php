@@ -47,16 +47,6 @@ $lang = array_merge($lang, array(
 	'VIDEO_DELETE'			=> 'Delete video',
 	'VIDEO_DELETED'			=> 'This video has been deleted successfully.',
 	'PAGE_RETURN'			=> '%sReturn to the videos page%s',
-	'RETURN'				=> 'Return to the previous page',
-	'COMMENTS'				=> 'Comments',
-	'POST_COMMENT'			=> 'Post a Comment',
-	'COMMENT_CREATED'		=> 'Your comment has been added successfully.',
-	'VIDEO_CMNT_SUBMIT'		=> 'Post a new comment',
-	'NO_VIDEOS_COMMENTS'	=> 'This video has no comments.',
-	'VIDEO_COMMENT'			=> 'Comment',
-	'VIDEO_COMMENTS'		=> 'Comments',
-	'COMMENT_DELETED_SUCCESS'	=> 'This comment has been deleted successfully.',
-	'DELETE_COMMENT_CONFIRM'	=> 'Are you sure you want to delete this comment?',
 	'DELETE_VIDEO'			=> 'Are you sure you want to delete this video?',
 	'MY_VIDEOS'				=> 'View your videos',
 	'NEED_VIDEO_URL'		=> 'You must enter a <strong>url</strong> for this video.',
@@ -65,7 +55,6 @@ $lang = array_merge($lang, array(
 	'NO_CAT_VIDEOS'			=> 'This category has no videos or does not exist.',
 	'NO_USER_VIDEOS'		=> 'This user has no videos or does not exist.',
 	'NO_CATEGORIES'			=> 'This page has no categories.',
-	'NO_TITLE'			=> 'This page has no titles.',
 	'RETURN_TO_VIDEO_INDEX' => 'Return to Video Gallery',
 	'SEARCH_VIDEOS'			=> 'Search Videos',
 	'TOTAL_CATEGORIES_OTHER'=> 'Total categories <strong>%d</strong>',
@@ -73,16 +62,9 @@ $lang = array_merge($lang, array(
 	'TOTAL_VIDEOS'			=> 'Total videos',
 	'TOTAL_VIDEOS_OTHER'	=> 'Total videos <strong>%d</strong>',
 	'TOTAL_VIDEO_ZERO'		=> 'Total videos <strong>0</strong>',
-	'TOTAL_VIEWS_OTHER'		=> 'Total views <strong>%d</strong>',
-	'TOTAL_VIEW_ZERO'		=> 'Total views <strong>0</strong>',
-	'TOTAL_COMMENTS_OTHER'	=> 'Total comments <strong>%d</strong>',
-	'TOTAL_COMMENT_ZERO'	=> 'Total comments <strong>0</strong>',
-	'USER_VIDEOS'			=> 'Search user’s videos',
 	'USER_VIDEOS'			=> 'Search user’s videos',
 	'NO_KEY_ADMIN'				=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
 	'NO_KEY_USER'				=> 'Dear user, the gallery will be unavailable. Please come back later.',
-	'COMMENTS_DISABLED'		=> 'Comments are disabled.',
-	'DELETE_COMMENT'		=> 'Delete comment',
 
 	// ACP
 	'ACP_VIDEO'				=> 'Video Gallery',
@@ -92,19 +74,10 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_ENABLE'		=> 'Enable Videos Page',
 	'ACP_VIDEO_CATEGORY'	=> 'Video Categories',
 	'ACP_VIDEO_HEIGHT'		=> 'Video Height',
-	'ACP_VIDEO_HEIGHT_EXPLAIN'		=> 'Set video height.',
 	'ACP_VIDEO_WIDTH'		=> 'Video Width',
-	'ACP_VIDEO_WIDTH_EXPLAIN'		=> 'Set video width.',
 	'ACP_VERSION_CURRENT'	=> 'Version',
 	'ACP_GOOGLE_KEY'		=> 'Google Public API key',
-	'ACP_GOOGLE_KEY_EXPLAIN'=> 'In order to use Video Gallery, you must create a <strong>Google Public API key</strong>. Please, visit <strong><a href="https://console.developers.google.com/">Google Developers Console</a></strong> to generate the key. If you have trouble to generate your key, read the guide <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">Google Developers Console Help: API keys</a></strong>. Until you set up your key, the gallery will be unavailable.',
-	'ACP_VIDEOS_PER_PAGE'	=> 'Videos per page',
-	'ACP_COMMENTS_PER_PAGE'	=> 'Comments per page',
-	'ACP_COMMENTS_PER_PAGE_EXPLAIN'	=> 'Set value for comments on video page.<br /><em>Default value is 10</em>.',
-	'ACP_ENABLE_COMMENTS'	=> 'Enable comments on videos',
-	'ACP_ENABLE_COMMENTS_EXPLAIN'	=> 'This option will display the comment on video page.',
-	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX'	=> 'Enable video statics on index',
-	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN'	=> 'This option will display the video statics on index page.',
+	'ACP_GOOGLE_KEY_EXPLAIN'=> 'In order to use Video Gallery, you must create a <strong>Google Public API key</strong>. Please, visit <a href="https://console.developers.google.com/">Google Developers Console</a> to generate the key. If you have trouble to generate your key, read the guide <a href="https://developers.google.com/console/help/new/#generatingdevkeys">Google Developers Console Help: API keys</a>. Until you set up your key, the gallery will be unavailable.',
 
 	// ACP Categories
 	'ACP_CATEGORY_CREATED'	=> 'This category has been added successfully.',
@@ -118,10 +91,6 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_CAT_TITLE_TITLE'	=> 'You must enter a <strong>title</strong> for this category.',
 	'ACP_VIDEO_OVERVIEW'	=> 'Video Categories',
 	'ACP_VIDEO_OVERVIEW_EXPLAIN'	=> 'Here you can manage the Video Categories of your board.',
-	'ACP_VIDEO_TITLE'	=> 'Video Titles',
-	'ACP_VIDEO_TITLE_EXPLAIN'	=> 'Here you can manage the Video Titles of your board.',
-	'ACP_TITLE_DELETE'	=> 'Are you sure you wish to delete this title?',
-	'ACP_TITLE_DELETED'	=> 'This title has been deleted successfully',
 
 	// Install
 	'INSTALL_TEST_CAT'		=> 'Uncategorized',
@@ -131,8 +100,6 @@ $lang = array_merge($lang, array(
 	'ACL_U_VIDEO_VIEW'		=> 'Can view videos',
 	'ACL_U_VIDEO_DELETE'	=> 'Can delete own videos',
 	'ACL_U_VIDEO_POST'		=> 'Can post videos',
-	'ACL_U_VIDEO_COMMENT'	=> 'Can post video comments',
-	'ACL_U_VIDEO_COMMENT_DELETE'		=> 'Can delete own video comments',
 
 	// View Video
 	'FLASH_IS_OFF'			=> '[flash] is <em>OFF</em>',
@@ -152,8 +119,5 @@ $lang = array_merge($lang, array(
 	//Pagination
 	'LIST_VIDEO'			=> '1 Video',
 	'LIST_VIDEOS'			=> '%1$s Videos',
-	'LIST_COMMENT'			=> '1 Comment',
-	'LIST_COMMENTS'			=> '%1$s Comments',
-
 ));
 
