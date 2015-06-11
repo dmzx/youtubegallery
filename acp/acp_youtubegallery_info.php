@@ -20,6 +20,7 @@ class acp_youtubegallery_info
 			'modes'		=> array(
 				'settings'			=> array('title' => 'ACP_VIDEO_SETTINGS',				'auth' => 'acl_a_board',	'cat' => array('ACP_VIDEO')),
 				'cat'				=> array('title' => 'ACP_VIDEO_CATEGORY',				'auth' => 'acl_a_board',	'cat' => array('ACP_VIDEO')),
+				'title'				=> array('title' => 'ACP_VIDEO_TITLE',				'auth' => 'acl_a_board',		'cat' => array('ACP_VIDEO')),
 			),
 		);
 	}

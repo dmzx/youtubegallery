@@ -1,27 +1,29 @@
 <!-- INCLUDE overall_header.html -->
 
-<!-- IF not .video -->
-<br class="clear" />
-	<div id="information" class="rules">
-		<div class="inner">
-			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
-		</div>
+<h2>{CAT_NAME}</h2>
+
+	<div class="action-bar top">
+
+	<!-- IF .pagination or TOTAL_VIDEOS -->
+	<div class="pagination">
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
 	</div>
-<!-- ENDIF -->
+	<!-- ENDIF -->
 
-<br class="clear" />
+	</div>
 
-<div id="tabs">
-	<ul>
-		<li class="tab activetab"><a href="#">{CAT_NAME}</a></li>
-	</ul>
-</div>
+<!-- IF .video -->
 <div class="panel bg3">
 	<div class="inner">
 		<!-- BEGIN video -->
 			<div id="video{video.VIDEO_ID}" class="video_item <!-- IF video.S_ROW_COUNT is even -->column1<!-- ELSE -->column2<!-- ENDIF -->">
 			<div class="inner">
-				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="http://img.youtube.com/vi/{video.YOUTUBE_ID}/default.jpg" alt="{video.VIDEO_TITLE}" /></a>
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="{video.S_VIDEO_THUMBNAIL}" alt="{video.VIDEO_TITLE}" /></a>
 				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
 				<div>
 					{L_VIDEO_AUTHOR}{L_COLON} {video.USERNAME} <br />
@@ -34,6 +36,14 @@
 
 	</div>
 </div>
+<!-- ELSE -->
+<br class="clear" />
+	<div id="information" class="rules">
+		<div class="inner">
+			<strong>{L_INFORMATION}{L_COLON}</strong> {L_NO_CAT_VIDEOS}
+		</div>
+	</div>
+<!-- ENDIF -->
 
 	<div class="action-bar bottom">
 
@@ -52,6 +62,6 @@
 
 <p class="jumpbox-return"><a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_VIDEO_INDEX}</a></p>
 
-<br />
+<!-- INCLUDE jumpbox.html -->
 
 <!-- INCLUDE overall_footer.html -->

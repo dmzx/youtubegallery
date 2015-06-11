@@ -45,7 +45,9 @@ class admin_controller
 	protected $request;
 
 	protected $phpbb_root_path;
+
 	protected $phpEx;
+
 	protected $table_prefix;
 	/** @var \phpbb\pagination */
 	protected $pagination;
@@ -120,6 +122,9 @@ class admin_controller
 						'video_width'				=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
 						'video_height'				=> array('lang' => 'ACP_VIDEO_HEIGHT',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
 						'google_api_key'				=> array('lang' => 'ACP_GOOGLE_KEY',	'validate' => 'string',	'type' => 'text:40:40', 'explain' => true),
+						'enable_video_statics_on_index'			=> array('lang' => 'ACP_ENABLE_VIDEO_STATICS_ON_INDEX',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+						'enable_comments'			=> array('lang' => 'ACP_ENABLE_COMMENTS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+						'comments_per_page'			=> array('lang' => 'ACP_COMMENTS_PER_PAGE',	'validate' => 'int:1',	'type' => 'text:3:4', 'explain' => true),
 
 						'legend5'					=> 'ACP_SUBMIT_CHANGES',
 					)
@@ -296,6 +301,102 @@ class admin_controller
 					'U_ACTION'		=> $form_action,
 					'L_MODE_TITLE'	=> $lang_mode,
 					));
+
+	}
+
+	public function display_title()
+	{
+
+				$form_key = 'acp_video_title';
+				add_form_key($form_key);
+				include ($this->phpbb_root_path . 'includes/functions_user.' . $this->phpEx);
+				$form_action = $this->u_action. '&amp;action=add';
+				$lang_mode		= $this->user->lang['ACP_VIDEO_TITLE'];
+				$video_id 	= $this->request->variable('video_id', 0);
+				$video_title = $this->request->variable('video_title', '', true);
+				$video_cat_id 	= $this->request->variable('video_cat_id', 0);
+				$video_cat_title = $this->request->variable('video_cat_title', '', true);
+				$action		= (isset($_POST['add'])) ? 'add' : ((isset($_POST['delete'])) ? 'delete' : $this->request->variable('action', ''));
+				//Make SQL Array
+				$sql_ary = array(
+					'video_cat_id'				=> $video_cat_id,
+					'video_cat_title'			=> $video_cat_title,
+				);
+				switch ($action)
+				{
+					case 'edit':
+						$form_action = $this->u_action. '&amp;action=update';
+						$lang_mode = $this->user->lang['ACP_CATEGORY_EDIT'];
+						$sql = 'SELECT *
+							FROM ' . $this->video_cat_table . '
+							WHERE video_cat_id = '.(int) $this->request->variable('id', '');
+						$result = $this->db->sql_query_limit($sql,1);
+						$row = $this->db->sql_fetchrow($result);
+						$this->template->assign_vars(array(
+							'S_EDIT_MODE'		=> true,
+							'VIDEO_CAT_ID'		=> $row['video_cat_id'],
+							'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
+							));
+					break;
+					case 'update':
+
+						$this->db->sql_query('UPDATE ' . $this->video_cat_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE VIDEO_CAT_ID = ' . $video_cat_id);
+						trigger_error($this->user->lang['ACP_CATEGORY_UPDATED'] . adm_back_link($this->u_action));
+
+					break;
+					case 'delete':
+						if (confirm_box(true))
+						{
+							$sql = 'DELETE FROM ' . $this->video_table . '
+								WHERE video_id = '.(int)$this->request->variable('id', '');
+							$this->db->sql_query($sql);
+							trigger_error($this->user->lang['ACP_TITLE_DELETED'] . adm_back_link($this->u_action));
+						}
+						else
+						{
+							confirm_box(false, $this->user->lang['ACP_TITLE_DELETE'], build_hidden_fields(array(
+								'video_id'		=> $video_id,
+								'action'			=> 'delete',
+							)));
+						}
+					break;
+				}
+				//
+				// Start output the page
+				//
+				$sql_title_ary = array(
+				'SELECT'	=> 'v.*,ct.*,
+				 u.username,u.user_colour,u.user_id',
+				'FROM'		=> array(
+					$this->video_table			=> 'v',
+					$this->video_cat_table		=> 'ct',
+				 	USERS_TABLE			=> 'u',
+				),
+				'WHERE'		=> 'ct.video_cat_id = v.video_cat_id AND u.user_id = v.user_id',
+				'ORDER_BY'	=> 'v.video_id DESC',
+				);
+
+				$sql = $this->db->sql_build_query('SELECT', $sql_title_ary);
+				$result = $this->db->sql_query($sql);
+				while ($row = $this->db->sql_fetchrow($result))
+				{
+					$this->template->assign_block_vars('title', array(
+						'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
+						'VIDEO_CAT_ID'	=> $row['video_cat_id'],
+						'VIDEO_TITLE'	=> $row['video_title'],
+						'U_EDIT'			=> $this->u_action . '&amp;action=edit&amp;id=' .$row['video_cat_id'],
+						'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' .$row['video_id'],
+						'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				//		'VIDEO_CAT_ID'		=> censor_text($row['video_cat_id']),
+				//		'VIDEO_CAT_TITLE'	=> censor_text($row['video_cat_title']),
+					));
+				}
+				$this->db->sql_freeresult($result);
+				$this->template->assign_vars(array(
+					'U_ACTION'		=> $form_action,
+					'L_MODE_TITLE'	=> $lang_mode,
+					));
+
 	}
 
 	/**

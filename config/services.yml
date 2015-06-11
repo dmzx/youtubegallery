@@ -19,6 +19,7 @@ services:
             - %core.table_prefix%
             - %dmzx.youtubegallery.table.video%
             - %dmzx.youtubegallery.table.video_cat%
+            - %dmzx.youtubegallery.table.video_cmnts%
     dmzx.youtubegallery.admin.controller:
         class: dmzx\youtubegallery\controller\admin_controller
         arguments:
@@ -49,5 +50,8 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
+            - %dmzx.youtubegallery.table.video%
+            - %dmzx.youtubegallery.table.video_cat%
+            - %dmzx.youtubegallery.table.video_cmnts%
         tags:
             - { name: event.listener }

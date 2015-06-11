@@ -51,6 +51,15 @@ class acp_youtubegallery_module
 				// Load the display cat handle in the admin controller
 				$admin_controller->display_cat();
 			break;
+
+			case 'title':
+				// Load a template from adm/style for our ACP page
+				$this->tpl_name = 'acp_video_title';
+				// Set the page title for our ACP page
+				$this->page_title = $user->lang['ACP_VIDEO_TITLE'];
+				// Load the display cat handle in the admin controller
+				$admin_controller->display_title();
+			break;
 		}
 	}
 }

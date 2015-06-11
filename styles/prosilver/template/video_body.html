@@ -8,16 +8,7 @@
 	</div>
 <!-- ENDIF -->
 
-<!-- IF not .video -->
-<br class="clear" />
-	<div id="information" class="rules">
-		<div class="inner">
-			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
-		</div>
-	</div>
-<br class="clear" />
-<!-- ENDIF -->
-
+<!-- IF .video -->
 <div id="tabs">
 	<ul>
 		<li class="tab activetab"><a href="#">{L_NEWEST_VIDEOS}</a></li>
@@ -38,9 +29,16 @@
 				</div>
 			</div>
 		<!-- END video -->
-
 	</div>
 </div>
+<!-- ELSE -->
+<br class="clear" />
+	<div id="information" class="rules">
+		<div class="inner">
+			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
+		</div>
+	</div>
+<!-- ENDIF -->
 
 	<div class="action-bar bottom">
 
@@ -86,10 +84,10 @@
 		<div class="panel bg3 panel-container" id="statistics-panel">
 			<div class="inner">
 				<h3>{L_STATISTICS}</h3>
-				<p>{TOTAL_VIDEOS} &bull; {TOTAL_CATEGORIES}</p>
+				<p>{TOTAL_VIDEOS_INDEX} &bull; {TOTAL_CATEGORIES} &bull; {TOTAL_VIEWS} &bull; {TOTAL_COMMENTS}</p>
 			</div>
 		</div>
 
-<br />
+<!-- INCLUDE jumpbox.html -->
 
 <!-- INCLUDE overall_footer.html -->
