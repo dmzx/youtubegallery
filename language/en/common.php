@@ -103,7 +103,7 @@ $lang = array_merge($lang, array(
 	'ACP_COMMENTS_PER_PAGE_EXPLAIN'	=> 'Set value for comments on video page.<br /><em>Default value is 10</em>.',
 	'ACP_ENABLE_COMMENTS'	=> 'Enable comments on videos',
 	'ACP_ENABLE_COMMENTS_EXPLAIN'	=> 'This option will display the comment on video page.',
-	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX'	=> 'Enable video statics on index',
+	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX'	=> 'Enable video statistics on index',
 	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN'	=> 'This option will display the video statics on index page.',
 
 	// ACP Categories
