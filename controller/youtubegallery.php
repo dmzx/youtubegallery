@@ -121,7 +121,7 @@ $video_views = $this->request->variable('video_views', 0);
 
 $sql_start = $this->request->variable('start', 0);
 $sql_limit = $this->request->variable('limit', 10);
-$sql_limit = $this->request->variable('limit', $this->config['comments_per_page']);
+$sql_limits = $this->request->variable('limit', $this->config['comments_per_page']); //comments
 
 // Comments
 $cmnt_id = $this->request->variable('cmntid', 0);
@@ -560,7 +560,7 @@ switch ($mode)
 	'ORDER_BY'	=> 'cmnt.cmnt_id DESC',
 	 );
 	 $sql = $this->db->sql_build_query('SELECT', $sql_ary);
-	 $result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+	 $result = $this->db->sql_query_limit($sql, $sql_limits, $sql_start);
 	 while ($row = $this->db->sql_fetchrow($result))
 	{
 	$delete_cmnt_allowed = ($this->auth->acl_get('a_') or $this->auth->acl_get('m_') || ($this->user->data['is_registered'] && $this->user->data['user_id'] == $row['user_id'] && $this->auth->acl_get('u_video_comment_delete')));
@@ -584,7 +584,7 @@ switch ($mode)
 
 	//Start pagination
 	$start = $this->request->variable('start', 0);
-	$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['comment_count'], $sql_limit, $sql_start);
+	$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['comment_count'], $sql_limits, $sql_start);
 
 	$this->template->assign_vars(array(
 		'TOTAL_COMMENTS'		=> ($videorow['comment_count'] == 1) ? $this->user->lang['LIST_COMMENT'] : sprintf($this->user->lang['LIST_COMMENTS'], $videorow['comment_count']),
