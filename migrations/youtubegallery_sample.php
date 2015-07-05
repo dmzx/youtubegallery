@@ -25,6 +25,7 @@ class youtubegallery_sample extends \phpbb\db\migration\migration
 			array('custom', array(array($this, 'insert_sample_data'))),
 		);
 	}
+
 	public function insert_sample_data()
 	{
 		global $user;

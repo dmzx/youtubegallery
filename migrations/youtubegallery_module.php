@@ -12,14 +12,13 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_module extends \phpbb\db\migration\migration
 {
-
 	public function update_data()
 	{
 		return array(
 			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_VIDEO')),
 			array('module.add', array(
 			'acp', 'ACP_VIDEO', array(
-			'module_basename'	=> '\dmzx\youtubegallery\acp\acp_youtubegallery_module', 'modes' => array('cat', 'settings', 'title'),
+				'module_basename'	=> '\dmzx\youtubegallery\acp\acp_youtubegallery_module', 'modes' => array('cat', 'settings', 'title'),
 				),
 			)),
 		);

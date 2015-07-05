@@ -11,12 +11,10 @@ services:
             - @user
             - @auth
             - @dbal.conn
-            - @cache
             - @request
             - @pagination
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%
             - %dmzx.youtubegallery.table.video%
             - %dmzx.youtubegallery.table.video_cat%
             - %dmzx.youtubegallery.table.video_cmnts%
@@ -24,32 +22,23 @@ services:
         class: dmzx\youtubegallery\controller\admin_controller
         arguments:
             - @config
-            - @controller.helper
             - @template
             - @log
             - @user
-            - @auth
             - @dbal.conn
-            - @cache
             - @request
-            - @pagination
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%
             - %dmzx.youtubegallery.table.video%
             - %dmzx.youtubegallery.table.video_cat%
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
-            - @auth
             - @config
             - @controller.helper
             - @template
             - @user
             - @dbal.conn
-            - %core.root_path%
-            - %core.php_ext%
-            - %core.table_prefix%
             - %dmzx.youtubegallery.table.video%
             - %dmzx.youtubegallery.table.video_cat%
             - %dmzx.youtubegallery.table.video_cmnts%

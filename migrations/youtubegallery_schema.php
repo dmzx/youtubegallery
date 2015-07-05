@@ -12,7 +12,6 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_schema extends \phpbb\db\migration\migration
 {
-
 	public function update_schema()
 	{
 		return array(
@@ -24,9 +23,9 @@ class youtubegallery_schema extends \phpbb\db\migration\migration
 				),
 				'PRIMARY_KEY'	=> 'video_cat_id',
 				)),
-
 		);
 	}
+
 	public function revert_schema()
 	{
 		return array(

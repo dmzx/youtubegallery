@@ -12,7 +12,6 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_schema3 extends \phpbb\db\migration\migration
 {
-
 	public function update_schema()
 	{
 		return array(
@@ -33,6 +32,7 @@ class youtubegallery_schema3 extends \phpbb\db\migration\migration
 			)),
 		);
 	}
+
 	public function revert_schema()
 	{
 		return array(
