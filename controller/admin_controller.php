@@ -218,7 +218,7 @@ class admin_controller
 				$lang_mode = $this->user->lang['ACP_CATEGORY_EDIT'];
 				$sql = 'SELECT *
 					FROM ' . $this->video_cat_table . '
-					WHERE video_cat_id = '.(int) $this->request->variable('id', '');
+					WHERE video_cat_id = '.(int) $this->request->variable('id', 0);
 				$result = $this->db->sql_query_limit($sql,1);
 				$row = $this->db->sql_fetchrow($result);
 				$this->template->assign_vars(array(
