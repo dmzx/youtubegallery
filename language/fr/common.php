@@ -1,18 +1,22 @@
 <?php
 /**
 *
-* @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author _Vinny_ - http://www.suportephpbb.com.br
-* @French Translation Philippe - http://www.forum-newbeetle.fr
+* Youtube Videos Gallery extension for the phpBB Forum Software package.
+* French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
+/**
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -31,7 +35,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
@@ -41,14 +45,13 @@ $lang = array_merge($lang, array(
 	'VIDEO_URL'				=> 'Entrer l’adresse de la vidéo ',
 	'VIDEO_URL_EXPLAIN'		=> '',
 	'VIDEOS_TIP'			=> 'Aide et Suggestions',
-	'VIDEOS_TIPS'			=> '
-	<ul>
-		<li>Rendez vous sur <a href="https://www.youtube.com/">Youtube.com</a>, cherchez votre vidéo favorite.</li>
-		<li>Copiez l’adresse de la vidéo, collez la dans le champs ci-dessous, choisissez la catégorie et soumettez le formulaire.</li>
-		<li>Vous pouvez utiliser <strong>youtube.com</strong> et <strong>youtu.be</strong>, les deux étant acceptés par cette extension.</li>
-	</ul>
-	<br />
-	<strong>Avertissement: cette page ne peut pas être utilisée pour charger des vidéos sur Youtube!</strong>',
+	'VIDEOS_TIPS_PART_01'			=> 'Se rendre sur',
+	'VIDEOS_TIPS_PART_02'			=> 'pour trouver ses vidéos préférées.',
+	'VIDEOS_TIPS_PART_03'			=> 'Copier l’adresse URL de la vidéo, la coller dans le champ ci-dessous, choisir la catégorie souhaitée et valider le formulaire.',
+	'VIDEOS_TIPS_PART_04'			=> 'Il est possible d’utiliser',
+	'VIDEOS_TIPS_PART_05'			=> 'les deux étant acceptés par cette extension.',
+	'VIDEOS_TIPS_PART_06'			=> 'Merci de noter que',
+	'VIDEOS_TIPS_PART_07'			=> 'cette page ne permet pas d’envoyer des vidéos sur le site Web de Youtube !',
 	'UNAUTHED'				=> 'Vous n’êtes pas autorisé à visualiser cette page.',
 	'VIDEO_UNAUTHED'		=> 'Vous n’êtes pas autorisé à visualiser cette vidéo.',
 	'INVALID_VIDEO'			=> 'La vidéo que vous avez sélectionné n’existe pas.',
