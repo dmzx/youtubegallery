@@ -44,15 +44,11 @@
 		</div>
 
 		<dl class="postprofile" id="profile{VIDEO_ID}">
-		<dd><strong>{L_VIDEO_ADD_BY}{L_COLON}</strong> {USERNAME} (<a href="{U_USER_VIDEOS}" title="{L_USER_VIDEOS}">{TOTAL_VIDEOS}</a>)</dd>
-		<dd><strong>{L_VIDEO_VIEWS}{L_COLON}</strong> {VIDEO_VIEWS}</dd>
-			<!--dd>
-				<ul class="profile-icons">
-					<li class="pm-icon"><a href="{U_PM}" title="{L_PRIVATE_MESSAGE}"><span>{L_PRIVATE_MESSAGE}</span></a></li>
-				</ul>
-			</dd-->
+			<dd><strong>{L_VIDEO_ADD_BY}{L_COLON}</strong> {USERNAME} (<a href="{U_USER_VIDEOS}" title="{L_USER_VIDEOS}">{TOTAL_VIDEOS}</a>)</dd>
+			<dd><strong>{L_VIDEO_VIEWS}{L_COLON}</strong> {VIDEO_VIEWS}</dd>
 		</dl>
-		<div class="back2top"><a href="#wrap" class="top" title="{L_BACK_TO_TOP}">{L_BACK_TO_TOP}</a></div>
+
+		<div class="back2top"><a href="#top" class="top" title="{L_BACK_TO_TOP}">{L_BACK_TO_TOP}</a></div>
 
 		</div>
 	</div>
@@ -115,7 +111,7 @@
 <a id="comments"></a>
 	<!-- BEGIN commentrow -->
 	<div id="p{commentrow.COMMENT_ID}" class="post <!-- IF commentrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 		<div class="postbody" style="width: 98%;">
 		<!-- IF not S_IS_BOT -->
 			<!-- IF commentrow.S_DELETE_ALLOWED -->
@@ -130,15 +126,15 @@
 			<div class="content">{commentrow.COMMENT_TEXT}</div>
 		</div>
 		<div class="back2top"><a href="#wrap" class="top" title="{L_BACK_TO_TOP}">{L_BACK_TO_TOP}</a></div>
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
 	<hr class="divider" />
 	<!-- END commentrow -->
 <!-- ELSE -->
 	<div class="panel">
-		<div class="inner"><span class="corners-top"><span></span></span>
-		<strong>{L_NO_VIDEOS_COMMENTS}</strong>
-		<span class="corners-bottom"><span></span></span></div>
+		<div class="inner">
+			<strong>{L_NO_VIDEOS_COMMENTS}</strong>
+		</div>
 	</div>
 <!-- ENDIF -->
 
