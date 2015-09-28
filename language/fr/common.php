@@ -116,7 +116,7 @@ $lang = array_merge($lang, array(
 	'ACP_GOOGLE_KEY_EXPLAIN'=> 'Permet d’utiliser la galerie vidéo en créant une <strong>clé publique de l’API Google</strong>. Se rendre sur la <strong><a href="https://console.developers.google.com/"> la console développeurs de Google</a></strong> pour générer la clé. En cas de problème, lire attentivement le guide sur la page <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">d’aide de la console développeurs de Google : clés de l’API</a></strong>. Tant qu’aucune clé n’est saisie, la galerie sera inaccessible.',
 	'ACP_VIDEOS_PER_PAGE'	=> 'Vidéos par page',
 	'ACP_COMMENTS_PER_PAGE'	=> 'Commentaires par page',
-	'ACP_COMMENTS_PER_PAGE_EXPLAIN'	=> 'Saisir le nombre de commentaires à afficher par page.<br /><em>La valeur par défaut est à 10</em>.',
+	'ACP_COMMENTS_PER_PAGE_EXPLAIN'	=> 'Permet de saisir le nombre de commentaires à afficher par page.<br /><em>La valeur par défaut est à 10</em>.',
 	'ACP_ENABLE_COMMENTS'	=> 'Activer les commentaires pour les vidéos',
 	'ACP_ENABLE_COMMENTS_EXPLAIN'	=> 'Permet d’afficher les commentaires sur la page des vidéos.',
 	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX'	=> 'Activer les statistiques vidéo sur la page de l’index du forum',
