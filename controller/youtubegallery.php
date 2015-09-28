@@ -89,7 +89,7 @@ class youtubegallery
 
 		if (!$this->auth->acl_get('u_video_view_full'))
 		{
-			trigger_error($this->user->lang['UNAUTHED']);
+			trigger_error($this->user->lang['NOT_AUTHORISED']);
 		}
 
 		// Initial var setup
@@ -199,7 +199,7 @@ class youtubegallery
 				// Can post?!
 				if (!$this->auth->acl_get('u_video_post'))
 				{
-					trigger_error($this->user->lang['UNAUTHED']);
+					trigger_error($this->user->lang['NOT_AUTHORISED']);
 				}
 
 				$l_title = $this->user->lang['VIDEO_SUBMIT'];
@@ -294,7 +294,7 @@ class youtubegallery
 				// Can post?!
 				if (!$this->auth->acl_get('u_video_comment'))
 				{
-					trigger_error($this->user->lang['UNAUTHED']);
+					trigger_error($this->user->lang['NOT_AUTHORISED']);
 				}
 
 				$redirect_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'comment', 'v' => (int) $video_id));
@@ -401,7 +401,7 @@ class youtubegallery
 
 				if (!$this->auth->acl_get('u_video_comment_delete'))
 				{
-					trigger_error($this->user->lang['UNAUTHED']);
+					trigger_error($this->user->lang['NOT_AUTHORISED']);
 				}
 
 				$video_id = $this->request->variable('v', 0); // Get video to redirect :D
@@ -437,7 +437,7 @@ class youtubegallery
 
 				if (!$this->auth->acl_get('u_video_delete'))
 				{
-					trigger_error($this->user->lang['UNAUTHED']);
+					trigger_error($this->user->lang['NOT_AUTHORISED']);
 				}
 
 				$l_title = ($this->user->lang['DELETE_VIDEO']);
