@@ -19,7 +19,7 @@ class acp_youtubegallery_info
 			'title'		=> 'ACP_NEWS_TITLE',
 			'modes'		=> array(
 				'settings'	=> array('title' => 'ACP_VIDEO_SETTINGS', 'auth' => 'ext_dmzx/youtubegallery && acl_a_board', 'cat' => array('ACP_VIDEO')),
-				'cat'	=> array('title' => 'ACP_VIDEO_CATEGORY', 'auth' => 'ext_dmzxe/youtubegallery && acl_a_board', 'cat' => array('ACP_VIDEO')),
+				'cat'	=> array('title' => 'ACP_VIDEO_CATEGORY', 'auth' => 'ext_dmzx/youtubegallery && acl_a_board', 'cat' => array('ACP_VIDEO')),
 				'title'	=> array('title' => 'ACP_VIDEO_TITLE', 'auth' => 'ext_dmzx/youtubegallery && acl_a_board',	'cat' => array('ACP_VIDEO')),
 			),
 		);
