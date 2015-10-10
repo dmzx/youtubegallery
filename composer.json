@@ -31,7 +31,7 @@
 		},
 		"version-check": {
 			"host": "www.phpbb.com",
-			"directory": "/customise/db/extension/",
+			"directory": "/customise/db/extension/youtube_videos_gallery",
 			"filename": "version_check"
 		}
 	}

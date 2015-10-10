@@ -1,22 +1,42 @@
 <?php
 /**
 *
-* @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author _Vinny_ - http://www.suportephpbb.com.br
-* @Translation Anvar - http://bb3.mobi
+* Youtube Videos Gallery extension for the phpBB Forum Software package.
+* Russian translation by Anvar (http://bb3.mobi)
+*
+* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
+/**
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
 }
+
+// DEVELOPERS PLEASE NOTE
+//
+// All language files should use UTF-8 as their encoding and the files must not contain a BOM.
+//
+// Placeholders can now contain order information, e.g. instead of
+// 'Page %s of %s' you can (and should) write 'Page %1$s of %2$s', this allows
+// translators to re-order the output of data while ensuring it remains correct
+//
+// You do not need this where single placeholders are used, e.g. 'Message %d' is fine
+// equally where a string contains only two placeholders which are used to wrap text
+// in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
 	'VIDEO_INDEX'			=> 'Видео галерея',
@@ -25,15 +45,11 @@ $lang = array_merge($lang, array(
 	'VIDEO_URL'				=> 'Указать URL Видеоролика',
 	'VIDEO_URL_EXPLAIN'		=> '',
 	'VIDEOS_TIP'			=> 'Помощь и предложения',
-	'VIDEOS_TIPS'			=> '
-	<ul>
-		<li>Перейдите на <a href="https://www.youtube.com/">Youtube.com</a> и выберите видеоролик который Вам понравился.</li>
-		<li>Скопируйте URL видеоролика, вставьте его в поле выше и нажмите отправить.</li>
-		<li>Ссылки принимаются с <strong>youtube.com</strong> и <strong>youtu.be</strong>, а также расширения.</li>
-	</ul>
-	<br />
-	<strong>Внимание: Эта страница не для загрузки видеороликов с Youtube!</strong>',
-	'UNAUTHED'				=> 'Вы не авторизованы для просмотра этой страницы.',
+	'VIDEOS_TIPS_PART_01'			=> 'Перейдите на <a href="https://www.youtube.com/">Youtube.com</a> и выберите видеоролик который Вам понравился.',
+	'VIDEOS_TIPS_PART_02'			=> 'Скопируйте URL видеоролика, вставьте его в поле выше и нажмите отправить.',
+	'VIDEOS_TIPS_PART_03'			=> 'Ссылки принимаются с <strong>youtube.com</strong> и <strong>youtu.be</strong>, а также расширения.',
+	'VIDEOS_TIPS_PART_04'			=> 'Внимание',
+	'VIDEOS_TIPS_PART_05'			=> 'Эта страница не для загрузки видеороликов с Youtube!',
 	'VIDEO_UNAUTHED'		=> 'Вы не авторизованы для просмотра этого видеоролика.',
 	'INVALID_VIDEO'			=> 'Выбранного видеоролика не существует.',
 	'VIDEO'					=> 'Видео',
@@ -42,13 +58,11 @@ $lang = array_merge($lang, array(
 	'VIEW_VIDEO'			=> 'Просмотр видеороликов',
 	'VIDEO_CAT'				=> 'Категория',
 	'VIDEO_CATS'			=> 'Категории',
-	'VIDEO_CATEGORIES'		=> 'Категории',
 	'VIDEO_CREATED'			=> 'Видеоролик было успешно добавлен.',
 	'VIDEO_DATE'			=> 'Дата',
 	'VIDEO_DELETE'			=> 'Удалить видеоролик',
 	'VIDEO_DELETED'			=> 'Этот видеоролик было успешно удалён.',
 	'PAGE_RETURN'			=> '%sВернуться к странице видеороликов%s',
-	'RETURN'				=> 'Return to the previous page',
 	'COMMENTS'				=> 'Комментарии',
 	'POST_COMMENT'			=> 'Оставить комментарий',
 	'COMMENT_CREATED'		=> 'Ваш комментарий был успешно добавлен.',
@@ -78,7 +92,6 @@ $lang = array_merge($lang, array(
 	'TOTAL_VIEW_ZERO'		=> 'Просмотров <strong>0</strong>',
 	'TOTAL_COMMENTS_OTHER'	=> 'Комментариев <strong>%d</strong>',
 	'TOTAL_COMMENT_ZERO'	=> 'Комментариев <strong>0</strong>',
-	'USER_VIDEO'			=> 'Поиск видео пользователя',
 	'USER_VIDEOS'			=> 'Поиск видео пользователя',
 	'NO_KEY_ADMIN'			=> 'Для того, чтобы использовать видео галерею, необходимо настроить <strong>Google Public API key</strong>, перейдите в администраторский раздел и следуйте инструкциям.',
 	'NO_KEY_USER'			=> 'Уважаемый пользователь, галерея будет недоступна. Пожалуйста, вернитесь позже.',
