@@ -886,4 +886,4 @@ class youtubegallery
 		page_footer();
 
 	}
-}	
+}
