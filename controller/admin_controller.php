@@ -17,14 +17,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 */
 class admin_controller
 {
-	protected $video_table;
-
-	protected $video_cat_table;
-
+	/** @var \phpbb\config\config */
 	protected $config;
 
 	/** @var \phpbb\template\template */
 	protected $template;
+
+	/** @var \phpbb\log\log_interface */
+	protected $log;
 
 	/** @var \phpbb\user */
 	protected $user;
@@ -35,31 +35,45 @@ class admin_controller
 	/** @var \phpbb\request\request */
 	protected $request;
 
+	/** @var string */
 	protected $phpbb_root_path;
 
+	/** @var string */
 	protected $phpEx;
+
+	/**
+	* The database tables
+	*
+	* @var string
+	*/
+	protected $video_table;
+
+	protected $video_cat_table;
 
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config				$config
 	 * @param \phpbb\template\template			$template
+	 * @param \phpbb\log\log_interface			$log
 	 * @param \phpbb\user						$user
 	 * @param \phpbb\db\driver\driver_interface	$db
 	 * @param \phpbb\request\request			$request
 	 * @param									$phpbb_root_path
 	 * @param									$phpEx
+	 * @param string 							$video_table
+	 * @param string 							$video_cat_table
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\log\log_interface $log, \phpbb\user $user, \phpbb\db\driver\driver_interface $db, \phpbb\request\request $request, $phpbb_root_path, $phpEx, $video_table, $video_cat_table)
 	{
 		$this->config = $config;
 		$this->template = $template;
+		$this->phpbb_log = $log;
 		$this->user = $user;
 		$this->db = $db;
 		$this->request = $request;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->phpEx = $phpEx;
-		$this->phpbb_log = $log;
 		$this->video_table = $video_table;
 		$this->video_cat_table = $video_cat_table;
 	}
@@ -94,15 +108,15 @@ class admin_controller
 		// Set the options the user configured
 		$display_vars = array(
 			'vars'	=> array(
-			'legend1'				=> 'ACP_VIDEO_GENERAL_SETTINGS',
-			'video_width'				=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
-			'video_height'				=> array('lang' => 'ACP_VIDEO_HEIGHT',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
+			'legend1'						=> 'ACP_VIDEO_GENERAL_SETTINGS',
+			'video_width'					=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
+			'video_height'					=> array('lang' => 'ACP_VIDEO_HEIGHT',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
 			'google_api_key'				=> array('lang' => 'ACP_GOOGLE_KEY',	'validate' => 'string',	'type' => 'text:40:40', 'explain' => true),
-			'enable_video_statics_on_index'			=> array('lang' => 'ACP_ENABLE_VIDEO_STATICS_ON_INDEX',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-			'enable_comments'			=> array('lang' => 'ACP_ENABLE_COMMENTS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-			'comments_per_page'			=> array('lang' => 'ACP_COMMENTS_PER_PAGE',	'validate' => 'int:1',	'type' => 'text:3:4', 'explain' => true),
+			'enable_video_statics_on_index'	=> array('lang' => 'ACP_ENABLE_VIDEO_STATICS_ON_INDEX',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+			'enable_comments'				=> array('lang' => 'ACP_ENABLE_COMMENTS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+			'comments_per_page'				=> array('lang' => 'ACP_COMMENTS_PER_PAGE',	'validate' => 'int:1',	'type' => 'text:3:4', 'explain' => true),
 
-			'legend5'					=> 'ACP_SUBMIT_CHANGES',
+			'legend5'						=> 'ACP_SUBMIT_CHANGES',
 			)
 		);
 
@@ -280,7 +294,6 @@ class admin_controller
 
 	public function display_title()
 	{
-
 		$form_key = 'acp_video_title';
 		add_form_key($form_key);
 		include ($this->phpbb_root_path . 'includes/functions_user.' . $this->phpEx);
@@ -339,15 +352,16 @@ class admin_controller
 		// Start output the page
 		//
 		$sql_title_ary = array(
-		'SELECT'	=> 'v.*,ct.*,
-		 u.username,u.user_colour,u.user_id',
-		'FROM'		=> array(
-			$this->video_table			=> 'v',
-			$this->video_cat_table		=> 'ct',
-		 	USERS_TABLE			=> 'u',
-		),
-		'WHERE'		=> 'ct.video_cat_id = v.video_cat_id AND u.user_id = v.user_id',
-		'ORDER_BY'	=> 'v.video_id DESC',
+			'SELECT'	=> 'v.*,ct.*,
+			u.username,u.user_colour,u.user_id',
+			'FROM'		=> array(
+				$this->video_table			=> 'v',
+				$this->video_cat_table		=> 'ct',
+				USERS_TABLE			=> 'u',
+			),
+			'WHERE'		=> 'ct.video_cat_id = v.video_cat_id
+				AND u.user_id = v.user_id',
+			'ORDER_BY'	=> 'v.video_id DESC',
 		);
 
 		$sql = $this->db->sql_build_query('SELECT', $sql_title_ary);

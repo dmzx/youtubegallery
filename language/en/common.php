@@ -1,10 +1,10 @@
 <?php
 /**
 *
-* Youtube Videos Gallery extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
-* @license GNU General Public License, version 2 (GPL-2.0)
+* @package phpBB Extension - Youtube Videos Gallery
+* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @Author _Vinny_ - http://www.suportephpbb.com.br
 *
 */
 
@@ -91,16 +91,14 @@ $lang = array_merge($lang, array(
 	'TOTAL_VIEW_ZERO'		=> 'Total views <strong>0</strong>',
 	'TOTAL_COMMENTS_OTHER'	=> 'Total comments <strong>%d</strong>',
 	'TOTAL_COMMENT_ZERO'	=> 'Total comments <strong>0</strong>',
-	'USER_VIDEOS'			=> 'Search user’s videos',
-	'NO_KEY_ADMIN'				=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
-	'NO_KEY_USER'				=> 'Dear user, the gallery will be unavailable. Please come back later.',
+	'USER_VIDEOS'			=> 'All videos from User',
+	'USER_VIDEOS_EXPLAIN'	=> 'Show all',
+	'NO_KEY_ADMIN'			=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
+	'NO_KEY_USER'			=> 'Dear user, the gallery will be unavailable. Please come back later.',
 	'COMMENTS_DISABLED'		=> 'Comments are disabled.',
 	'DELETE_COMMENT'		=> 'Delete comment',
 
 	// ACP
-	'ACP_VIDEO'				=> 'Video Gallery',
-	'ACP_VIDEO_EXPLAIN'		=> '',
-	'ACP_VIDEO_SETTINGS'	=> 'Video Settings',
 	'ACP_VIDEO_GENERAL_SETTINGS'	=> 'General Settings',
 	'ACP_VIDEO_ENABLE'		=> 'Enable Videos Page',
 	'ACP_VIDEO_CATEGORY'	=> 'Video Categories',
@@ -131,21 +129,12 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_CAT_TITLE_TITLE'	=> 'You must enter a <strong>title</strong> for this category.',
 	'ACP_VIDEO_OVERVIEW'	=> 'Video Categories',
 	'ACP_VIDEO_OVERVIEW_EXPLAIN'	=> 'Here you can manage the Video Categories of your board.',
-	'ACP_VIDEO_TITLE'	=> 'Video Titles',
 	'ACP_VIDEO_TITLE_EXPLAIN'	=> 'Here you can manage the Video Titles of your board.',
 	'ACP_TITLE_DELETE'	=> 'Are you sure you wish to delete this title?',
 	'ACP_TITLE_DELETED'	=> 'This title has been deleted successfully',
 
 	// Install
 	'INSTALL_TEST_CAT'		=> 'Uncategorized',
-
-	// Permissions
-	'ACL_U_VIDEO_VIEW_FULL'	=> 'Can view Video Gallery',
-	'ACL_U_VIDEO_VIEW'		=> 'Can view videos',
-	'ACL_U_VIDEO_DELETE'	=> 'Can delete own videos',
-	'ACL_U_VIDEO_POST'		=> 'Can post videos',
-	'ACL_U_VIDEO_COMMENT'	=> 'Can post video comments',
-	'ACL_U_VIDEO_COMMENT_DELETE'		=> 'Can delete own video comments',
 
 	// View Video
 	'FLASH_IS_OFF'			=> '[flash] is <em>OFF</em>',

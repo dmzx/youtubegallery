@@ -12,17 +12,6 @@ namespace dmzx\youtubegallery\controller;
 
 class youtubegallery
 {
-	/**
-	* The database tables
-	*
-	* @var string
-	*/
-	protected $video_table;
-
-	protected $video_cat_table;
-
-	protected $video_cmnts_table;
-	/**
 	/** @var \phpbb\config\config */
 	protected $config;
 
@@ -31,6 +20,9 @@ class youtubegallery
 
 	/** @var \phpbb\template\template */
 	protected $template;
+
+	/** @var \phpbb\log\log_interface */
+	protected $log;
 
 	/** @var \phpbb\user */
 	protected $user;
@@ -44,12 +36,25 @@ class youtubegallery
 	/** @var \phpbb\request\request */
 	protected $request;
 
-	protected $phpbb_root_path;
-
-	protected $phpEx;
-
 	/** @var \phpbb\pagination */
 	protected $pagination;
+
+	/** @var string */
+	protected $phpbb_root_path;
+
+	/** @var string */
+	protected $phpEx;
+
+	/**
+	* The database tables
+	*
+	* @var string
+	*/
+	protected $video_table;
+
+	protected $video_cat_table;
+
+	protected $video_cmnts_table;
 
 	/**
 	 * Constructor
@@ -57,28 +62,31 @@ class youtubegallery
 	 * @param \phpbb\config\config				$config
 	 * @param \phpbb\controller\helper			$helper
 	 * @param \phpbb\template\template			$template
+	 * @param \phpbb\log\log_interface			$log
 	 * @param \phpbb\user						$user
 	 * @param \phpbb\auth\auth					$auth
 	 * @param \phpbb\db\driver\driver_interface	$db
 	 * @param \phpbb\request\request			$request
+	 * @param \phpbb\pagination					$pagination
 	 * @param									$phpbb_root_path
 	 * @param									$phpEx
+	 * @param string 							$video_table
+	 * @param string 							$video_cat_table
+	 * @param string 							$video_cmnts_table
 	 */
-
 	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\log\log_interface $log, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\db\driver\driver_interface $db, \phpbb\request\request $request, \phpbb\pagination $pagination, $phpbb_root_path, $phpEx, $video_table, $video_cat_table, $video_cmnts_table)
-
 	{
 		$this->config = $config;
 		$this->helper = $helper;
 		$this->template = $template;
+		$this->phpbb_log = $log;
 		$this->user = $user;
 		$this->auth = $auth;
 		$this->db = $db;
 		$this->request = $request;
+		$this->pagination = $pagination;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->phpEx = $phpEx;
-		$this->phpbb_log = $log;
-		$this->pagination = $pagination;
 		$this->video_table = $video_table;
 		$this->video_cat_table = $video_cat_table;
 		$this->video_cmnts_table = $video_cmnts_table;
@@ -86,7 +94,6 @@ class youtubegallery
 
 	public function handle_video()
 	{
-
 		if (!$this->auth->acl_get('u_video_view_full'))
 		{
 			trigger_error($this->user->lang['NOT_AUTHORISED']);
@@ -521,7 +528,7 @@ class youtubegallery
 				'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
 				'VIDEO_LINK' 		=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 				'VIDEO_LINK_FLASH'	=> 'http://www.youtube.com/v/' . $row['youtube_id'],
-				'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
+				'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $row['user_id'] , 'usernamesearch' => $row['username'])),
 				'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 				'DELETE_ALLOW'		=> $delete_allowed,
 				'S_BBCODE_FLASH'	=> $flash_status,
@@ -698,6 +705,21 @@ class youtubegallery
 			$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 			$pagination_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos', 'user_id' => $user_id));
 
+			// We need another query for the video count
+			$sql = 'SELECT COUNT(*) as video_count
+				FROM '. $this->video_table .'
+				WHERE user_id = '. $user_id;
+			$result = $this->db->sql_query($sql);
+			$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
+			$this->db->sql_freeresult($result);
+
+			$start = $this->request->variable('start', 0);
+			$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
+
+			$this->template->assign_vars(array(
+				'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
+			));
+
 			$sql_ary = array(
 				'SELECT'	=> 'v.*,
 				ct.video_cat_title,ct.video_cat_id,
@@ -729,25 +751,16 @@ class youtubegallery
 					'U_VIEW_VIDEO'	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 					'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 					'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+
 					'S_VIDEO_THUMBNAIL'	=> 'http://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
 				));
+
+				$this->template->assign_vars(array(
+					'USERNAME_SEARCH'	=> get_username_string('no_profile', $row['user_id'], $row['username']) . ' (' . $videorow['video_count'] . ')',
+				));
 			}
+
 			$this->db->sql_freeresult($result);
-
-			// We need another query for the video count
-			$sql = 'SELECT COUNT(*) as video_count
-				FROM '. $this->video_table .'
-				WHERE user_id = '. $user_id;
-			$result = $this->db->sql_query($sql);
-			$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
-			$this->db->sql_freeresult($result);
-
-			$start = $this->request->variable('start', 0);
-			$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
-
-			$this->template->assign_vars(array(
-				'TOTAL_VIDEOS'		=> ($videorow['video_count'] == 1) ? $this->user->lang['LIST_VIDEO'] : sprintf($this->user->lang['LIST_VIDEOS'], $videorow['video_count']),
-			));
 
 			$l_title = $this->user->lang['USER_VIDEOS'];
 			$template_html = 'video_search.html';
