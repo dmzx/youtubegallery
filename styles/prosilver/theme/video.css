@@ -1,9 +1,6 @@
-
 h3.center {
 	text-align: center;
 }
-
-
 
 .video_item .content{
 	font-size: 1.1em;
@@ -19,7 +16,10 @@ h3.center {
 	width: 96px;
 }
 
-.buttons div.video-icon		{ width: 96px; height: 25px; }
+.buttons div.video-icon	{ 
+	width: 96px; 
+	height: 25px; 
+}
 
 .rtl .icon-videos {
 	background-position: 100% 50%;
@@ -33,4 +33,28 @@ h3.center {
 	padding: 1px 0 0 1px;
 }
 
-.icon-videos		{ background-image: url("./images/icon_videos.gif"); }
+.icon-videos { 
+	background-image: url("./images/icon_videos.gif"); 
+}
+
+ul.video {
+    width:100%;
+    text-align:center;
+    background-color: #eef5f9;
+	list-style-type: none;
+	padding-bottom: 6px;
+}
+
+ul.video li {
+    display: inline-block;
+    font-size: inherit;
+    line-height: inherit;
+	padding-bottom: 2px;
+	width: 180px;
+}
+
+ul.video li.videolist {
+    text-align:center;
+	margin: 5px 3px 0;
+	box-shadow: 0 0 4px #000000;
+}

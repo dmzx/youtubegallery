@@ -39,9 +39,11 @@ services:
             - '@template'
             - '@user'
             - '@dbal.conn'
+            - '%core.root_path%'
             - '%core.php_ext%'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
+            - '@?phpbb.collapsiblecategories.operator'
         tags:
             - { name: event.listener }

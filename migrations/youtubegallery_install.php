@@ -14,7 +14,7 @@ class youtubegallery_install extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['youtubegallery_version']) && version_compare($this->config['youtubegallery_version'], '1.0.1', '>=');
+		return isset($this->config['youtubegallery_version']) && version_compare($this->config['youtubegallery_version'], '1.0.2', '>=');
 	}
 
 	static public function depends_on()
@@ -26,7 +26,7 @@ class youtubegallery_install extends \phpbb\db\migration\migration
 	{
 		return array(
 			// Add configs
-			array('config.add', array('youtubegallery_version', '1.0.1')),
+			array('config.add', array('youtubegallery_version', '1.0.2')),
 			array('config.add', array('enable_video', true)),
 			array('config.add', array('enable_video_share', true)),
 			array('config.add', array('video_width', '640')),
@@ -36,6 +36,9 @@ class youtubegallery_install extends \phpbb\db\migration\migration
 			array('config.add', array('comments_per_page', '10')),
 			array('config.add', array('enable_video_comments', true)),
 			array('config.add', array('enable_video_statics_on_index', true)),
+			array('config.add', array('enable_video_on_index', false)),
+			array('config.add', array('enable_video_on_index_location', true)),
+			array('config.add', array('video_on_index_value', '6')),
 
 			// Add permissions
 			array('permission.add', array('u_video_view_full')),

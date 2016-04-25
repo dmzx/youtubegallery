@@ -108,15 +108,18 @@ class admin_controller
 		// Set the options the user configured
 		$display_vars = array(
 			'vars'	=> array(
-			'legend1'						=> 'ACP_VIDEO_GENERAL_SETTINGS',
-			'video_width'					=> array('lang' => 'ACP_VIDEO_WIDTH',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
-			'video_height'					=> array('lang' => 'ACP_VIDEO_HEIGHT',	'validate' => 'string',	'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
-			'google_api_key'				=> array('lang' => 'ACP_GOOGLE_KEY',	'validate' => 'string',	'type' => 'text:40:40', 'explain' => true),
-			'enable_video_statics_on_index'	=> array('lang' => 'ACP_ENABLE_VIDEO_STATICS_ON_INDEX',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-			'enable_comments'				=> array('lang' => 'ACP_ENABLE_COMMENTS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-			'comments_per_page'				=> array('lang' => 'ACP_COMMENTS_PER_PAGE',	'validate' => 'int:1',	'type' => 'text:3:4', 'explain' => true),
+			'legend1'							=> 'ACP_VIDEO_GENERAL_SETTINGS',
+			'video_width'						=> array('lang' => 'ACP_VIDEO_WIDTH', 'validate' => 'string', 'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
+			'video_height'						=> array('lang' => 'ACP_VIDEO_HEIGHT', 'validate' => 'string', 'type' => 'text:4:4', 'explain' => true, 'append' => ' ' . $this->user->lang['PIXEL']),
+			'google_api_key'					=> array('lang' => 'ACP_GOOGLE_KEY', 'validate' => 'string', 'type' => 'text:40:40', 'explain' => true),
+			'enable_video_statics_on_index'		=> array('lang' => 'ACP_ENABLE_VIDEO_STATICS_ON_INDEX',	'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+			'enable_comments'					=> array('lang' => 'ACP_ENABLE_COMMENTS', 'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+			'comments_per_page'					=> array('lang' => 'ACP_COMMENTS_PER_PAGE', 'validate' => 'int:1', 'type' => 'text:3:4', 'explain' => true),
+			'enable_video_on_index'				=> array('lang' => 'ACP_ENABLE_VIDEO_ON_INDEX', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+			'enable_video_on_index_location'	=> array('lang' => 'ACP_ENABLE_VIDEO_ON_INDEX_LOCATION', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+			'video_on_index_value'				=> array('lang' => 'ACP_VIDEO_ON_INDEX_VALUE', 'validate' => 'int:1', 'type' => 'text:3:4', 'explain' => true),
 
-			'legend5'						=> 'ACP_SUBMIT_CHANGES',
+			'legend5'							=> 'ACP_SUBMIT_CHANGES',
 			)
 		);
 
