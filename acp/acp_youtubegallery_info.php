@@ -16,7 +16,7 @@ class acp_youtubegallery_info
 	{
 		return array(
 			'filename'	=> '\dmzx\youtubegallery\acp\acp_youtubegallery_module',
-			'title'		=> 'ACP_NEWS_TITLE',
+			'title'		=> 'ACP_VIDEO',
 			'modes'		=> array(
 				'settings'	=> array('title' => 'ACP_VIDEO_SETTINGS', 'auth' => 'ext_dmzx/youtubegallery && acl_a_board', 'cat' => array('ACP_VIDEO')),
 				'cat'	=> array('title' => 'ACP_VIDEO_CATEGORY', 'auth' => 'ext_dmzx/youtubegallery && acl_a_board', 'cat' => array('ACP_VIDEO')),
