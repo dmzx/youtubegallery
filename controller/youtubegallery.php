@@ -151,7 +151,7 @@ class youtubegallery
 			return isset($matches[1]) ? $matches[1] : false;
 		}
 		$youtube_id = getYouTubeIdFromURL($video_url);
-		$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$youtube_id}&key={$this->config['google_api_key']}&type=video&part=snippet");
+		$jsonURL = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id={$youtube_id}&key={$this->config['google_api_key']}&fields=items(snippet(title))&part=snippet");
 
 		$json = json_decode($jsonURL);
 
@@ -525,9 +525,9 @@ class youtubegallery
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
 				'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
-				'YOUTUBE_VIDEO'		=> 'http://www.youtube.com/watch?v='.$row['youtube_id'],
+				'YOUTUBE_VIDEO'		=> 'https://www.youtube.com/watch?v='.$row['youtube_id'],
 				'VIDEO_LINK' 		=> generate_board_url() . $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-				'VIDEO_LINK_FLASH'	=> 'http://www.youtube.com/v/' . $row['youtube_id'],
+				'VIDEO_LINK_FLASH'	=> 'https://www.youtube.com/v/' . $row['youtube_id'],
 				'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos', 'user_id' => $row['user_id'], 'usernamesearch' => $row['username'])),
 				'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'delete', 'id' => $row['video_id'])),
 				'DELETE_ALLOW'		=> $delete_allowed,
@@ -657,7 +657,7 @@ class youtubegallery
 					'U_VIEW_VIDEO'	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 					'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 					'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-					'S_VIDEO_THUMBNAIL'	=> 'http://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
+					'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 				));
 			}
 			$this->db->sql_freeresult($result);
@@ -751,8 +751,7 @@ class youtubegallery
 					'U_VIEW_VIDEO'	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 					'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 					'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-
-					'S_VIDEO_THUMBNAIL'	=> 'http://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
+					'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 				));
 
 				$this->template->assign_vars(array(
@@ -822,7 +821,6 @@ class youtubegallery
 				'U_VIDEO_SUBMIT' 	=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
 				'VIDEOSUBMIT'	 	=> $this->auth->acl_get('u_video_post'),
 				'U_MY_VIDEOS'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
-				'BUTTON_VIDEO_NEW'	=> "{$web_path}styles/" .$this->user->lang_name .'/button_video_new.gif',
 				'TOTAL_VIDEOS_INDEX'=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
 				'TOTAL_CATEGORIES'	=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
 				'TOTAL_VIEWS'		=> sprintf($this->user->lang[$l_total_view_s], $total_views),
@@ -862,6 +860,7 @@ class youtubegallery
 					'U_POSTER'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->phpEx", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 					'USERNAME'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 					'YOUTUBE_ID'	=> censor_text($row['youtube_id']),
+					'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 				));
 			}
 			$this->db->sql_freeresult($result);
