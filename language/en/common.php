@@ -163,6 +163,4 @@ $lang = array_merge($lang, array(
 	'LIST_VIDEOS'			=> '%1$s Videos',
 	'LIST_COMMENT'			=> '1 Comment',
 	'LIST_COMMENTS'			=> '%1$s Comments',
-
 ));
-

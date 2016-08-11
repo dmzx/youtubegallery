@@ -155,7 +155,7 @@ class youtubegallery
 
 		$json = json_decode($jsonURL);
 
-		if(isset($json->items[0]->snippet))
+		if (isset($json->items[0]->snippet))
 		{
 			$video_title = $json->items[0]->snippet->title;
 		}
@@ -665,7 +665,7 @@ class youtubegallery
 			// We need another query for the video count
 			$sql = 'SELECT COUNT(*) as video_count
 				FROM ' . $this->video_table .'
-				WHERE video_cat_id = '. (int)$video_cat_ids;
+				WHERE video_cat_id = '. (int) $video_cat_ids;
 			$result = $this->db->sql_query($sql);
 			$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 			$this->db->sql_freeresult($result);
@@ -771,7 +771,7 @@ class youtubegallery
 				FROM ' . $this->video_cat_table . "
 				ORDER BY video_cat_id";
 			$res = $this->db->sql_query($sql);
-			while($row = $this->db->sql_fetchrow($res))
+			while ($row = $this->db->sql_fetchrow($res))
 			{
 				$this->template->assign_block_vars('videocat', array(
 					'VIDEO_CAT_ID'		=> $row['video_cat_id'],
@@ -799,7 +799,7 @@ class youtubegallery
 				FROM ' . $this->video_table;
 			$result = $this->db->sql_query($sql);
 			$total_views = (int) $this->db->sql_fetchfield('total_views');
-			$this->db->sql_freeresult($result);$total_videos;
+			$this->db->sql_freeresult($result);
 
 			// Count the videos comments ...
 			$sql = 'SELECT COUNT(cmnt_id) AS total_comments

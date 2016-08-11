@@ -157,7 +157,7 @@ class listener implements EventSubscriberInterface
 			FROM ' . $this->video_table;
 		$result = $this->db->sql_query($sql);
 		$total_views = (int) $this->db->sql_fetchfield('total_views');
-		$this->db->sql_freeresult($result);$total_videos;
+		$this->db->sql_freeresult($result);
 
 		// Count the videos comments ...
 		$sql = 'SELECT COUNT(cmnt_id) AS total_comments

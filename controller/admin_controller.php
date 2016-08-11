@@ -10,8 +10,6 @@
 
 namespace dmzx\youtubegallery\controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
 * Admin controller
 */
@@ -143,7 +141,7 @@ class admin_controller
 			$this->new_config[$config_name] = $config_value = $cfg_array[$config_name];
 			if ($submit)
 			{
-				if(!$this->config->set($config_name, $config_value))
+				if (!$this->config->set($config_name, $config_value))
 				{
 					$error = true;
 				}
@@ -259,7 +257,7 @@ class admin_controller
 				if (confirm_box(true))
 				{
 					$sql = 'DELETE FROM ' . $this->video_cat_table . '
-						WHERE video_cat_id = '.(int)$this->request->variable('id', '');
+						WHERE video_cat_id = '.(int) $this->request->variable('id', '');
 					$this->db->sql_query($sql);
 					trigger_error($this->user->lang['ACP_CATEGORY_DELETED'] . adm_back_link($this->u_action));
 				}
@@ -338,7 +336,7 @@ class admin_controller
 				if (confirm_box(true))
 				{
 					$sql = 'DELETE FROM ' . $this->video_table . '
-						WHERE video_id = '.(int)$this->request->variable('id', '');
+						WHERE video_id = '.(int) $this->request->variable('id', '');
 					$this->db->sql_query($sql);
 					trigger_error($this->user->lang['ACP_TITLE_DELETED'] . adm_back_link($this->u_action));
 				}
