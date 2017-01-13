@@ -2,8 +2,7 @@
 
 <h2>{CAT_NAME}</h2>
 
-	<div class="action-bar top">
-
+<div class="action-bar bar-top">
 	<!-- IF .pagination or TOTAL_VIDEOS -->
 	<div class="pagination">
 		{TOTAL_VIDEOS}
@@ -14,8 +13,7 @@
 		<!-- ENDIF -->
 	</div>
 	<!-- ENDIF -->
-
-	</div>
+</div>
 
 <!-- IF .video -->
 <div class="panel bg3">
@@ -33,20 +31,18 @@
 				</div>
 			</div>
 		<!-- END video -->
-
 	</div>
 </div>
 <!-- ELSE -->
 <br class="clear" />
-	<div id="information" class="rules">
-		<div class="inner">
-			<strong>{L_INFORMATION}{L_COLON}</strong> {L_NO_CAT_VIDEOS}
-		</div>
+<div id="information" class="rules">
+	<div class="inner">
+		<strong>{L_INFORMATION}{L_COLON}</strong> {L_NO_CAT_VIDEOS}
 	</div>
+</div>
 <!-- ENDIF -->
 
-	<div class="action-bar bottom">
-
+<div class="action-bar bar-bottom">
 	<!-- IF .pagination or TOTAL_VIDEOS -->
 	<div class="pagination">
 		{TOTAL_VIDEOS}
@@ -57,10 +53,13 @@
 		<!-- ENDIF -->
 	</div>
 	<!-- ENDIF -->
+</div>
 
-	</div>
-
-<p class="jumpbox-return"><a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_VIDEO_INDEX}</a></p>
+<p class="jumpbox-return">
+	<a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">
+		<i class="icon fa-angle-{S_CONTENT_FLOW_BEGIN} fa-fw icon-black" aria-hidden="true"></i><span>{L_RETURN_TO_VIDEO_INDEX}</span>
+	</a>
+</p>
 
 <!-- INCLUDE jumpbox.html -->
 

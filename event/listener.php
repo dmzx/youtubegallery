@@ -10,33 +10,34 @@
 
 namespace dmzx\youtubegallery\event;
 
-/**
-* @ignore
-*/
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use phpbb\config\config;
+use phpbb\template\template;
+use phpbb\controller\helper;
+use phpbb\user;
+use phpbb\db\driver\driver_interface as db_interface;
+use phpbb\collapsiblecategories\operator\operator as operator;
+use phpbb\files\factory;
 
-/**
-* Event listener
-*/
 class listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\template\template */
+	/** @var template */
 	protected $template;
 
-	/** @var \phpbb\controller\helper */
+	/** @var helper */
 	protected $helper;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db_interface */
 	protected $db;
 
 	/** @var string */
-	protected $phpbb_root_path;
+	protected $root_path;
 
 	/** @var string */
 	protected $php_ext;
@@ -52,38 +53,56 @@ class listener implements EventSubscriberInterface
 
 	protected $video_cmnts_table;
 
-	/** @var \phpbb\collapsiblecategories\operator\operator */
+	/** @var operator */
 	protected $operator;
+
+	/** @var factory */
+	protected $files_factory;
 
 	/**
 	* Constructor
 	*
-	* @param \phpbb\config\config							$config
-	* @param \phpbb\template\template						$template
-	* @param \phpbb\controller\helper						$helper
-	* @param \phpbb\user									$user
-	* @param \phpbb\db\driver\driver_interface				$db
-	* @param												$phpbb_root_path
-	* @param string											$php_ext
-	* @param string 										$video_table
-	* @param string 										$video_cat_table
-	* @param string 										$video_cmnts_table
-	* @param \phpbb\collapsiblecategories\operator\operator	$operator
+	* @param config				$config
+	* @param template			$template
+	* @param helper				$helper
+	* @param user				$user
+	* @param db_interface		$db
+	* @param string				$root_path
+	* @param string				$php_ext
+	* @param string 			$video_table
+	* @param string 			$video_cat_table
+	* @param string 			$video_cmnts_table
+	* @param operator			$operator
+	* @param factory			$files_factory
 	*
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\driver_interface $db, $phpbb_root_path, $php_ext, $video_table, $video_cat_table, $video_cmnts_table, \phpbb\collapsiblecategories\operator\operator $operator = null)
+	public function __construct(
+		config $config,
+		helper $helper,
+		template $template,
+		user $user,
+		db_interface $db,
+		$root_path,
+		$php_ext,
+		$video_table,
+		$video_cat_table,
+		$video_cmnts_table,
+		operator $operator = null,
+		factory $files_factory = null
+	)
 	{
 		$this->config 				= $config;
 		$this->template 			= $template;
 		$this->helper 				= $helper;
 		$this->user 				= $user;
 		$this->db 					= $db;
-		$this->phpbb_root_path 		= $phpbb_root_path;
+		$this->root_path 			= $root_path;
 		$this->php_ext				= $php_ext;
 		$this->video_table 			= $video_table;
 		$this->video_cat_table 		= $video_cat_table;
 		$this->video_cmnts_table 	= $video_cmnts_table;
 		$this->operator 			= $operator;
+		$this->files_factory 		= $files_factory;
 	}
 
 	static public function getSubscribedEvents()
@@ -109,7 +128,9 @@ class listener implements EventSubscriberInterface
 	public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
-			'U_VIDEO' => $this->helper->route('dmzx_youtubegallery_controller'),
+			'U_VIDEO' 		=> $this->helper->route('dmzx_youtubegallery_controller'),
+			'PHPBB_IS_32'	=> ($this->files_factory !== null) ? true : false,
+			'VIDEO_ENABLE'	=> $this->config['enable_video_global'],
 		));
 	}
 
@@ -131,8 +152,9 @@ class listener implements EventSubscriberInterface
 		{
 			$fid = 'video'; // can be any unique string to identify your extension's collapsible element
 			$this->template->assign_vars(array(
-				'S_VIDEO_HIDDEN' => in_array($fid, $this->operator->get_user_categories()),
-				'U_VIDEO_COLLAPSE_URL' => $this->helper->route('phpbb_collapsiblecategories_main_controller', array(
+				'VIDEO_IS_COLLAPSIBLE'	=> true,
+				'S_VIDEO_HIDDEN' 		=> in_array($fid, $this->operator->get_user_categories()),
+				'U_VIDEO_COLLAPSE_URL' 	=> $this->helper->route('phpbb_collapsiblecategories_main_controller', array(
 					'forum_id' => $fid,
 					'hash' => generate_link_hash("collapsible_$fid")))
 			));
@@ -166,16 +188,11 @@ class listener implements EventSubscriberInterface
 		$total_comments = (int) $this->db->sql_fetchfield('total_comments');
 		$this->db->sql_freeresult($result);
 
-		$l_total_video_s 	= ($total_videos == 0) ? 'TOTAL_VIDEO_ZERO' : 'TOTAL_VIDEOS_OTHER';
-		$l_total_category_s = ($total_categories == 0) ? 'TOTAL_CATEGORY_ZERO' : 'TOTAL_CATEGORIES_OTHER';
-		$l_total_view_s 	= ($total_views == 0) ? 'TOTAL_VIEW_ZERO' : 'TOTAL_VIEWS_OTHER';
-		$l_total_comment_s 	= ($total_comments == 0) ? 'TOTAL_COMMENT_ZERO' : 'TOTAL_COMMENTS_OTHER';
-
 		$this->template->assign_vars(array(
-			'TOTAL_VIDEOS_INDEX'				=> sprintf($this->user->lang[$l_total_video_s], $total_videos),
-			'TOTAL_CATEGORIES'					=> sprintf($this->user->lang[$l_total_category_s], $total_categories),
-			'TOTAL_VIEWS'						=> sprintf($this->user->lang[$l_total_view_s], $total_views),
-			'TOTAL_COMMENTS'					=> sprintf($this->user->lang[$l_total_comment_s], $total_comments),
+			'TOTAL_VIDEOS_INDEX'				=> sprintf($this->user->lang('TOTAL_VIDEO', $total_videos)),
+			'TOTAL_CATEGORIES'					=> sprintf($this->user->lang('TOTAL_CATEGORIES', $total_categories)),
+			'TOTAL_VIEWS'						=> sprintf($this->user->lang('TOTAL_VIEWS', $total_views)),
+			'TOTAL_COMMENTS'					=> sprintf($this->user->lang('TOTAL_COMMENTS', $total_comments)),
 			'S_ENABLE_VIDEO_STATICS_ON_INDEX'	=> $this->config['enable_video_statics_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX'			=> $this->config['enable_video_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],
@@ -190,12 +207,12 @@ class listener implements EventSubscriberInterface
 			'FROM'		=> array(
 				$this->video_table			=> 'v',
 				$this->video_cat_table		=> 'ct',
-				USERS_TABLE			=> 'u',
+				USERS_TABLE					=> 'u',
 			),
-			'WHERE'		=> 'ct.video_cat_id = v.video_cat_id AND u.user_id = v.user_id',
+			'WHERE'		=> 'ct.video_cat_id = v.video_cat_id
+				AND u.user_id = v.user_id',
 			'ORDER_BY'	=> 'v.video_id DESC',
 		);
-
 		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query_limit($sql, $video_value, 0);
 
@@ -210,9 +227,9 @@ class listener implements EventSubscriberInterface
 				'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
 				'VIDEO_ID'			=> censor_text($row['video_id']),
 				'U_VIEW_VIDEO'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-				'U_POSTER'			=> append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
+				'U_POSTER'			=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
+				'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
 			));
 		}
 		$this->db->sql_freeresult($result);

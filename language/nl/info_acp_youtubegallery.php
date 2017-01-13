@@ -3,6 +3,7 @@
 *
 * @package phpBB Extension - Youtube Videos Gallery
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* Nederlandse vertaling @ Solidjeuh <http://www.froddelpower.be>
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -34,14 +35,14 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 
 $lang = array_merge($lang, array(
-	'ACP_VIDEO'				=> 'Youtube Video Gallery',
-	'ACP_VIDEO_SETTINGS'	=> 'Video Settings',
-	'ACP_VIDEO_CATEGORY'	=> 'Video Categories',
-	'ACP_VIDEO_TITLE'		=> 'Video Titles',
+	'ACP_VIDEO'				=> 'Youtube Video Galerij',
+	'ACP_VIDEO_SETTINGS'	=> 'Video Instellingen',
+	'ACP_VIDEO_CATEGORY'	=> 'Video categorieën',
+	'ACP_VIDEO_TITLE'		=> 'Video Titels',
 	//Log
-	'LOG_VIDEO_SETTINGS'			=> '<strong>Updated Youtube Video Gallery Settings</strong>',
-	'LOG_VIDEO_CATEGORY_ADD'		=> '<strong>Added Youtube Video Gallery Category</strong>',
-	'LOG_VIDEO_CATEGORY_UPDATE'		=> '<strong>Updated Youtube Video Gallery Category</strong>',
-	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Deleted Youtube Video Gallery Category</strong>',
-	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Deleted Youtube Video Gallery Title</strong>',
+	'LOG_VIDEO_SETTINGS'			=> '<strong>Youtube video galerij instellingen geüpdatet</strong>',
+	'LOG_VIDEO_CATEGORY_ADD'		=> '<strong>Youtube video galerij categorie toegevoegd</strong>',
+	'LOG_VIDEO_CATEGORY_UPDATE'		=> '<strong>Youtube video galerij categorie geüpdate</strong>',
+	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Youtube video galerij categorie verwijderd</strong>',
+	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Youtube video galerij titel verwijderd</strong>',
 ));

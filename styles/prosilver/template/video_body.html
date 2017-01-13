@@ -1,15 +1,15 @@
 <!-- INCLUDE overall_header.html -->
 
 <!-- IF not S_IS_BOT and VIDEOSUBMIT -->
-	<div class="action-bar top">
-		<div class="buttons">
-			<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
-		</div>
+<div class="action-bar bar-top">
+	<div class="buttons">
+		<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
 	</div>
+</div>
 <!-- ENDIF -->
 
 <!-- IF .video -->
-<div id="tabs">
+<div id="tabs" class="tabs">
 	<ul>
 		<li class="tab activetab"><a href="#">{L_NEWEST_VIDEOS}</a></li>
 		<!-- IF not S_IS_BOT and S_USER_LOGGED_IN --><li class="tab"><a href="{U_MY_VIDEOS}">{L_MY_VIDEOS}</a></li><!-- ENDIF -->
@@ -33,18 +33,18 @@
 </div>
 <!-- ELSE -->
 <br class="clear" />
-	<div id="information" class="rules">
-		<div class="inner">
-			<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
-		</div>
+<div id="information" class="rules">
+	<div class="inner">
+		<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
 	</div>
+</div>
 <!-- ENDIF -->
 
-<div class="action-bar bottom">
+<div class="action-bar bar-bottom">
 	<!-- IF not S_IS_BOT and VIDEOSUBMIT -->
-		<div class="buttons">
-			<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
-		</div>
+	<div class="buttons">
+		<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+	</div>
 	<!-- ENDIF -->
 
 	<!-- IF .pagination or TOTAL_VIDEOS -->
@@ -58,10 +58,8 @@
 	</div>
 	<!-- ENDIF -->
 </div>
-
 <br />
-
-<div id="tabs" class="sub-panels" data-show-panel="category-panel" role="tablist">
+<div id="tabs" class="sub-panels tabs" data-show-panel="category-panel" role="tablist">
 	<ul>
 		<li id="category-panel-tab" class="tab activetab">
 			<a href="#tabs" data-subpanel="category-panel" role="tab" aria-controls="category-panel"><span>{L_VIDEO_CATS}</span></a>

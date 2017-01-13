@@ -34,11 +34,10 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 
 $lang = array_merge($lang, array(
-	// Permissions
-	'ACL_U_VIDEO_VIEW_FULL'	=> 'Can view Video Gallery',
-	'ACL_U_VIDEO_VIEW'		=> 'Can view videos',
-	'ACL_U_VIDEO_DELETE'	=> 'Can delete own videos',
-	'ACL_U_VIDEO_POST'		=> 'Can post videos',
-	'ACL_U_VIDEO_COMMENT'	=> 'Can post video comments',
-	'ACL_U_VIDEO_COMMENT_DELETE'		=> 'Can delete own video comments',
+	'ACL_U_VIDEO_VIEW_FULL'			=> 'Can view Video Gallery',
+	'ACL_U_VIDEO_VIEW'				=> 'Can view videos',
+	'ACL_U_VIDEO_DELETE'			=> 'Can delete own videos',
+	'ACL_U_VIDEO_POST'				=> 'Can post videos',
+	'ACL_U_VIDEO_COMMENT'			=> 'Can post video comments',
+	'ACL_U_VIDEO_COMMENT_DELETE'	=> 'Can delete own video comments',
 ));

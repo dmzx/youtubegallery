@@ -13,21 +13,13 @@ namespace dmzx\youtubegallery\acp;
 class acp_youtubegallery_module
 {
 	public	$u_action;
-	public	$new_config = array();
 
 	function main($id, $mode)
 	{
-		global $phpbb_container, $request, $user;
+		global $phpbb_container, $user;
 
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('dmzx.youtubegallery.admin.controller');
-
-		// Requests
-		$action = $request->variable('action', '');
-		if ($request->is_set_post('add'))
-		{
-			$action = 'add';
-		}
 
 		// Make the $u_action url available in the admin controller
 		$admin_controller->set_page_url($this->u_action);
@@ -57,7 +49,7 @@ class acp_youtubegallery_module
 				$this->tpl_name = 'acp_video_title';
 				// Set the page title for our ACP page
 				$this->page_title = $user->lang['ACP_VIDEO_TITLE'];
-				// Load the display cat handle in the admin controller
+				// Load the display titles handle in the admin controller
 				$admin_controller->display_title();
 			break;
 		}

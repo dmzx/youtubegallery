@@ -18,6 +18,7 @@ services:
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
+            - '@ext.manager'
     dmzx.youtubegallery.admin.controller:
         class: dmzx\youtubegallery\controller\admin_controller
         arguments:
@@ -45,5 +46,6 @@ services:
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
             - '@?phpbb.collapsiblecategories.operator'
+            - '@?files.factory'
         tags:
             - { name: event.listener }

@@ -12,11 +12,6 @@ namespace dmzx\youtubegallery\migrations;
 
 class youtubegallery_install extends \phpbb\db\migration\migration
 {
-	public function effectively_installed()
-	{
-		return isset($this->config['youtubegallery_version']) && version_compare($this->config['youtubegallery_version'], '1.0.2', '>=');
-	}
-
 	static public function depends_on()
 	{
 		return array('\phpbb\db\migration\data\v310\dev');
