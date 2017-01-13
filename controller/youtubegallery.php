@@ -537,7 +537,7 @@ class youtubegallery
 				{
 					$sql = 'UPDATE ' . $this->video_table . '
 						SET video_views = video_views + 1
-						WHERE video_id = '.$video_id;
+						WHERE video_id = ' . (int) $video_id;
 					$this->db->sql_query($sql);
 				}
 
@@ -547,7 +547,7 @@ class youtubegallery
 						$this->video_table			=> 'v',
 						USERS_TABLE			=> 'u',
 					),
-					'WHERE'		=> 'v.video_id = '.(int) $video_id .' and u.user_id = v.user_id',
+					'WHERE'		=> 'v.video_id = ' . (int) $video_id . ' and u.user_id = v.user_id',
 					'ORDER_BY'	=> 'v.video_id DESC',
 				);
 
@@ -625,7 +625,7 @@ class youtubegallery
 				// Count the videos user video ...
 				$sql = 'SELECT COUNT(video_id) AS total_videos
 					FROM ' . $this->video_table . '
-					WHERE user_id = '. (int) $user_id;
+					WHERE user_id = ' . (int) $user_id;
 				$result = $this->db->sql_query($sql);
 				$total_videos = (int) $this->db->sql_fetchfield('total_videos');
 				$this->db->sql_freeresult($result);
@@ -663,8 +663,8 @@ class youtubegallery
 						$this->video_cat_table		=> 'ct',
 						USERS_TABLE			=> 'u',
 					),
-					'WHERE'		=> 'v.video_cat_id = '. $video_cat_ids .'
-						AND ct.video_cat_id = '. $video_cat_ids .'
+					'WHERE'		=> 'v.video_cat_id = ' . (int) $video_cat_ids . '
+						AND ct.video_cat_id = ' . (int) $video_cat_ids . '
 						AND v.user_id = u.user_id',
 					'ORDER_BY'	=> 'v.video_id DESC',
 				);
@@ -692,7 +692,7 @@ class youtubegallery
 				// We need another query for the video count
 				$sql = 'SELECT COUNT(*) as video_count
 					FROM ' . $this->video_table .'
-					WHERE video_cat_id = '. (int) $video_cat_ids;
+					WHERE video_cat_id = ' . (int) $video_cat_ids;
 				$result = $this->db->sql_query($sql);
 				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);
@@ -733,7 +733,7 @@ class youtubegallery
 				// We need another query for the video count
 				$sql = 'SELECT COUNT(*) as video_count
 					FROM '. $this->video_table .'
-					WHERE user_id = '. $user_id;
+					WHERE user_id = ' . (int) $user_id;
 				$result = $this->db->sql_query($sql);
 				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);

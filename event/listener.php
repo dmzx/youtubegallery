@@ -209,7 +209,7 @@ class listener implements EventSubscriberInterface
 				$this->video_cat_table		=> 'ct',
 				USERS_TABLE					=> 'u',
 			),
-			'WHERE'		=> 'ct.video_cat_id = v.video_cat_id
+			'WHERE'	=> 'ct.video_cat_id = v.video_cat_id
 				AND u.user_id = v.user_id',
 			'ORDER_BY'	=> 'v.video_id DESC',
 		);
