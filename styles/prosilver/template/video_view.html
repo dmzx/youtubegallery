@@ -1,0 +1,152 @@
+<!-- INCLUDE overall_header.html -->
+
+<div id="p{VIDEO_ID}" class="post bg3">
+	<div class="inner">
+		<div class="postbody">
+				<!-- IF U_DELETE and DELETE_ALLOW -->
+				<ul class="post-buttons">
+					<li>
+						<a href="{U_DELETE}" title="{L_VIDEO_DELETE}" class="button button-icon-only"><i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{L_VIDEO_DELETE}</span></a>
+					</li>
+				</ul>
+				<!-- ENDIF -->
+			<h3 class="first"><a href="#v{VIDEO_ID}">{VIDEO_TITLE}</a></h3>
+			<p class="author">{L_VIDEO_ADD_BY} <strong>{USERNAME}</strong> &raquo; {VIDEO_TIME}</p>
+			<div class="content" style="text-align: center;">
+				<div class="videoWrapper">
+					<div id="ytplayer"></div>
+				</div>
+				<script type="text/javascript">
+				// <![CDATA[
+				// Load the IFrame Player API code asynchronously.
+				var tag = document.createElement('script');
+				tag.src = "https://www.youtube.com/player_api";
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+				// Replace the 'ytplayer' element with an <iframe> and
+				// YouTube player after the API code downloads.
+				var player;
+				function onYouTubePlayerAPIReady() {
+					player = new YT.Player('ytplayer', {
+						videoId: '{YOUTUBE_ID}'
+					});
+				}
+				// ]]>
+				</script>
+				<br /><br />
+				<a href="{YOUTUBE_VIDEO}" onclick="this.target= '_blank';return true;"><span class="icon_youtube" title="{L_VIDEO_WATCH}"></span> {L_VIDEO_WATCH}</a>
+			</div>
+		</div>
+		<dl class="postprofile" id="profile{VIDEO_ID}">
+			<dd><strong>{L_VIDEO_ADD_BY}{L_COLON}</strong> {USERNAME}</dd>
+			<dd><strong>{L_TOTAL_VIDEOS}{L_COLON}</strong> {TOTAL_VIDEOS} (<a href="{U_USER_VIDEOS}" title="{L_USER_VIDEOS_EXPLAIN}">{L_USER_VIDEOS_EXPLAIN}</a>)</dd>
+			<dd><strong>{L_VIDEO_VIEWS}{L_COLON}</strong> {VIDEO_VIEWS}</dd>
+		</dl>
+		<div class="back2top"><a href="#top" class="top" title="{L_BACK_TO_TOP}"><i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">{L_BACK_TO_TOP}</span></a></div>
+	</div>
+</div>
+
+<div class="panel bg1">
+	<div class="inner">
+		<h3>{L_VIDEO_LINKS}</h3>
+
+		<fieldset class="fields2">
+			<dl>
+				<dt><label>{L_VIDEO_LINK}{L_COLON}</label></dt>
+				<dd><input type="text" class="inputbox" value="{VIDEO_LINK}" title="{VIDEO_TITLE}" onclick="select()" /></dd>
+			</dl>
+			<dl>
+				<dt><label>{L_VIDEO_LINK_YOUTUBE}{L_COLON}</label></dt>
+				<dd><input type="text" class="inputbox" value="{YOUTUBE_VIDEO}" title="{VIDEO_TITLE}" onclick="select()" /></dd>
+			</dl>
+			<dl>
+				<dt><label>{L_VIDEO_BBCODE}{L_COLON}</label></dt>
+				<dd><input type="text" class="inputbox" value="[url={VIDEO_LINK}]{VIDEO_TITLE}[/url]" title="{VIDEO_TITLE}" onclick="select()" /></dd>
+			</dl>
+			<!-- IF S_BBCODE_FLASH -->
+			<dl>
+				<dt><label>{L_VIDEO_EMBED}{L_COLON}</label><br /><span>{FLASH_STATUS}</span></dt>
+				<dd><input type="text" class="inputbox" value="[flash=425,344]{VIDEO_LINK_FLASH}[/flash]" title="{VIDEO_TITLE}" onclick="select()" /></dd>
+			</dl>
+			<!-- ENDIF -->
+		</fieldset>
+	</div>
+</div>
+<br />
+<!-- IF S_ENABLE_COMMENTS -->
+<div class="action-bar bar-top">
+	<div class="buttons">
+	<!-- IF not S_IS_BOT and S_POST_COMMENT -->
+		<a href="{U_POST_COMMENT}" title="{L_POST_REPLY}" class="button icon-button reply-icon">{L_POST_REPLY}</a>
+	<!-- ENDIF -->
+	</div>
+	<!-- IF .pagination or TOTAL_COMMENTS -->
+	<div class="pagination">
+		{TOTAL_COMMENTS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+</div>
+<div class="clear"></div>
+<!-- IF .commentrow -->
+<a id="comments"></a>
+	<!-- BEGIN commentrow -->
+	<div id="p{commentrow.COMMENT_ID}" class="post <!-- IF commentrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<div class="inner">
+			<div class="postbody" style="width: 98%;">
+				<!-- IF not S_IS_BOT -->
+				<!-- IF commentrow.S_DELETE_ALLOWED -->
+					<ul class="post-buttons">
+						<a href="{commentrow.U_DELETE}" title="{L_DELETE_COMMENT}" class="button button-icon-only"><i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{L_DELETE_COMMENT}</span></a>
+					</ul>
+				<!-- ENDIF -->
+				<!-- ENDIF -->
+				<h3><a href="#p{commentrow.COMMENT_ID}">{commentrow.VIDEO_TITLE}</a></h3>
+				<p class="author">{L_POST_BY_AUTHOR} <strong>{commentrow.USERNAME}</strong> &raquo; {commentrow.COMMENT_TIME} </p>
+
+				<div class="content">{commentrow.COMMENT_TEXT}</div>
+			</div>
+			<div class="back2top"><a href="#top" class="top" title="{L_BACK_TO_TOP}"><i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">{L_BACK_TO_TOP}</span></a></div>
+		</div>
+	</div>
+	<hr class="divider" />
+	<!-- END commentrow -->
+<!-- ELSE -->
+<div class="panel">
+	<div class="inner">
+		<strong>{L_NO_VIDEOS_COMMENTS}</strong>
+	</div>
+</div>
+<!-- ENDIF -->
+<!-- ENDIF -->
+<div class="action-bar bar-bottom">
+	<div class="buttons">
+	<!-- IF not S_IS_BOT and S_POST_COMMENT -->
+		<a href="{U_POST_COMMENT}" title="{L_POST_REPLY}" class="button icon-button reply-icon">{L_POST_REPLY}</a>
+	<!-- ENDIF -->
+	</div>
+	<!-- IF .pagination or TOTAL_COMMENTS -->
+	<div class="pagination">
+		{TOTAL_COMMENTS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+</div>
+<p class="jumpbox-return">
+	<a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">
+		<i class="icon fa-angle-{S_CONTENT_FLOW_BEGIN} fa-fw icon-black" aria-hidden="true"></i><span>{L_RETURN_TO_VIDEO_INDEX}</span>
+	</a>
+</p>
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->

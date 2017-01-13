@@ -1,0 +1,67 @@
+<!-- INCLUDE overall_header.html -->
+
+<h2>{L_USER_VIDEOS} {USERNAME_SEARCH}</h2>
+
+<div class="action-bar bar-top">
+	<!-- IF .pagination or TOTAL_VIDEOS -->
+	<div class="pagination">
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+</div>
+
+<!-- IF S_SEARCH_USER_VIDEO -->
+<!-- IF .video -->
+<div class="panel bg3">
+	<div class="inner">
+		<!-- BEGIN video -->
+			<div id="video{video.VIDEO_ID}" class="video_item <!-- IF video.S_ROW_COUNT is even -->column1<!-- ELSE -->column2<!-- ENDIF -->">
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="{video.S_VIDEO_THUMBNAIL}" alt="{video.VIDEO_TITLE}" /></a>
+				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
+				<div>
+					{L_VIDEO_CAT}{L_COLON} <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
+					{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME} <br />
+					{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
+				</div>
+			</div>
+		<!-- END video -->
+	</div>
+</div>
+<!-- ELSE -->
+<br class="clear" />
+<div id="information" class="rules">
+	<div class="inner">
+		<strong>{L_INFORMATION}{L_COLON}</strong> {L_NO_USER_VIDEOS}
+	</div>
+</div>
+<!-- ENDIF -->
+
+<div class="action-bar bar-bottom">
+	<!-- IF .pagination or TOTAL_VIDEOS -->
+	<div class="pagination">
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+<p class="jumpbox-return">
+	<a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">
+		<i class="icon fa-angle-{S_CONTENT_FLOW_BEGIN} fa-fw icon-black" aria-hidden="true"></i><span>{L_RETURN_TO_VIDEO_INDEX}</span>
+	</a>
+</p>
+<br class="clear" />
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->

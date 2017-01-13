@@ -1,0 +1,35 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_VIDEO_TITLE}</h1>
+
+<p>{L_ACP_VIDEO_TITLE_EXPLAIN}</p>
+
+<!-- IF .title -->
+<table cellspacing="1">
+	<thead>
+		<tr>
+			<th>{L_ACP_VIDEO_TITLE}</th>
+			<th>{L_ACP_VIDEO_CAT_TITLE}</th>
+			<th>{L_VIDEO_AUTHOR}</th>
+			<th>{L_ACTION}</th>
+		</tr>
+	</thead>
+	<tbody>
+	<!-- BEGIN title -->
+		<!-- IF title.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+			<td>{title.VIDEO_TITLE}</td>
+			<td>{title.VIDEO_CAT_TITLE}</td>
+			<td>{title.USERNAME}</td>
+			<td>&nbsp;<a href="{title.U_DEL}">{ICON_DELETE}</a>&nbsp;</td>
+		</tr>
+	<!-- END title -->
+	</tbody>
+</table>
+<br />
+<!-- ENDIF -->
+
+<!-- IF not .title -->
+<p class="error"><strong>{L_NO_TITLE}</strong></p>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

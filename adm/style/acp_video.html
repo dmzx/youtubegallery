@@ -1,0 +1,62 @@
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+
+<h1>{L_ACP_VIDEO}</h1>
+
+<p>{L_ACP_VIDEO_EXPLAIN}</p>
+
+<p><img src="https://img.shields.io/badge/{{ lang('Version') }}-{{ VIDEO_GALLERY_VERSION }}-green.svg?style=plastic" /></p>
+
+<form id="acp_video" method="post" action="{U_ACTION}" enctype="multipart/form-data">
+	<fieldset>
+		<legend>{L_ACP_VIDEO_GENERAL_SETTINGS}</legend>
+		<dl>
+			<dt><label>{L_ACP_ENABLE_VIDEO_GLOBAL}{L_COLON}</label><br />{L_ACP_ENABLE_VIDEO_GLOBAL_EXPLAIN}</dt>
+			<dd><label><input type="radio" class="radio" name="enable_video_global" value="1"<!-- IF ENABLE_VIDEO_GLOBAL --> id="enable_video_global" checked="checked" <!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="enable_video_global" value="0"<!-- IF not ENABLE_VIDEO_GLOBAL --> id="enable_video_global" checked="checked" <!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_GOOGLE_KEY}{L_COLON}</label><br /><span>{L_ACP_GOOGLE_KEY_EXPLAIN}</span></dt>
+			<dd><input type="text" name="google_api_key" size="40" maxlength="40" value="{GOOGLE_KEY_ACP}" /></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_ENABLE_VIDEO_STATICS_ON_INDEX}{L_COLON}</label><br />{L_ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN}</dt>
+			<dd><label><input type="radio" class="radio" name="enable_video_statics_on_index" value="1"<!-- IF ENABLE_VIDEO_STATICS_ON_INDEX --> id="enable_video_statics_on_index" checked="checked" <!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="enable_video_statics_on_index" value="0"<!-- IF not ENABLE_VIDEO_STATICS_ON_INDEX --> id="enable_video_statics_on_index" checked="checked" <!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_ENABLE_COMMENTS}{L_COLON}</label><br />{L_ACP_ENABLE_COMMENTS_EXPLAIN}</dt>
+			<dd><label><input type="radio" class="radio" name="enable_comments" value="1"<!-- IF ENABLE_COMMENTS --> id="enable_comments" checked="checked" <!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="enable_comments" value="0"<!-- IF not ENABLE_COMMENTS --> id="enable_comments" checked="checked" <!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_COMMENTS_PER_PAGE}{L_COLON}</label><br /><span>{L_ACP_COMMENTS_PER_PAGE_EXPLAIN}</span></dt>
+			<dd><input type="text" name="comments_per_page" size="3" maxlength="4" value="{COMMENTS_PER_PAGE_ACP}" /></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_ENABLE_VIDEO_ON_INDEX}{L_COLON}</label><br />{L_ACP_ENABLE_VIDEO_ON_INDEX_EXPLAIN}</dt>
+			<dd><label><input type="radio" class="radio" name="enable_video_on_index" value="1"<!-- IF ENABLE_VIDEO_ON_INDEX --> id="enable_video_on_index" checked="checked" <!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="enable_video_on_index" value="0"<!-- IF not ENABLE_VIDEO_ON_INDEX --> id="enable_video_on_index" checked="checked" <!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_ENABLE_VIDEO_ON_INDEX_LOCATION}{L_COLON}</label><br />{L_ACP_ENABLE_VIDEO_ON_INDEX_LOCATION_EXPLAIN}</dt>
+			<dd><label><input type="radio" class="radio" name="enable_video_on_index_location" value="1"<!-- IF ENABLE_VIDEO_ON_INDEX_LOCATION --> id="enable_video_on_index_location" checked="checked" <!-- ENDIF --> /> {L_ACP_VIDEO_TOP}</label>
+			<label><input type="radio" class="radio" name="enable_video_on_index_location" value="0"<!-- IF not ENABLE_VIDEO_ON_INDEX_LOCATION --> id="enable_video_on_index_location" checked="checked" <!-- ENDIF --> /> {L_ACP_VIDEO_BOTTOM}</label></dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_VIDEO_ON_INDEX_VALUE}{L_COLON}</label><br /><span>{L_ACP_VIDEO_ON_INDEX_VALUE_EXPLAIN}</span></dt>
+			<dd><input type="text" name="video_on_index_value" size="3" maxlength="4" value="{VIDEO_ON_INDEX_VALUE_ACP}" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</p>
+		{S_FORM_TOKEN}
+	</fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,4 @@
+parameters:
+    dmzx.youtubegallery.table.video: %core.table_prefix%video
+    dmzx.youtubegallery.table.video_cat: %core.table_prefix%video_cat
+    dmzx.youtubegallery.table.video_cmnts: %core.table_prefix%video_cmnts

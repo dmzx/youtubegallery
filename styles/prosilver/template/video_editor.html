@@ -1,0 +1,60 @@
+<!-- INCLUDE overall_header.html -->
+
+<form method="post" id="postform" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
+	<div class="panel">
+		<div class="inner">
+			<fieldset class="fields2">
+				<input type="hidden" name="username" id="username" value="{S_USERNAME}" />
+				<input type="hidden" name="user_id" id="user_id" value="{S_USER_ID}" />
+				<input type="hidden" name="create_time" id="create_time" value="{CREATE_TIME}" />
+				<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+				<dl>
+					<dt><label for="video_url">{L_VIDEO_URL}{L_COLON}</label></dt>
+					<dd><input type="url" size="45" class="inputbox autowidth" name="video_url" id="video_url" tabindex="5" /></dd>
+				</dl>
+				<dl>
+					<dt><label>{L_VIDEO_SELECT_CAT}{L_COLON}</label></dt>
+					<dd>
+						<select name="cid">
+						<!-- BEGIN cat -->
+							<option value="{cat.VIDEO_CAT_ID}">{cat.VIDEO_CAT_TITLE}</option>
+						<!-- END cat -->
+						</select>
+					</dd>
+				</dl>
+			</fieldset>
+		</div>
+	</div>
+	<div class="panel bg3" style="clear: both;">
+		<div class="inner">
+			<fieldset class="submit-buttons">
+				{S_HIDDEN_FIELDS}
+				<input type="submit" name="submit" id="submit" value="{L_SUBMIT}" class="button1" tabindex="9" />
+				{S_FORM_TOKEN}
+			</fieldset>
+		</div>
+	</div>
+</form>
+
+<div class="rules">
+	<div class="inner">
+		<strong>{L_VIDEOS_TIP}</strong><br />
+			<ul>
+				<li>{L_VIDEOS_TIPS_PART_01}</li>
+				<li>{L_VIDEOS_TIPS_PART_02}</li>
+				<li>{L_VIDEOS_TIPS_PART_03}</li>
+			</ul>
+			<br />
+		<strong>{L_VIDEOS_TIPS_PART_04}{L_COLON}&nbsp;{L_VIDEOS_TIPS_PART_05}</strong>
+	</div>
+</div>
+
+<p class="jumpbox-return">
+	<a href="{U_VIDEO}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">
+		<i class="icon fa-angle-{S_CONTENT_FLOW_BEGIN} fa-fw icon-black" aria-hidden="true"></i><span>{L_RETURN_TO_VIDEO_INDEX}</span>
+	</a>
+</p>
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->

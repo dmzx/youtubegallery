@@ -1,0 +1,89 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF not S_IS_BOT and VIDEOSUBMIT -->
+<div class="action-bar bar-top">
+	<div class="buttons">
+		<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- IF .video -->
+<div id="tabs" class="tabs">
+	<ul>
+		<li class="tab activetab"><a href="#">{L_NEWEST_VIDEOS}</a></li>
+		<!-- IF not S_IS_BOT and S_USER_LOGGED_IN --><li class="tab"><a href="{U_MY_VIDEOS}">{L_MY_VIDEOS}</a></li><!-- ENDIF -->
+	</ul>
+</div>
+<div class="panel bg3">
+	<div class="inner">
+		<!-- BEGIN video -->
+			<div id="video{video.VIDEO_ID}" class="video_item <!-- IF video.S_ROW_COUNT is even -->column1<!-- ELSE -->column2<!-- ENDIF -->">
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="{video.S_VIDEO_THUMBNAIL}" alt="{video.VIDEO_TITLE}" /></a>
+				<h3 class="center"><a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}">{video.VIDEO_TITLE}</a></h3>
+				<div>
+					{L_VIDEO_AUTHOR}{L_COLON} {video.USERNAME} <br />
+					{L_VIDEO_CAT}{L_COLON} <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a> <br />
+					{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME} <br />
+					{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
+				</div>
+			</div>
+		<!-- END video -->
+	</div>
+</div>
+<!-- ELSE -->
+<br class="clear" />
+<div id="information" class="rules">
+	<div class="inner">
+		<strong>{L_INFORMATION}{L_COLON}</strong> {NO_ENTRY}
+	</div>
+</div>
+<!-- ENDIF -->
+
+<div class="action-bar bar-bottom">
+	<!-- IF not S_IS_BOT and VIDEOSUBMIT -->
+	<div class="buttons">
+		<a href="{U_VIDEO_SUBMIT}" title="{L_VIDEO_SUBMIT}" class="button icon-button video-icon">{L_VIDEO_SUBMIT}</a>
+	</div>
+	<!-- ENDIF -->
+
+	<!-- IF .pagination or TOTAL_VIDEOS -->
+	<div class="pagination">
+		{TOTAL_VIDEOS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+</div>
+<br />
+<div id="tabs" class="sub-panels tabs" data-show-panel="category-panel" role="tablist">
+	<ul>
+		<li id="category-panel-tab" class="tab activetab">
+			<a href="#tabs" data-subpanel="category-panel" role="tab" aria-controls="category-panel"><span>{L_VIDEO_CATS}</span></a>
+		</li>
+		<li id="statistics-panel-tab" class="tab">
+			<a href="#tabs" data-subpanel="statistics-panel" role="tab" aria-controls="statistics-panel">{L_STATISTICS}<strong id="file-total-progress"><strong id="file-total-progress-bar"></strong></strong></a>
+		</li>
+	</ul>
+</div>
+
+<div class="panel bg3 panel-container" id="category-panel">
+	<div class="inner">
+		<h3>{L_VIDEO_CATS}</h3>
+		<p><!-- BEGIN videocat -->&bull; <a href="{videocat.U_CAT}" id="cat{videocat.VIDEO_CAT_ID}">{videocat.VIDEO_CAT_TITLE}</a> <!-- END videocat --></p>
+	</div>
+</div>
+
+<div class="panel bg3 panel-container" id="statistics-panel">
+	<div class="inner">
+		<h3>{L_STATISTICS}</h3>
+		<p>{TOTAL_VIDEOS_INDEX} &bull; {TOTAL_CATEGORIES} &bull; {TOTAL_VIEWS} &bull; {TOTAL_COMMENTS}</p>
+	</div>
+</div>
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->
