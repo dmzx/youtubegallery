@@ -1,3 +1,0 @@
-dmzx_youtubegallery_controller:
-    path: /video
-    defaults: { _controller: dmzx.youtubegallery.controller:handle_video }
