@@ -495,7 +495,7 @@ class youtubegallery
 					$sql = 'DELETE FROM ' . $this->video_table . '
 						WHERE video_id = ' . (int) $video_id;
 					$this->db->sql_query($sql);
-					
+
 					$sql = 'DELETE FROM ' . $this->video_cmnts_table . '
 						WHERE cmnt_video_id = ' . (int) $video_id;
 					$this->db->sql_query($sql);
