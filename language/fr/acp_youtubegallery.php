@@ -5,6 +5,7 @@
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
+* French translation - Philippe B.
 *
 */
 
@@ -42,20 +43,20 @@ $lang = array_merge($lang, array(
 	'ACP_GOOGLE_KEY_EXPLAIN'						=> 'Afin d’utiliser la galerie vidéo, vous devez créer une <strong>Clé API Google Publique</strong>. Merci de visiter <strong><a href="https://support.google.com/cloud/answer/6158862/">Créer une clé API</a></strong> pour générer la clé. Si vous avez des soucis pour générer votre clé, lisez le guide <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">Google Developers Console Help: API keys</a></strong>. Tant que la clé ne sera pas entrée, la galerie ne fonctionnera pas.',
 	'ACP_VIDEOS_PER_PAGE'							=> 'Vidéos par page',
 	'ACP_COMMENTS_PER_PAGE'							=> 'Commentaires par page',
-	'ACP_COMMENTS_PER_PAGE_EXPLAIN'					=> 'Set value for comments on video page.<br /><em>Default value is 10</em>.',
+	'ACP_COMMENTS_PER_PAGE_EXPLAIN'					=> 'Nombre de commentaires sur la page des vidéos.<br /><em>La valeur par défaut est de 10</em>.',
 	'ACP_ENABLE_COMMENTS'							=> 'Activer les commentaires des vidéos',
-	'ACP_ENABLE_COMMENTS_EXPLAIN'					=> 'This option will display the comment on video page.',
+	'ACP_ENABLE_COMMENTS_EXPLAIN'					=> 'Cette option va activer l’affichage des commentaires sur la page des vidéos.',
 	'ACP_ENABLE_VIDEO_GLOBAL'						=> 'Activer la galerie vidéo',
-	'ACP_ENABLE_VIDEO_GLOBAL_EXPLAIN'				=> 'Enable video gallery extension global.',
+	'ACP_ENABLE_VIDEO_GLOBAL_EXPLAIN'				=> 'Activer l’extension galerie vidéo.',
 	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX'				=> 'Activer les statistiques vidéos sur l’index',
-	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN'		=> 'Cette option active l’affichage des statisqtiques vidéos sur la page d’index.',
+	'ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN'		=> 'Cette option active l’affichage des statistiques vidéos sur la page d’index.',
 	'ACP_ENABLE_VIDEO_ON_INDEX'						=> 'Activer les vidéos sur l’index',
 	'ACP_ENABLE_VIDEO_ON_INDEX_EXPLAIN'				=> 'Cette option active l’affichage des vidéos sur la page d’index.',
 	'ACP_ENABLE_VIDEO_ON_INDEX_LOCATION'			=> 'Afficher les dernières vidéos en haut de l’index',
 	'ACP_ENABLE_VIDEO_ON_INDEX_LOCATION_EXPLAIN'	=> 'Au dessus ou en dessous du forum.',
 	'ACP_VIDEO_ON_INDEX_VALUE'						=> 'Afficher les dernières vidéos',
 	'ACP_VIDEO_ON_INDEX_VALUE_EXPLAIN'				=> 'Entrez le nombre de vidéos a afficher sur l’index.<br /><em>La valeur par défaut est 6</em>.',
-	'ACP_VIDEO_SETTINGS_SAVED'						=> 'Video gallery settings saved',
+	'ACP_VIDEO_SETTINGS_SAVED'						=> 'Paramètres de la galerie vidéo sauvegrdés',
 	'ACP_VIDEO_TOP'									=> 'Haut',
 	'ACP_VIDEO_BOTTOM'								=> 'Bas',
 
