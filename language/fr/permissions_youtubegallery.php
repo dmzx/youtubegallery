@@ -5,6 +5,7 @@
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
+* French Translation - Philippe B.
 *
 */
 
@@ -38,6 +39,6 @@ $lang = array_merge($lang, array(
 	'ACL_U_VIDEO_VIEW'				=> 'Peut voir les vidéos',
 	'ACL_U_VIDEO_DELETE'			=> 'Peut supprimer ses propres vidéos',
 	'ACL_U_VIDEO_POST'				=> 'Peut poster des vidéos',
-	'ACL_U_VIDEO_COMMENT'			=> 'Put commenter les vidéos',
+	'ACL_U_VIDEO_COMMENT'			=> 'Peut commenter les vidéos',
 	'ACL_U_VIDEO_COMMENT_DELETE'	=> 'Peut supprimer les commentaires de ses propres vidéos',
 ));
