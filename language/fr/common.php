@@ -5,6 +5,7 @@
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
+* French Translation - Philippe B.
 *
 */
 
@@ -38,16 +39,16 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'VIDEO_INDEX'				=> 'Galerie Vidéo',
+	'VIDEO_INDEX'				=> 'Galerie vidéo',
 	'VIDEO_SELECT_CAT'			=> 'Selectionner une catégorie',
-	'VIDEO_SUBMIT'				=> 'Nouvelle Vidéo',
+	'VIDEO_SUBMIT'				=> 'Nouvelle vidéo',
 	'VIDEO_URL'					=> 'Entrez l’URL de la vidéo',
 	'VIDEOS_TIP'				=> 'Aide et Suggestions',
 	'VIDEOS_TIPS_PART_01'		=> 'Rendez vous sur <a href="https://www.youtube.com/">Youtube.com</a>, cherchez vos vidéos favorites.',
 	'VIDEOS_TIPS_PART_02'		=> 'Copiez l’URL de la vidéo, collez la dans le champs, choisissez la catégorie et soumettez le formulaire.',
 	'VIDEOS_TIPS_PART_03'		=> 'Vous pouvez utiliser <strong>youtube.com</strong> et <strong>youtu.be</strong>, les deux sont acceptés dans l’Extension.',
 	'VIDEOS_TIPS_PART_04'		=> 'Attention',
-	'VIDEOS_TIPS_PART_05'		=> 'cette page n’est pas faite pour charger des vidéos vers Youtube !',
+	'VIDEOS_TIPS_PART_05'		=> 'Cette page n’est pas faite pour charger des vidéos vers Youtube !',
 	'VIDEO_UNAUTHED'			=> 'Vous n’êtes pas autorisé à voir cette vidéo.',
 	'INVALID_VIDEO'				=> 'La vidéo que vous avez selectionné n’existe pas.',
 	'VIDEO'						=> 'Vidéos',
@@ -76,7 +77,7 @@ $lang = array_merge($lang, array(
 	'DELETE_VIDEO'				=> 'Etes vous certain de vouloir effacer cette vidéo ?',
 	'MY_VIDEOS'					=> 'Voir vos vidéos',
 	'NEED_VIDEO_URL'			=> 'Vous devez entrer une <strong>url</strong> pour cette vidéo.',
-	'NEWEST_VIDEOS'				=> 'Nouvelles Vidéos',
+	'NEWEST_VIDEOS'				=> 'Nouvelles vidéos',
 	'NO_VIDEOS'					=> 'Cette page ne contient pas de vidéo.',
 	'NO_CAT_VIDEOS'				=> 'Cette catégorie ne contient pas de vidéo ou n’existe pas.',
 	'NO_USER_VIDEOS'			=> 'Cet utilisateur n’a pas de vidéo ou n’existe pas.',
@@ -115,14 +116,14 @@ $lang = array_merge($lang, array(
 	'DELETE_COMMENT'			=> 'Effacer commentaire',
 
 	// View Video
-	'FLASH_IS_OFF'				=> '[flash] est <em>OFF</em>',
-	'FLASH_IS_ON'				=> '[flash] est <em>ON</em>',
+	'FLASH_IS_OFF'				=> '[flash] est <em>Désactivé</em>',
+	'FLASH_IS_ON'				=> '[flash] est <em>Activé</em>',
 	'VIDEO_ADD_BY'				=> 'Ajouté par',
 	'VIDEO_BBCODE'				=> 'BBcode',
-	'VIDEO_EMBED'				=> 'Embed Video',
-	'VIDEO_LINK'				=> 'Video Link',
-	'VIDEO_LINKS'				=> 'Links',
-	'VIDEO_LINK_YOUTUBE'		=> 'Youtube Video Link',
+	'VIDEO_EMBED'				=> 'Intégrer la vidéo',
+	'VIDEO_LINK'				=> 'Lien vidéo',
+	'VIDEO_LINKS'				=> 'Liens',
+	'VIDEO_LINK_YOUTUBE'		=> 'Lien vidéo Youtube',
 	'VIDEO_VIEWS'				=> 'Vues',
 
 	// Youtube vidéo text
