@@ -169,7 +169,7 @@ class listener implements EventSubscriberInterface
 
 		// Count the videos categories ...
 		$sql = 'SELECT COUNT(video_cat_id) AS total_categories
-			FROM ' . $this->video_cat_table . '';
+			FROM ' . $this->video_cat_table;
 		$result = $this->db->sql_query($sql);
 		$total_categories = (int) $this->db->sql_fetchfield('total_categories');
 		$this->db->sql_freeresult($result);
@@ -189,10 +189,10 @@ class listener implements EventSubscriberInterface
 		$this->db->sql_freeresult($result);
 
 		$this->template->assign_vars(array(
-			'TOTAL_VIDEOS_INDEX'				=> sprintf($this->user->lang('TOTAL_VIDEO', $total_videos)),
-			'TOTAL_CATEGORIES'					=> sprintf($this->user->lang('TOTAL_CATEGORIES', $total_categories)),
-			'TOTAL_VIEWS'						=> sprintf($this->user->lang('TOTAL_VIEWS', $total_views)),
-			'TOTAL_COMMENTS'					=> sprintf($this->user->lang('TOTAL_COMMENTS', $total_comments)),
+			'TOTAL_VIDEOS_INDEX'				=> $this->user->lang('TOTAL_VIDEO', $total_videos),
+			'TOTAL_CATEGORIES'					=> $this->user->lang('TOTAL_CATEGORIES', $total_categories),
+			'TOTAL_VIEWS'						=> $this->user->lang('TOTAL_VIEWS', $total_views),
+			'TOTAL_COMMENTS'					=> $this->user->lang('TOTAL_COMMENTS', $total_comments),
 			'S_ENABLE_VIDEO_STATICS_ON_INDEX'	=> $this->config['enable_video_statics_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX'			=> $this->config['enable_video_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],

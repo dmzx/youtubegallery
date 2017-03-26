@@ -13,7 +13,6 @@ namespace dmzx\youtubegallery\controller;
 use phpbb\config\config;
 use phpbb\controller\helper;
 use phpbb\template\template;
-use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\auth\auth;
 use phpbb\db\driver\driver_interface as db_interface;
@@ -32,9 +31,6 @@ class youtubegallery
 
 	/** @var template */
 	protected $template;
-
-	/** @var log_interface */
-	protected $log;
 
 	/** @var user */
 	protected $user;
@@ -77,7 +73,6 @@ class youtubegallery
 	 * @param config				$config
 	 * @param helper				$helper
 	 * @param template				$template
-	 * @param log_interface			$log
 	 * @param user					$user
 	 * @param auth					$auth
 	 * @param db_interface			$db
@@ -94,7 +89,6 @@ class youtubegallery
 		config $config,
 		helper $helper,
 		template $template,
-		log_interface $log,
 		user $user,
 		auth $auth,
 		db_interface $db,
@@ -111,7 +105,6 @@ class youtubegallery
 		$this->config 				= $config;
 		$this->helper 				= $helper;
 		$this->template 			= $template;
-		$this->phpbb_log 			= $log;
 		$this->user 				= $user;
 		$this->auth 				= $auth;
 		$this->db 					= $db;
@@ -140,8 +133,6 @@ class youtubegallery
 		$video_cat_ids 	= $this->request->variable('id', 0);
 		$username 		= $this->request->variable('username', '', true);
 		$user_id 		= $this->request->variable('user_id', 0);
-		$youtube_id 	= $this->request->variable('youtube_id', '', true);
-		$create_time 	= $this->request->variable('create_time', '');
 		$video_views 	= $this->request->variable('video_views', 0);
 		$sql_start 		= $this->request->variable('start', 0);
 		$sql_limit 		= $this->request->variable('limit', 10);
@@ -149,8 +140,6 @@ class youtubegallery
 
 		// Comments
 		$cmnt_id 		= $this->request->variable('cmntid', 0);
-		$cmnt_video_id	= $this->request->variable('v', 0);
-		$cmnt_text 		= $this->request->variable('cmnt_text', '', true);
 
 		$mode 			= $this->request->variable('mode', '');
 		$submit 		= $this->request->is_set_post('submit');
@@ -201,7 +190,6 @@ class youtubegallery
 		);
 
 		$error = $row = array();
-		$current_time = time();
 
 		$this->assign_authors();
 
@@ -261,6 +249,7 @@ class youtubegallery
 						'VIDEO_CAT_TITLE'	=> censor_text($row['video_cat_title']),
 					));
 				}
+				$this->db->sql_freeresult($result);
 
 				// Start assigning vars for main posting page ...
 				$this->template->assign_vars(array(
@@ -295,19 +284,18 @@ class youtubegallery
 							$message = $this->user->lang['NEED_VIDEO_URL'];
 
 							meta_refresh(3, $meta_info);
-							$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+							$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 							trigger_error($message);
 						}
 						else
 						{
 							$this->db->sql_query('INSERT INTO ' . $this->video_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
-							$u_action = $this->helper->route('dmzx_youtubegallery_controller');
 
 							$meta_info = $this->helper->route('dmzx_youtubegallery_controller');
 							$message = $this->user->lang['VIDEO_CREATED'];
 
 							meta_refresh(3, $meta_info);
-							$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+							$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 							trigger_error($message);
 						}
 					break;
@@ -368,9 +356,9 @@ class youtubegallery
 				$video_id		= $this->request->variable('v', 0);
 				$uid = $bitfield = $options = '';
 				$allow_bbcode = $allow_urls = $allow_smilies = true;
-				$s_action 		= $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'comment', 'v' => (int) $video_id));
+				$s_action = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'comment', 'v' => (int) $video_id));
 				$s_hidden_fields = '';
-				$form_enctype 	= '';
+				$form_enctype = '';
 
 				add_form_key('postform');
 
@@ -387,7 +375,7 @@ class youtubegallery
 					'S_BBCODE_URL'			=> $url_status,
 					'S_LINKS_ALLOWED'		=> $url_status,
 					'S_BBCODE_QUOTE'		=> $quote_status,
-					'BBCODE_STATUS'			=> ($bbcode_status) ? sprintf($this->user->lang['BBCODE_IS_ON'], '<a href="' . append_sid("{$this->root_path}faq.$this->php_ext", 'mode=bbcode') . '">', '</a>') : sprintf($this->user->lang['BBCODE_IS_OFF'], '<a href="' . append_sid("{$this->root_path}faq.$this->php_ext", 'mode=bbcode') . '">', '</a>'),
+					'BBCODE_STATUS'			=> ($bbcode_status) ? $this->user->lang('BBCODE_IS_ON', '<a href="' . append_sid("{$this->root_path}faq.$this->php_ext", 'mode=bbcode') . '">', '</a>') : $this->user->lang('BBCODE_IS_OFF', '<a href="' . append_sid("{$this->root_path}faq.$this->php_ext", 'mode=bbcode') . '">', '</a>'),
 					'IMG_STATUS'			=> ($img_status) ? $this->user->lang['IMAGES_ARE_ON'] : $this->user->lang['IMAGES_ARE_OFF'],
 					'FLASH_STATUS'			=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
 					'SMILIES_STATUS'		=> ($smilies_status) ? $this->user->lang['SMILIES_ARE_ON'] : $this->user->lang['SMILIES_ARE_OFF'],
@@ -421,7 +409,7 @@ class youtubegallery
 						$message = $this->user->lang['NEED_VIDEO_MESSAGE'];
 
 						meta_refresh(3, $meta_info);
-						$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+						$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 						trigger_error($message);
 					}
 					else
@@ -432,7 +420,7 @@ class youtubegallery
 						$message = $this->user->lang['COMMENT_CREATED'];
 
 						meta_refresh(3, $meta_info);
-						$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+						$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 						trigger_error($message);
 					}
 				}
@@ -461,7 +449,7 @@ class youtubegallery
 					$message = $this->user->lang['COMMENT_DELETED_SUCCESS'];
 
 					meta_refresh(1, $meta_info);
-					$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+					$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 					trigger_error($message);
 				}
 				else
@@ -474,7 +462,7 @@ class youtubegallery
 					confirm_box(false, $this->user->lang['DELETE_COMMENT_CONFIRM'], $s_hidden_fields);
 					$meta_info = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view' , 'id' => (int) $video_id));
 					$message = $this->user->lang['DELETE_COMMENT_NOT'];
-					$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+					$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 
 					meta_refresh(1, $meta_info);
 					trigger_error($message);
@@ -504,7 +492,7 @@ class youtubegallery
 					$message = $this->user->lang['VIDEO_DELETED'];
 
 					meta_refresh(3, $meta_info);
-					$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+					$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 					trigger_error($message);
 				}
 				else
@@ -520,7 +508,7 @@ class youtubegallery
 					$message = $this->user->lang['RETURN_TO_VIDEO_INDEX'];
 
 					meta_refresh(1, $meta_info);
-					$message .= '<br /><br />' . sprintf($this->user->lang['PAGE_RETURN'], '<a href="' . $meta_info . '">', '</a>');
+					$message .= '<br /><br />' . $this->user->lang('PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
 					trigger_error($message);
 				}
 			break;
@@ -547,7 +535,7 @@ class youtubegallery
 						$this->video_table			=> 'v',
 						USERS_TABLE			=> 'u',
 					),
-					'WHERE'		=> 'v.video_id = ' . (int) $video_id . ' and u.user_id = v.user_id',
+					'WHERE'		=> 'v.video_id = ' . (int) $video_id . ' AND u.user_id = v.user_id',
 					'ORDER_BY'	=> 'v.video_id DESC',
 				);
 
@@ -559,7 +547,7 @@ class youtubegallery
 				$page_title 	= $row['video_title'];
 				$user_id 		= $row['user_id'];
 				$flash_status	= $this->config['allow_post_flash'] ? true : false;
-				$delete_allowed = ($this->auth->acl_get('a_') or $this->auth->acl_get('m_') || ($this->user->data['is_registered'] && $this->user->data['user_id'] == $row['user_id'] && $this->auth->acl_get('u_video_delete')));
+				$delete_allowed = ($this->auth->acl_get('a_') || $this->auth->acl_get('m_') || ($this->user->data['is_registered'] && $this->user->data['user_id'] == $row['user_id'] && $this->auth->acl_get('u_video_delete')));
 
 				$this->template->assign_vars(array(
 					'VIDEO_ID'			=> censor_text($row['video_id']),
@@ -601,7 +589,7 @@ class youtubegallery
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
-					$delete_cmnt_allowed = ($this->auth->acl_get('a_') or $this->auth->acl_get('m_') || ($this->user->data['is_registered'] && $this->user->data['user_id'] == $row['user_id'] && $this->auth->acl_get('u_video_comment_delete')));
+					$delete_cmnt_allowed = ($this->auth->acl_get('a_') || $this->auth->acl_get('m_') || ($this->user->data['is_registered'] && $this->user->data['user_id'] == $row['user_id'] && $this->auth->acl_get('u_video_comment_delete')));
 					$text = generate_text_for_display($row['cmnt_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $row['bbcode_options']);
 					$this->template->assign_block_vars('commentrow', array(
 						'COMMENT_ID'		=> $row['cmnt_id'],
@@ -631,7 +619,6 @@ class youtubegallery
 				$this->db->sql_freeresult($result);
 
 				//Start pagination
-				$start = $this->request->variable('start', 0);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['comment_count'], $sql_limits, $sql_start);
 
 				$this->template->assign_vars(array(
@@ -697,7 +684,6 @@ class youtubegallery
 				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);
 
-				$start = $this->request->variable('start', 0);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
 
 				$sql = 'SELECT *
@@ -738,7 +724,6 @@ class youtubegallery
 				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);
 
-				$start = $this->request->variable('start', 0);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
 
 				$this->template->assign_vars(array(
@@ -783,7 +768,6 @@ class youtubegallery
 						'USERNAME_SEARCH'	=> get_username_string('no_profile', $row['user_id'], $row['username']) . ' (' . $videorow['video_count'] . ')',
 					));
 				}
-
 				$this->db->sql_freeresult($result);
 
 				$l_title = $this->user->lang['USER_VIDEOS'];
@@ -814,7 +798,7 @@ class youtubegallery
 
 				// Count the videos categories ...
 				$sql = 'SELECT COUNT(video_cat_id) AS total_categories
-					FROM ' . $this->video_cat_table . '';
+					FROM ' . $this->video_cat_table;
 				$result = $this->db->sql_query($sql);
 				$total_categories = (int) $this->db->sql_fetchfield('total_categories');
 				$this->db->sql_freeresult($result);
@@ -841,10 +825,10 @@ class youtubegallery
 					'U_VIDEO_SUBMIT' 		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'submit')),
 					'VIDEOSUBMIT'	 		=> $this->auth->acl_get('u_video_post'),
 					'U_MY_VIDEOS'			=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos' , 'user_id' => $this->user->data['user_id'])),
-					'TOTAL_VIDEOS_INDEX'	=> sprintf($this->user->lang('TOTAL_VIDEO', $total_videos)),
-					'TOTAL_CATEGORIES'		=> sprintf($this->user->lang('TOTAL_CATEGORIES', $total_categories)),
-					'TOTAL_VIEWS'			=> sprintf($this->user->lang('TOTAL_VIEWS', $total_views)),
-					'TOTAL_COMMENTS'		=> sprintf($this->user->lang('TOTAL_COMMENTS', $total_comments)),
+					'TOTAL_VIDEOS_INDEX'	=> $this->user->lang('TOTAL_VIDEO', $total_videos),
+					'TOTAL_CATEGORIES'		=> $this->user->lang('TOTAL_CATEGORIES', $total_categories),
+					'TOTAL_VIEWS'			=> $this->user->lang('TOTAL_VIEWS', $total_views),
+					'TOTAL_COMMENTS'		=> $this->user->lang('TOTAL_COMMENTS', $total_comments),
 				));
 
 				$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
@@ -892,7 +876,6 @@ class youtubegallery
 				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);
 
-				$start = $this->request->variable('start', 0);
 				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
 
 				$this->assign_authors();
