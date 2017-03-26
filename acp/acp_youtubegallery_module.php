@@ -18,6 +18,9 @@ class acp_youtubegallery_module
 	{
 		global $phpbb_container, $user;
 
+		// Add the ACP lang file
+		$user->add_lang_ext('dmzx/youtubegallery', 'acp_youtubegallery');
+
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('dmzx.youtubegallery.admin.controller');
 

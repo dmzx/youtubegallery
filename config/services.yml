@@ -7,7 +7,6 @@ services:
             - '@config'
             - '@controller.helper'
             - '@template'
-            - '@log'
             - '@user'
             - '@auth'
             - '@dbal.conn'
@@ -28,8 +27,6 @@ services:
             - '@user'
             - '@dbal.conn'
             - '@request'
-            - '%core.root_path%'
-            - '%core.php_ext%'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
     dmzx.youtubegallery.listener:

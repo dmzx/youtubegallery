@@ -37,12 +37,6 @@ class admin_controller
 	/** @var request_interface */
 	protected $request;
 
-	/** @var string */
-	protected $root_path;
-
-	/** @var string */
-	protected $php_ext;
-
 	/**
 	* The database tables
 	*
@@ -51,6 +45,9 @@ class admin_controller
 	protected $video_table;
 
 	protected $video_cat_table;
+
+	/** @var string Custom form action */
+	protected $u_action;
 
 	/**
 	 * Constructor
@@ -61,8 +58,6 @@ class admin_controller
 	 * @param user					$user
 	 * @param db_interface			$db
 	 * @param request_interface		$request
-	 * @param string 				$root_path
-	 * @param string 				$php_ext
 	 * @param string 				$video_table
 	 * @param string 				$video_cat_table
 	 */
@@ -73,8 +68,6 @@ class admin_controller
 		user $user,
 		db_interface $db,
 		request_interface $request,
-		$root_path,
-		$php_ext,
 		$video_table,
 		$video_cat_table
 	)
@@ -85,16 +78,12 @@ class admin_controller
 		$this->user 			= $user;
 		$this->db 				= $db;
 		$this->request 			= $request;
-		$this->root_path 		= $root_path;
-		$this->php_ext 			= $php_ext;
 		$this->video_table 		= $video_table;
 		$this->video_cat_table 	= $video_cat_table;
 	}
 
 	public function display_settings()
 	{
-		$this->user->add_lang_ext('dmzx/youtubegallery', 'acp_youtubegallery');
-
 		add_form_key('acp_video');
 
 		// Is the form being submitted to us?
@@ -143,8 +132,6 @@ class admin_controller
 
 	public function display_cat()
 	{
-		$this->user->add_lang_ext('dmzx/youtubegallery', 'acp_youtubegallery');
-
 		$form_key = 'acp_video_cat';
 		add_form_key($form_key);
 
@@ -191,6 +178,7 @@ class admin_controller
 					'VIDEO_CAT_ID'		=> $row['video_cat_id'],
 					'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
 				));
+				$this->db->sql_freeresult($result);
 			break;
 			case 'update':
 				if ($video_cat_title == '')
@@ -252,17 +240,12 @@ class admin_controller
 
 	public function display_title()
 	{
-		$this->user->add_lang_ext('dmzx/youtubegallery', 'acp_youtubegallery');
-
 		$form_key = 'acp_video_title';
 		add_form_key($form_key);
 
 		$form_action 		= $this->u_action. '&amp;action=delete';
 		$lang_mode			= $this->user->lang['ACP_VIDEO_TITLE'];
 		$video_id 			= $this->request->variable('video_id', 0);
-		$video_title 		= $this->request->variable('video_title', '', true);
-		$video_cat_id 		= $this->request->variable('video_cat_id', 0);
-		$video_cat_title 	= $this->request->variable('video_cat_title', '', true);
 		$action				= ($this->request->is_set_post('delete')) ? 'delete' : $this->request->variable('action', '');
 
 		switch ($action)
