@@ -1,14 +1,17 @@
 <?php
 /**
 *
-* @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author _Vinny_ - http://www.suportephpbb.com.br
-* French Translation - Philippe B.
+* Youtube Videos Gallery extension for the phpBB Forum Software package.
+* French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
+/**
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,14 +34,15 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ’ » “ ” …
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_U_VIDEO_VIEW_FULL'			=> 'Peut voir la gaerie vidéo',
-	'ACL_U_VIDEO_VIEW'				=> 'Peut voir les vidéos',
-	'ACL_U_VIDEO_DELETE'			=> 'Peut supprimer ses propres vidéos',
-	'ACL_U_VIDEO_POST'				=> 'Peut poster des vidéos',
-	'ACL_U_VIDEO_COMMENT'			=> 'Peut commenter les vidéos',
-	'ACL_U_VIDEO_COMMENT_DELETE'	=> 'Peut supprimer les commentaires de ses propres vidéos',
+	'ACL_U_VIDEO_VIEW_FULL'			=> 'Peut voir la galerie vidéo.',
+	'ACL_U_VIDEO_VIEW'				=> 'Peut voir les vidéos.',
+	'ACL_U_VIDEO_DELETE'			=> 'Peut supprimer ses vidéos.',
+	'ACL_U_VIDEO_POST'				=> 'Peut poster des vidéos.',
+	'ACL_U_VIDEO_COMMENT'			=> 'Peut commenter les vidéos.',
+	'ACL_U_VIDEO_COMMENT_DELETE'	=> 'Peut supprimer ses commentaires des vidéos.',
 ));
