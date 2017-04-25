@@ -1,14 +1,17 @@
 <?php
 /**
 *
-* @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Author _Vinny_ - http://www.suportephpbb.com.br
-* French Translation - Philippe B.
+* Youtube Videos Gallery extension for the phpBB Forum Software package.
+* French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
+/**
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,8 +34,9 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ’ » “ ” …
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
 	'ACP_VIDEO'				=> 'Galerie vidéo Youtube',
@@ -40,9 +44,9 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_CATEGORY'	=> 'Catégories des vidéos',
 	'ACP_VIDEO_TITLE'		=> 'Titres des vidéos',
 	//Log
-	'LOG_VIDEO_SETTINGS'			=> '<strong>Paramètres de la galerie vidéo mis à jour</strong>',
-	'LOG_VIDEO_CATEGORY_ADD'		=> '<strong>Catégorie vidéo Youtube ajoutée/strong>',
-	'LOG_VIDEO_CATEGORY_UPDATE'		=> '<strong>Catégorie vidéo Youtube mise à jour</strong>',
-	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Catégorie vidéo Youtube supprimée</strong>',
-	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Titre vidéo Youtube supprimé</strong>',
+	'LOG_VIDEO_SETTINGS'			=> '<strong>Paramètres de la galerie vidéo Youtube mis à jour</strong>',
+	'LOG_VIDEO_CATEGORY_ADD'		=> '<strong>Catégorie ajoutée dans la galerie vidéo Youtube</strong>',
+	'LOG_VIDEO_CATEGORY_UPDATE'		=> '<strong>Catégorie mise à jour dans la galerie vidéo Youtube</strong>',
+	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Catégorie supprimée dans la galerie vidéo Youtube</strong>',
+	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Titre supprimé dans la galerie vidéo Youtube</strong>',
 ));
