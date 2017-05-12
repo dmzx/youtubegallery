@@ -15,6 +15,7 @@ use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\controller\helper;
 use phpbb\user;
+use phpbb\auth\auth;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\collapsiblecategories\operator\operator as operator;
 use phpbb\files\factory;
@@ -32,6 +33,9 @@ class listener implements EventSubscriberInterface
 
 	/** @var user */
 	protected $user;
+
+	/** @var auth */
+	protected $auth;
 
 	/** @var db_interface */
 	protected $db;
@@ -66,6 +70,7 @@ class listener implements EventSubscriberInterface
 	* @param template			$template
 	* @param helper				$helper
 	* @param user				$user
+	* @param auth				$auth
 	* @param db_interface		$db
 	* @param string				$root_path
 	* @param string				$php_ext
@@ -81,6 +86,7 @@ class listener implements EventSubscriberInterface
 		helper $helper,
 		template $template,
 		user $user,
+		auth $auth,
 		db_interface $db,
 		$root_path,
 		$php_ext,
@@ -95,6 +101,7 @@ class listener implements EventSubscriberInterface
 		$this->template 			= $template;
 		$this->helper 				= $helper;
 		$this->user 				= $user;
+		$this->auth 				= $auth;
 		$this->db 					= $db;
 		$this->root_path 			= $root_path;
 		$this->php_ext				= $php_ext;
@@ -109,8 +116,8 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.viewonline_overwrite_location'	=> 'add_page_viewonline',
-			'core.user_setup'						=> 'load_language_on_setup',
 			'core.page_header'						=> 'add_page_header_link',
+			'core.user_setup'						=> 'load_language_on_setup',
 			'core.index_modify_page_title'			=> 'index_modify_page_title',
 			'core.permissions'						=> 'permissions',
 		);
@@ -128,9 +135,10 @@ class listener implements EventSubscriberInterface
 	public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
-			'U_VIDEO' 		=> $this->helper->route('dmzx_youtubegallery_controller'),
-			'PHPBB_IS_32'	=> ($this->files_factory !== null) ? true : false,
-			'VIDEO_ENABLE'	=> $this->config['enable_video_global'],
+			'U_VIDEO' 					=> $this->helper->route('dmzx_youtubegallery_controller'),
+			'PHPBB_IS_32'				=> ($this->files_factory !== null) ? true : false,
+			'VIDEO_ENABLE'				=> $this->config['enable_video_global'],
+			'S_CAN_VIEW_GALLERY_LINK'	=> $this->auth->acl_get('u_video_view_full'),
 		));
 	}
 
@@ -198,6 +206,7 @@ class listener implements EventSubscriberInterface
 			'S_ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],
 			'LAST_VIDEOS'						=> $this->config['video_on_index_value'],
 			'NO_ENTRY'							=> $this->user->lang['NO_VIDEOS'],
+			'S_CAN_VIEW_GALLERY'				=> $this->auth->acl_get('u_video_view'),
 		));
 
 		$sql_ary = array(

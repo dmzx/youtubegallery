@@ -36,6 +36,7 @@ services:
             - '@controller.helper'
             - '@template'
             - '@user'
+            - '@auth'
             - '@dbal.conn'
             - '%core.root_path%'
             - '%core.php_ext%'
