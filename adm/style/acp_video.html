@@ -21,6 +21,10 @@
 			<dd><input type="text" name="google_api_key" size="40" maxlength="40" value="{GOOGLE_KEY_ACP}" /></dd>
 		</dl>
 		<dl>
+			<dt><label>{L_ACP_VIDEOS_PER_PAGE}{L_COLON}</label><br /><span>{L_ACP_VIDEOS_PER_PAGE_EXPLAIN}</span></dt>
+			<dd><input type="text" name="videos_per_page" size="3" maxlength="4" value="{VIDEOS_PER_PAGE_ACP}" /></dd>
+		</dl>
+		<dl>
 			<dt><label>{L_ACP_ENABLE_VIDEO_STATICS_ON_INDEX}{L_COLON}</label><br />{L_ACP_ENABLE_VIDEO_STATICS_ON_INDEX_EXPLAIN}</dt>
 			<dd><label><input type="radio" class="radio" name="enable_video_statics_on_index" value="1"<!-- IF ENABLE_VIDEO_STATICS_ON_INDEX --> id="enable_video_statics_on_index" checked="checked" <!-- ENDIF --> /> {L_YES}</label>
 			<label><input type="radio" class="radio" name="enable_video_statics_on_index" value="0"<!-- IF not ENABLE_VIDEO_STATICS_ON_INDEX --> id="enable_video_statics_on_index" checked="checked" <!-- ENDIF --> /> {L_NO}</label></dd>

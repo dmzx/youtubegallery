@@ -41,6 +41,7 @@ $lang = array_merge($lang, array(
 	'ACP_GOOGLE_KEY'								=> 'Google Public API key',
 	'ACP_GOOGLE_KEY_EXPLAIN'						=> 'In order to use Video Gallery, you must create a <strong>Google Public API key</strong>. Please, visit <strong><a href="https://support.google.com/cloud/answer/6158862/">Setting up API keys</a></strong> to generate the key. If you have trouble to generate your key, read the guide <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">Google Developers Console Help: API keys</a></strong>. Until you set up your key, the gallery will be unavailable.',
 	'ACP_VIDEOS_PER_PAGE'							=> 'Videos per page',
+	'ACP_VIDEOS_PER_PAGE_EXPLAIN'					=> 'Set value for videos per page.<br /><em>Default value is 10</em>.',
 	'ACP_COMMENTS_PER_PAGE'							=> 'Comments per page',
 	'ACP_COMMENTS_PER_PAGE_EXPLAIN'					=> 'Set value for comments on video page.<br /><em>Default value is 10</em>.',
 	'ACP_ENABLE_COMMENTS'							=> 'Enable comments on videos',

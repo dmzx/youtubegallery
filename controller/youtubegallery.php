@@ -135,7 +135,7 @@ class youtubegallery
 		$user_id 		= $this->request->variable('user_id', 0);
 		$video_views 	= $this->request->variable('video_views', 0);
 		$sql_start 		= $this->request->variable('start', 0);
-		$sql_limit 		= $this->request->variable('limit', 10);
+		$sql_limit 		= $this->request->variable('limit', $this->config['videos_per_page']);
 		$sql_limits 	= $this->request->variable('limit', $this->config['comments_per_page']);
 
 		// Comments
@@ -638,7 +638,6 @@ class youtubegallery
 
 			case 'cat';
 
-				$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 				$pagination_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $video_cat_ids));
 
 				$sql_ary = array(
@@ -713,7 +712,6 @@ class youtubegallery
 					'S_SEARCH_USER_VIDEO' 	=> true,
 				));
 
-				$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 				$pagination_url = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'user_videos', 'user_id' => $user_id));
 
 				// We need another query for the video count
@@ -831,7 +829,6 @@ class youtubegallery
 					'TOTAL_COMMENTS'		=> $this->user->lang('TOTAL_COMMENTS', $total_comments),
 				));
 
-				$sql_limit = ($sql_limit > 10) ? 10 : $sql_limit;
 				$pagination_url = $this->helper->route('dmzx_youtubegallery_controller');
 
 				$sql_ary = array(

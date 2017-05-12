@@ -110,6 +110,7 @@ class admin_controller
 			'ENABLE_VIDEO_STATICS_ON_INDEX'		=> $this->config['enable_video_statics_on_index'],
 			'ENABLE_COMMENTS'					=> $this->config['enable_comments'],
 			'COMMENTS_PER_PAGE_ACP'				=> $this->config['comments_per_page'],
+			'VIDEOS_PER_PAGE_ACP'				=> $this->config['videos_per_page'],
 			'ENABLE_VIDEO_ON_INDEX'				=> $this->config['enable_video_on_index'],
 			'ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],
 			'VIDEO_ON_INDEX_VALUE_ACP'			=> $this->config['video_on_index_value'],
@@ -125,6 +126,7 @@ class admin_controller
 		$this->config->set('enable_video_statics_on_index', $this->request->variable('enable_video_statics_on_index', 0));
 		$this->config->set('enable_comments', $this->request->variable('enable_comments', 0));
 		$this->config->set('comments_per_page', $this->request->variable('comments_per_page', ''));
+		$this->config->set('videos_per_page', $this->request->variable('videos_per_page', ''));
 		$this->config->set('enable_video_on_index', $this->request->variable('enable_video_on_index', 0));
 		$this->config->set('enable_video_on_index_location', $this->request->variable('enable_video_on_index_location', 0));
 		$this->config->set('video_on_index_value', $this->request->variable('video_on_index_value', ''));
