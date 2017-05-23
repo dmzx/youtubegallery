@@ -10,17 +10,22 @@
 
 namespace dmzx\youtubegallery\migrations;
 
-class youtubegallery_module extends \phpbb\db\migration\migration
+class youtubegallery_1_0_4 extends \phpbb\db\migration\migration
 {
+	static public function depends_on()
+	{
+		return array(
+			'\dmzx\youtubegallery\migrations\youtubegallery_1_0_3',
+		);
+	}
+
 	public function update_data()
 	{
 		return array(
-			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_VIDEO')),
-			array('module.add', array(
-			'acp', 'ACP_VIDEO', array(
-				'module_basename'	=> '\dmzx\youtubegallery\acp\acp_youtubegallery_module', 'modes' => array('cat', 'settings', 'title'),
-				),
-			)),
+			// Update config
+			array('config.update', array('youtubegallery_version', '1.0.4')),
+			// Add config
+			array('config.add', array('videos_per_page', '10')),
 		);
 	}
 }

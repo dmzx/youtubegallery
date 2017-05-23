@@ -1,5 +1,7 @@
 # Youtube Videos Gallery Extension
 
+[![Build Status](https://travis-ci.org/dmzx/youtubegallery.svg?branch=master)](https://travis-ci.org/dmzx/youtubegallery)
+
 ## Install
 
 1. Download the latest release.

@@ -1,0 +1,58 @@
+<!-- IF .video -->
+
+<!-- IF VIDEO_IS_COLLAPSIBLE -->
+<a class="category<!-- IF S_VIDEO_HIDDEN --> hidden-category<!-- ENDIF -->" style="display: none; height: 0"></a>
+<!-- ENDIF -->
+
+<div class="forabg" id="video">
+	<div class="inner">
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt><div class="list-inner"><a href="{U_VIDEO}" title="{L_VIDEO_EXPLAIN}">{L_VIDEO_LAST} {LAST_VIDEOS} {L_VIDEO}</a></div></dt>
+					<dd></dd>
+				</dl>
+				<!-- IF VIDEO_IS_COLLAPSIBLE -->
+				<a href="{U_VIDEO_COLLAPSE_URL}"
+					class="collapse-btn collapse-<!-- IF S_VIDEO_HIDDEN -->show<!-- ELSE -->hide<!-- ENDIF -->"
+					data-hidden="{S_VIDEO_HIDDEN}"
+					data-ajax="phpbb_collapse"
+					data-overlay="true"
+					title="{L_COLLAPSIBLE_CATEGORIES_TITLE}"></a>
+				<!-- ENDIF -->
+			</li>
+		</ul>
+		<ul class="video collapsible bg1">
+		<!-- BEGIN video -->
+			<li class="videolist">
+				<a href="{video.U_VIEW_VIDEO}" title="{video.VIDEO_TITLE}"><img src="{video.S_VIDEO_THUMBNAIL}" alt="{video.VIDEO_TITLE}" /></a>
+				<h3 class="center"></h3>
+				{L_VIDEO_AUTHOR}{L_COLON} {video.USERNAME}<br />
+				{L_VIDEO_CAT}{L_COLON} <a href="{video.U_CAT}" title="{video.VIDEO_CAT_TITLE}">{video.VIDEO_CAT_TITLE}</a><br />
+				{L_VIDEO_DATE}{L_COLON} {video.VIDEO_TIME}<br />
+				{L_VIDEO_VIEWS}{L_COLON} {video.VIDEO_VIEWS}
+			</li>
+		<!-- END video -->
+		</ul>
+	</div>
+</div>
+<!-- ELSE -->
+<div class="forabg" id="video">
+	<div class="inner">
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="row-item">
+					<dt>
+						<div class="list-inner"><a href="{U_VIDEO}" title="{L_VIDEO_EXPLAIN}" role="menuitem">{L_VIDEO_LAST} {L_VIDEO}</a></div></dt>
+					<dd></dd>
+				</dl>
+			</li>
+		</ul>
+		<ul class="video bg3">
+			<li class="videolist">
+				{NO_ENTRY}
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- ENDIF -->
