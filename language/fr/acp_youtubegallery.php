@@ -44,7 +44,7 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_ENABLE'								=> 'Activer la page des vidéos',
 	'ACP_VERSION_CURRENT'							=> 'Version',
 	'ACP_GOOGLE_KEY'								=> 'Clé publique de l’API Google',
-	'ACP_GOOGLE_KEY_EXPLAIN'						=> 'Permet d’utiliser la galerie vidéo Youtube au moyen d’une <strong>clé publique de l’API Google</strong>. Merci de consulter la page : « <strong><a href="https://support.google.com/cloud/answer/6158862/">Configuration des clés de l’API</a></strong> » pour générer la clé. Pour tout problème, se référer au guide présent sur la page <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">d’aide de la console développeurs de Google : clés de l’API</a></strong>. Si clé n’est saisie, la galerie sera inaccessible.',
+	'ACP_GOOGLE_KEY_EXPLAIN'						=> 'Permet d’utiliser la galerie vidéo Youtube au moyen d’une <strong>clé publique de l’API Google</strong>. Merci de consulter la page : « <strong><a href="https://support.google.com/cloud/answer/6158862/">Configuration des clés de l’API</a></strong> » pour générer la clé. Pour tout problème, se référer au guide présent sur la page <strong><a href="https://developers.google.com/console/help/new/#generatingdevkeys">d’aide de la console développeurs de Google : clés de l’API</a></strong>. Si aucune clé n’est saisie, la galerie sera inaccessible.',
 	'ACP_VIDEOS_PER_PAGE'							=> 'Nombre de vidéos par page',
 	'ACP_VIDEOS_PER_PAGE_EXPLAIN'					=> 'Permet de saisir le nombre de vidéos à afficher par page.<br /><em>Par défaut la valeur est définie sur 10</em>.',
 	'ACP_COMMENTS_PER_PAGE'							=> 'Nombre de commentaires par page',
