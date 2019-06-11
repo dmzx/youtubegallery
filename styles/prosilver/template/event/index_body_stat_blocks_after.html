@@ -1,8 +1,8 @@
-<!-- IF S_ENABLE_VIDEO_STATICS_ON_INDEX and S_CAN_VIEW_GALLERY -->
+{% if S_ENABLE_VIDEO_STATICS_ON_INDEX and S_CAN_VIEW_GALLERY %}
 <div class="stat-block gallery">
-	<h3><a href="{U_VIDEO}">{L_VIDEO_INDEX}</a></h3>
+	<h3><a href="{{ U_VIDEO }}">{{ lang('VIDEO_INDEX') }}</a></h3>
 	<p>
-		{TOTAL_VIDEOS_INDEX} &bull; {TOTAL_CATEGORIES} &bull; {TOTAL_VIEWS} &bull; {TOTAL_COMMENTS}
+		{{ TOTAL_VIDEOS_INDEX }} &bull; {{ TOTAL_CATEGORIES }} &bull; {{ TOTAL_VIEWS }} &bull; {{ TOTAL_COMMENTS }}
 	</p>
 </div>
-<!-- ENDIF -->
+{% endif %}

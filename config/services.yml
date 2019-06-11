@@ -12,8 +12,10 @@ services:
             - '@dbal.conn'
             - '@request'
             - '@pagination'
+            - '@service_container'
             - '%core.root_path%'
             - '%core.php_ext%'
+            - '%core.table_prefix%'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
@@ -27,6 +29,7 @@ services:
             - '@user'
             - '@dbal.conn'
             - '@request'
+            - '@service_container'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
     dmzx.youtubegallery.listener:

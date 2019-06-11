@@ -1,35 +1,35 @@
-<!-- INCLUDE overall_header.html -->
+{% INCLUDE 'overall_header.html' %}
 
-<h1>{L_ACP_VIDEO_TITLE}</h1>
+<h1>{{ lang('ACP_VIDEO_TITLE') }}</h1>
 
-<p>{L_ACP_VIDEO_TITLE_EXPLAIN}</p>
+<p>{{ lang('ACP_VIDEO_TITLE_EXPLAIN') }}</p>
 
-<!-- IF .title -->
+{% if loops.title|length %}
 <table cellspacing="1">
 	<thead>
 		<tr>
-			<th>{L_ACP_VIDEO_TITLE}</th>
-			<th>{L_ACP_VIDEO_CAT_TITLE}</th>
-			<th>{L_VIDEO_AUTHOR}</th>
-			<th>{L_ACTION}</th>
+			<th>{{ lang('ACP_VIDEO_TITLE') }}</th>
+			<th>{{ lang('ACP_VIDEO_CAT_TITLE') }}</th>
+			<th>{{ lang('VIDEO_AUTHOR') }}</th>
+			<th>{{ lang('ACTION') }}</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- BEGIN title -->
-		<!-- IF title.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-			<td>{title.VIDEO_TITLE}</td>
-			<td>{title.VIDEO_CAT_TITLE}</td>
-			<td>{title.USERNAME}</td>
-			<td>&nbsp;<a href="{title.U_DEL}">{ICON_DELETE}</a>&nbsp;</td>
+	{% for title in loops.title %}
+		{% if title.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
+			<td>{{ title.VIDEO_TITLE }}</td>
+			<td>{{ title.VIDEO_CAT_TITLE }}</td>
+			<td>{{ title.USERNAME }}</td>
+			<td>&nbsp;<a href="{{ title.U_DEL }}">{{ ICON_DELETE }}</a>&nbsp;</td>
 		</tr>
-	<!-- END title -->
+	{% endfor %}
 	</tbody>
 </table>
 <br />
-<!-- ENDIF -->
+{% endif %}
 
-<!-- IF not .title -->
-<p class="error"><strong>{L_NO_TITLE}</strong></p>
-<!-- ENDIF -->
+{% if not loops.title|length %}
+<p class="error"><strong>{{ lang('NO_TITLE') }}</strong></p>
+{% endif %}
 
-<!-- INCLUDE overall_footer.html -->
+{% INCLUDE 'overall_footer.html' %}

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2015 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -232,6 +232,7 @@ class listener implements EventSubscriberInterface
 				'VIDEO_CAT_ID'		=> $row['video_cat_id'],
 				'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
 				'VIDEO_VIEWS'		=> $row['video_views'],
+				'VIDEO_DURATION'	=> $row['video_duration'],
 				'U_CAT'				=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
 				'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
 				'VIDEO_ID'			=> censor_text($row['video_id']),

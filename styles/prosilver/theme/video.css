@@ -1,5 +1,9 @@
 h3.center {
-	text-align: center;
+	text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 110ch;
 }
 
 a {
@@ -14,7 +18,7 @@ a {
 	display: inline-block; 
 	float: left;
 	height: 72px;
-	padding: 10px 10px 20px 0;
+	padding: 23px 10px 20px 0;
 	position: relative; 
 	vertical-align: middle;
 	width: 96px;
@@ -62,7 +66,20 @@ ul.video li {
 ul.video li.videolist {
     text-align:center;
 	margin: 5px 3px 0;
-	box-shadow: 0 0 4px #000000;
+	padding-top: 5px;
+	padding-bottom: 2px;
+	/* box-shadow: 0 0 4px #000000; */
+	-webkit-border-radius: 6px;
+    -o-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+#videolists {
+	box-shadow: 0 0 8px #8706FF;
+    border-radius: 100%;
+	height: 100px;
+	width: 100px;
 }
 
 /* Tip from: https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
@@ -79,4 +96,124 @@ ul.video li.videolist {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+#codehtml {
+    font-weight: bold;
+}
+
+.buttoncopy {
+	font-size: 1em;
+	padding: 1.5px 6px;
+	margin: 0;
+	outline: 0;
+	box-shadow: none;
+	padding-bottom: 4.5px;
+	position: relative;
+	background-color: #aaa;
+	border-radius: 0 3px 3px 0;
+	cursor: pointer;
+}
+
+@media all and (min-width : 350px) and (max-width : 850px) {
+	#codes input{
+		width: 80%;
+	}
+	.buttoncopy {
+		padding-top: 2px;
+		padding-bottom: 4px;
+	}
+}
+
+.copied::after {
+	position: absolute;
+	top: 12%;
+	right: 110%;
+	display: block;
+	content: "copied";
+	font-size: 0.75em;
+	padding: 0 2px 0 3px;
+	color: #fff;
+	background-color: #9900ff;
+	border-radius: 3px;
+	opacity: 0;
+	will-change: opacity, transform;
+	animation: showcopied 1.5s ease;
+}
+
+@keyframes showcopied {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.d-flex {
+  display: flex !important; 
+}
+  
+.justify-content-between {
+  justify-content: space-around !important; 
+}
+
+.post-meta {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #105289; 
+}
+
+.post-meta li::before {
+    content: "/";
+    font-weight: bold;
+    display: inline-block;
+    font-size: 1.2em;
+    margin: 0px 8px;
+    line-height: 0px; 
+}
+
+.post-meta li:first-child::before {
+    display: none;
+}
+
+.post-meta li a {
+    letter-spacing: 1px; 
+}
+
+.column1 {
+	float: left;
+	clear: left;
+	width: 49%;
+        margin-top: 8px;
+	border: 1px solid #757e86 !important;
+}
+
+.column2 {
+	float: right;
+	clear: right;
+	width: 49%;
+        margin-top: 8px;
+	border: 1px solid #757e86 !important;
+}
+
+@media all and (min-width : 350px) and (max-width : 900px) {
+	h3.center {
+	text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 75ch;
+        }
+}
+
+@media all and (min-width : 350px) and (max-width : 400px) {
+    .justify-content-between {
+	display: none !important;
+        }
 }

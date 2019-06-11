@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2015 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -16,6 +16,7 @@ use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\request\request_interface;
+use Symfony\Component\DependencyInjection\Container;
 
 class admin_controller
 {
@@ -36,6 +37,9 @@ class admin_controller
 
 	/** @var request_interface */
 	protected $request;
+
+	/** @var Container */
+	protected $phpbb_container;
 
 	/**
 	* The database tables
@@ -58,6 +62,7 @@ class admin_controller
 	 * @param user					$user
 	 * @param db_interface			$db
 	 * @param request_interface		$request
+	 * @param Container 			$phpbb_container
 	 * @param string 				$video_table
 	 * @param string 				$video_cat_table
 	 */
@@ -68,6 +73,7 @@ class admin_controller
 		user $user,
 		db_interface $db,
 		request_interface $request,
+		Container $phpbb_container,
 		$video_table,
 		$video_cat_table
 	)
@@ -78,6 +84,7 @@ class admin_controller
 		$this->user 			= $user;
 		$this->db 				= $db;
 		$this->request 			= $request;
+		$this->phpbb_container 	= $phpbb_container;
 		$this->video_table 		= $video_table;
 		$this->video_cat_table 	= $video_cat_table;
 	}
@@ -114,9 +121,16 @@ class admin_controller
 			'ENABLE_VIDEO_ON_INDEX'				=> $this->config['enable_video_on_index'],
 			'ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],
 			'VIDEO_ON_INDEX_VALUE_ACP'			=> $this->config['video_on_index_value'],
-
+			'ENABLE_VIDEO_CHAT'					=> $this->config['enable_video_chat'],
+			'ENABLE_VIDEO_CHAT_COMMENT'			=> $this->config['enable_video_chat_comment'],
+			'ENABLE_VIDEO_YOUTUBE_STATS'		=> $this->config['enable_video_youtube_stats'],
 			'U_ACTION'							=> $this->u_action,
 		));
+
+		if ($this->phpbb_container->has('dmzx.mchat.settings'))
+		{
+			$this->template->assign_var('VIDEO_CHAT_VIEW', true);
+		}
 	}
 
 	protected function set_options()
@@ -130,6 +144,9 @@ class admin_controller
 		$this->config->set('enable_video_on_index', $this->request->variable('enable_video_on_index', 0));
 		$this->config->set('enable_video_on_index_location', $this->request->variable('enable_video_on_index_location', 0));
 		$this->config->set('video_on_index_value', $this->request->variable('video_on_index_value', ''));
+		$this->config->set('enable_video_chat', $this->request->variable('enable_video_chat', 0));
+		$this->config->set('enable_video_chat_comment', $this->request->variable('enable_video_chat_comment', 0));
+		$this->config->set('enable_video_youtube_stats', $this->request->variable('enable_video_youtube_stats', 0));
 	}
 
 	public function display_cat()

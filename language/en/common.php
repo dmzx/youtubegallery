@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2015 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -56,6 +56,7 @@ $lang = array_merge($lang, array(
 	'VIEW_VIDEO'				=> 'View Video',
 	'VIDEO_CAT'					=> 'Category',
 	'VIDEO_CATS'				=> 'Categories',
+	'VIDEO_COPY_BUTTON'			=> 'Copy',
 	'VIDEO_CREATED'				=> 'This video has been added successfully.',
 	'VIDEO_DATE'				=> 'Date',
 	'VIDEO_DELETE'				=> 'Delete video',
@@ -84,7 +85,10 @@ $lang = array_merge($lang, array(
 	'NO_TITLE'					=> 'This page has no titles.',
 	'RETURN_TO_VIDEO_INDEX'		=> 'Return to Video Gallery',
 	'SEARCH_VIDEOS'				=> 'Search Videos',
+	'STATS_FROM_YOUTUBE'				=> 'statistics from youtube',
 	'TOTAL_VIDEOS'				=> 'Total videos',
+	'VIDEO_ADD_CHAT'			=> '[i]Added a new video:[/i] [url=%2$s]%1$s[/url] [i]in the category: [b]%3$s[/b][/i]',
+	'VIDEO_COMMENT_CHAT'		=> '[i]Made a comment on:[/i] [url=%2$s]%1$s[/url]',
 	'TOTAL_CATEGORIES'	=> array(
 		0 => 'No categories',
 		1 => 'Total <strong>%1$d</strong> category',
@@ -95,17 +99,20 @@ $lang = array_merge($lang, array(
 		1 => 'Total <strong>%1$d</strong> video',
 		2 => 'Total <strong>%1$d</strong> videos',
 	),
-
 	'TOTAL_VIEWS'		=> array(
 		0 => 'No views',
 		1 => 'Total <strong>%1$d</strong> view',
 		2 => 'Total <strong>%1$d</strong> views',
 	),
-
 	'TOTAL_COMMENTS'	=> array(
 		0 => 'No Comments',
 		1 => 'Total <strong>%1$d</strong> comment',
 		2 => 'Total <strong>%1$d</strong> comments',
+	),
+	'VIDEO_VIEWS_YOUTUBE'	=> array(
+		0 => 'No views on youtube',
+		1 => 'Total <strong>%s</strong> view on youtube',
+		2 => 'Total <strong>%s</strong> views on youtube',
 	),
 	'USER_VIDEOS'				=> 'All videos from User',
 	'USER_VIDEOS_EXPLAIN'		=> 'Show all',
@@ -124,6 +131,7 @@ $lang = array_merge($lang, array(
 	'VIDEO_LINKS'				=> 'Links',
 	'VIDEO_LINK_YOUTUBE'		=> 'Youtube Video Link',
 	'VIDEO_VIEWS'				=> 'Views',
+	'VIDEO_DURATION'				=> 'Duration',
 
 	// Youtube video text
 	'VIDEO_AUTHOR'				=> 'Author',
