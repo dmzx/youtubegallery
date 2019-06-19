@@ -186,7 +186,7 @@ ul.video li.videolist {
     letter-spacing: 1px; 
 }
 
-.column1 {
+.column11 {
 	float: left;
 	clear: left;
 	width: 49%;
@@ -194,7 +194,7 @@ ul.video li.videolist {
 	border: 1px solid #757e86 !important;
 }
 
-.column2 {
+.column22 {
 	float: right;
 	clear: right;
 	width: 49%;
