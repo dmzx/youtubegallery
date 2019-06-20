@@ -4,7 +4,7 @@
 * Youtube Videos Gallery extension for the phpBB Forum Software package.
 * French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
 *
-* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @copyright (c) 2015 dmzx <https://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
@@ -57,6 +57,7 @@ $lang = array_merge($lang, array(
 	'VIEW_VIDEO'				=> 'Voir la vidéo',
 	'VIDEO_CAT'					=> 'Catégorie',
 	'VIDEO_CATS'				=> 'Catégories',
+	'VIDEO_COPY_BUTTON'			=> 'Copier',
 	'VIDEO_CREATED'				=> 'La vidéo a été ajoutée avec succès.',
 	'VIDEO_DATE'				=> 'Date',
 	'VIDEO_DELETE'				=> 'Supprimer la vidéo',
@@ -85,7 +86,10 @@ $lang = array_merge($lang, array(
 	'NO_TITLE'					=> 'Cette page ne contient aucun titre.',
 	'RETURN_TO_VIDEO_INDEX'		=> 'Retourner à la galerie vidéo',
 	'SEARCH_VIDEOS'				=> 'Rechercher des vidéos',
-	'TOTAL_VIDEOS'				=> 'Nombre de vidéos',
+	'STATS_FROM_YOUTUBE'		=> 'Statisques Youtube',
+	'TOTAL_VIDEOS'				=> 'Total des vidéos',
+	'VIDEO_ADD_CHAT'			=> '[i]A ajouté une nouvelle vidéo :[/i] [url=%2$s]%1$s[/url] [i]dans la catégorie : [b]%3$s[/b][/i]',
+	'VIDEO_COMMENT_CHAT'		=> '[i]A commenté sur :[/i] [url=%2$s]%1$s[/url]',
 	'TOTAL_CATEGORIES'	=> array(
 		0 => 'Aucune catégorie',
 		1 => 'Total <strong>%1$d</strong> catégorie',
@@ -96,17 +100,20 @@ $lang = array_merge($lang, array(
 		1 => 'Total <strong>%1$d</strong> vidéo',
 		2 => 'Total <strong>%1$d</strong> vidéos',
 	),
-
 	'TOTAL_VIEWS'		=> array(
 		0 => 'Aucune vue',
 		1 => 'Total <strong>%1$d</strong> vue',
 		2 => 'Total <strong>%1$d</strong> vues',
 	),
-
 	'TOTAL_COMMENTS'	=> array(
 		0 => 'Aucun commentaire',
 		1 => 'Total <strong>%1$d</strong> commentaire',
 		2 => 'Total <strong>%1$d</strong> commentaires',
+	),
+	'VIDEO_VIEWS_YOUTUBE'	=> array(
+		0 => 'Aucune vue sur Youtube',
+		1 => 'Total de <strong>%s</strong> vue sur Youtube',
+		2 => 'Total de <strong>%s</strong> vues sur Youtube',
 	),
 	'USER_VIDEOS'				=> 'Toutes les vidéos du membre',
 	'USER_VIDEOS_EXPLAIN'		=> 'Afficher toutes les vidéos du membre.',
@@ -125,6 +132,7 @@ $lang = array_merge($lang, array(
 	'VIDEO_LINKS'				=> 'Liens des vidéos',
 	'VIDEO_LINK_YOUTUBE'		=> 'Lien de la vidéo Youtube',
 	'VIDEO_VIEWS'				=> 'Vues',
+	'VIDEO_DURATION'			=> 'Durée',
 
 	// Youtube video text
 	'VIDEO_AUTHOR'				=> 'Auteur',

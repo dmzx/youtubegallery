@@ -4,7 +4,7 @@
 * Youtube Videos Gallery extension for the phpBB Forum Software package.
 * French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
 *
-* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @copyright (c) 2015 dmzx <https://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
@@ -64,6 +64,12 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_SETTINGS_SAVED'						=> 'Les paramètres de la galerie vidéo Youtube ont été sauvegardés.',
 	'ACP_VIDEO_TOP'									=> 'Au-dessus',
 	'ACP_VIDEO_BOTTOM'								=> 'En dessous',
+	'ACP_ENABLE_VIDEO_CHAT'							=> 'Activer les publications de vidéos dans « mChat »',
+	'ACP_ENABLE_VIDEO_CHAT_EXPLAIN'					=> 'Permet d’afficher dans le « mChat » tout nouveau lien de vidéo publié à la galerie vidéo Youtube.',
+	'ACP_ENABLE_VIDEO_CHAT_COMMENT'					=> 'Activer les commentaires de vidéo dans « mChat »',
+	'ACP_ENABLE_VIDEO_CHAT_COMMENT_EXPLAIN'			=> 'Permet d’afficher dans le « mChat » tout nouveau commentaire de vidéo publié à la galerie vidéo Youtube.',
+	'ACP_ENABLE_VIDEO_YOUTUBE_STATS'				=> 'Activer les statistiques Youtube',
+	'ACP_ENABLE_VIDEO_YOUTUBE_STATS_EXPLAIN'		=> 'Permet d’afficher les statistiques des vidéos Youtube.',
 
 	// ACP Categories
 	'ACP_CATEGORY_CREATED'			=> 'Cette catégorie a été ajoutée avec succès.',

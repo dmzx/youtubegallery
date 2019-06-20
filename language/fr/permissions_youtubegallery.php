@@ -4,7 +4,7 @@
 * Youtube Videos Gallery extension for the phpBB Forum Software package.
 * French translation by Philippe (http://www.forum-newbeetle.fr) & Galixte (http://www.galixte.com)
 *
-* @copyright (c) 2015 dmzx <http://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
+* @copyright (c) 2015 dmzx <https://www.dmzx-web.net> & _Vinny_ <http://www.suportephpbb.com.br>
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
