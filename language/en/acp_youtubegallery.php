@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2015 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -59,6 +59,12 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_SETTINGS_SAVED'						=> 'Video gallery settings saved',
 	'ACP_VIDEO_TOP'									=> 'Top',
 	'ACP_VIDEO_BOTTOM'								=> 'Bottom',
+	'ACP_ENABLE_VIDEO_CHAT'							=> 'Enable video posting in mChat',
+	'ACP_ENABLE_VIDEO_CHAT_EXPLAIN'					=> 'When set to yes uploaded video link will be posted into mChat.',
+	'ACP_ENABLE_VIDEO_CHAT_COMMENT'					=> 'Enable comment posting in mChat',
+	'ACP_ENABLE_VIDEO_CHAT_COMMENT_EXPLAIN'			=> 'When set to yes uploaded comments on videos will be posted into mChat.',
+	'ACP_ENABLE_VIDEO_YOUTUBE_STATS'				=> 'Enable Youtube statistics',
+	'ACP_ENABLE_VIDEO_YOUTUBE_STATS_EXPLAIN'		=> 'When set to yes statistics from Youtube are shown.',
 
 	// ACP Categories
 	'ACP_CATEGORY_CREATED'			=> 'This category has been added successfully.',

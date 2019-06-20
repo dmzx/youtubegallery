@@ -1,48 +1,48 @@
-<!-- INCLUDE overall_header.html -->
+{% INCLUDE 'overall_header.html' %}
 
-<h1>{L_ACP_VIDEO_OVERVIEW}</h1>
+<h1>{{ lang('ACP_VIDEO_OVERVIEW') }}</h1>
 
-<p>{L_ACP_VIDEO_OVERVIEW_EXPLAIN}</p>
+<p>{{ lang('ACP_VIDEO_OVERVIEW_EXPLAIN') }}</p>
 
-<form id="acp_video_cat" method="post" action="{U_ACTION}">
+<form id="acp_video_cat" method="post" action="{{ U_ACTION }}">
 	<fieldset>
-		<legend><!-- IF S_EDIT_MODE -->{L_ACP_CATEGORY_EDIT}<!-- ELSE -->{L_ACP_VIDEO_CAT_ADD}<!-- ENDIF --></legend>
+		<legend>{% if S_EDIT_MODE %}{{ lang('ACP_CATEGORY_EDIT') }}{% else %}{{ lang('ACP_VIDEO_CAT_ADD') }}{% endif %}</legend>
 		<dl>
-			<dt><label for="video_cat_title"><!-- IF S_EDIT_MODE -->{L_ACP_CATEGORY_EDIT}<!-- ELSE -->{L_ACP_VIDEO_CAT_TITLE}<!-- ENDIF -->{L_COLON}</label><br /><span>{L_ACP_VIDEO_CAT_TITLE_EXPLAIN}</span></dt>
-			<dd><input type="text" id="video_cat_title" name="video_cat_title" size="41" value="{VIDEO_CAT_TITLE}"/></dd>
+			<dt><label for="video_cat_title">{% if S_EDIT_MODE %}{{ lang('ACP_CATEGORY_EDIT') }}{% else %}{{ lang('ACP_VIDEO_CAT_TITLE') }}{% endif %}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_VIDEO_CAT_TITLE_EXPLAIN') }}</span></dt>
+			<dd><input type="text" id="video_cat_title" name="video_cat_title" size="41" value="{{ VIDEO_CAT_TITLE }}"/></dd>
 		</dl>
-		<input type="hidden" name="video_cat_id" value="{VIDEO_CAT_ID}" />
+		<input type="hidden" name="video_cat_id" value="{{ VIDEO_CAT_ID }}" />
 
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
 		</p>
-		{S_FORM_TOKEN}
+		{{ S_FORM_TOKEN }}
 	</fieldset>
 </form>
 
-<!-- IF .category and not S_EDIT_MODE -->
+{% if loops.category|length and not S_EDIT_MODE %}
 <table cellspacing="1">
 	<thead>
 		<tr>
-			<th>{L_ACP_VIDEO_CAT_TITLE}</th>
-			<th>{L_ACTION}</th>
+			<th>{{ lang('ACP_VIDEO_CAT_TITLE') }}</th>
+			<th>{{ lang('ACTION') }}</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- BEGIN category -->
-		<!-- IF category.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-			<td>{category.VIDEO_CAT_TITLE}</td>
-			<td>&nbsp;<a href="{category.U_EDIT}">{ICON_EDIT}</a> <a href="{category.U_DEL}">{ICON_DELETE}</a>&nbsp;</td>
+	{% for category in loops.category %}
+		{% if category.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
+			<td>{{ category.VIDEO_CAT_TITLE }}</td>
+			<td>&nbsp;<a href="{{ category.U_EDIT }}">{{ ICON_EDIT }}</a> <a href="{{ category.U_DEL }}">{{ ICON_DELETE }}</a>&nbsp;</td>
 		</tr>
-	<!-- END category -->
+	{% endfor %}
 	</tbody>
 </table>
 <br />
-<!-- ENDIF -->
+{% endif %}
 
-<!-- IF not .category -->
-<p class="error"><strong>{L_NO_CATEGORIES}</strong></p>
-<!-- ENDIF -->
+{% if not loops.category|length %}
+<p class="error"><strong>{{ lang('NO_CATEGORIES') }}</strong></p>
+{% endif %}
 
-<!-- INCLUDE overall_footer.html -->
+{% INCLUDE 'overall_footer.html' %}
