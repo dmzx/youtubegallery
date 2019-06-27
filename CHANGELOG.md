@@ -1,5 +1,11 @@
 ## Changelog
 
+### 1.0.6 - 2019-06-27
+
+- Added UCP page.
+- Added statistics from youtube to more pages.
+- Changed category/statistics on main page.
+
 ### 1.0.5 - 2019-05-27
 
 - Added duration of videos.
