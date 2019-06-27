@@ -43,12 +43,12 @@ $lang = array_merge($lang, array(
 	'VIDEO_SUBMIT'				=> 'New Video',
 	'VIDEO_URL'					=> 'Enter Video URL',
 	'VIDEOS_TIP'				=> 'Help and Suggestions',
-	'VIDEOS_TIPS_PART_01'		=> 'Browse to <a href="https://www.youtube.com/">Youtube.com</a>, search your favourite videos.',
+	'VIDEOS_TIPS_PART_01'		=> 'Browse to <a href="https://www.youtube.com/">Youtube.com</a>, search your favorite videos.',
 	'VIDEOS_TIPS_PART_02'		=> 'Copy the video URL, paste it in the field above, choose the category and submit the form.',
 	'VIDEOS_TIPS_PART_03'		=> 'You can use <strong>youtube.com</strong> and <strong>youtu.be</strong>, both are accepted by the Extension.',
 	'VIDEOS_TIPS_PART_04'		=> 'Warning',
 	'VIDEOS_TIPS_PART_05'		=> 'this page isn’t for uploading videos to Youtube !',
-	'VIDEO_UNAUTHED'			=> 'You are not authorised to view this video.',
+	'VIDEO_UNAUTHED'			=> 'You are not authorized to view this video.',
 	'INVALID_VIDEO'				=> 'The video you selected does not exist.',
 	'VIDEO'						=> 'Videos',
 	'VIDEO_EXPLAIN'				=> 'View gallery of Youtube videos',
@@ -85,7 +85,7 @@ $lang = array_merge($lang, array(
 	'NO_TITLE'					=> 'This page has no titles.',
 	'RETURN_TO_VIDEO_INDEX'		=> 'Return to Video Gallery',
 	'SEARCH_VIDEOS'				=> 'Search Videos',
-	'STATS_FROM_YOUTUBE'				=> 'statistics from youtube',
+	'STATS_FROM_YOUTUBE'		=> 'statistics from youtube',
 	'TOTAL_VIDEOS'				=> 'Total videos',
 	'VIDEO_ADD_CHAT'			=> '[i]Added a new video:[/i] [url=%2$s]%1$s[/url] [i]in the category: [b]%3$s[/b][/i]',
 	'VIDEO_COMMENT_CHAT'		=> '[i]Made a comment on:[/i] [url=%2$s]%1$s[/url]',
@@ -131,11 +131,15 @@ $lang = array_merge($lang, array(
 	'VIDEO_LINKS'				=> 'Links',
 	'VIDEO_LINK_YOUTUBE'		=> 'Youtube Video Link',
 	'VIDEO_VIEWS'				=> 'Views',
-	'VIDEO_DURATION'				=> 'Duration',
+	'VIDEO_DURATION'			=> 'Duration',
 
 	// Youtube video text
 	'VIDEO_AUTHOR'				=> 'Author',
 	'VIDEO_WATCH'				=> 'Watch on YouTube',
+
+	// UCP
+	'UCP_YOUTUBEGALLERY_TITLE'	=> 'View your videos',
+	'UCP_NO_USER_VIDEOS'		=> 'No videos by you uploaded yet.',
 
 	//Pagination
 	'LIST_COMMENT'		=>	array(

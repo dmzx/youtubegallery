@@ -1,0 +1,8 @@
+{% if VIDEO_ENABLE and S_CAN_VIEW_GALLERY_LINK %}
+<li {% if not PHPBB_IS_32 %}class="small-icon icon-videos no-bulletin"{% endif %} data-last-responsive="true">
+	<a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}" role="menuitem" target="_blank">
+		{% if PHPBB_IS_32 %}<i class="icon fa fa-youtube-play" aria-hidden="true"></i>{% endif %}
+		<span>{{ lang('VIDEO') }}</span>
+	</a>
+</li>
+{% endif %}

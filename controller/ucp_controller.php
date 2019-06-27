@@ -1,0 +1,188 @@
+<?php
+/**
+*
+* @package phpBB Extension - Youtube Videos Gallery
+* @copyright (c) 2019 dmzx - https://www.dmzx-web.net
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @Author _Vinny_ - http://www.suportephpbb.com.br
+*
+*/
+
+namespace dmzx\youtubegallery\controller;
+
+use phpbb\config\config;
+use phpbb\template\template;
+use phpbb\controller\helper;
+use phpbb\user;
+use phpbb\auth\auth;
+use phpbb\pagination;
+use phpbb\db\driver\driver_interface as db_interface;
+use phpbb\request\request_interface;
+
+class ucp_controller
+{
+	/** @var config */
+	protected $config;
+
+	/** @var template */
+	protected $template;
+
+	/** @var helper */
+	protected $helper;
+
+	/** @var user */
+	protected $user;
+
+	/** @var auth */
+	protected $auth;
+
+	/** @var pagination */
+	protected $pagination;
+
+	/** @var db_interface */
+	protected $db;
+
+	/** @var request_interface */
+	protected $request;
+
+	/** @var string */
+	protected $root_path;
+
+	/** @var string */
+	protected $php_ext;
+
+	/**
+	* The database tables
+	*
+	* @var string
+	*/
+	protected $video_table;
+
+	protected $video_cat_table;
+
+	/**
+	* Constructor
+	*
+	* @param config				$config
+	* @param template			$template
+	* @param helper				$helper
+	* @param user				$user
+	* @param auth				$auth
+	* @param pagination			$pagination
+	* @param db_interface		$db
+	* @param request_interface	$request
+	* @param string				$root_path
+	* @param string				$php_ext
+	* @param string 			$video_table
+	* @param string 			$video_cat_table
+	*
+	*/
+	public function __construct(
+		config $config,
+		helper $helper,
+		template $template,
+		user $user,
+		auth $auth,
+		pagination $pagination,
+		db_interface $db,
+		request_interface $request,
+		$root_path,
+		$php_ext,
+		$video_table,
+		$video_cat_table
+	)
+	{
+		$this->config 				= $config;
+		$this->template 			= $template;
+		$this->helper 				= $helper;
+		$this->user 				= $user;
+		$this->auth 				= $auth;
+		$this->pagination 			= $pagination;
+		$this->db 					= $db;
+		$this->request 				= $request;
+		$this->root_path 			= $root_path;
+		$this->php_ext				= $php_ext;
+		$this->video_table 			= $video_table;
+		$this->video_cat_table 		= $video_cat_table;
+	}
+
+	public function main()
+	{
+		if ($this->user->data['user_id'] == ANONYMOUS || $this->user->data['is_bot'] || !$this->auth->acl_get('u_video_view') || !$this->config['enable_video_global'])
+		{
+			return;
+		}
+
+		$sql_start 	= $this->request->variable('start', 0);
+		$sql_limit 	= $this->request->variable('limit', $this->config['videos_per_page']);
+		$base_url = append_sid("{$this->root_path }ucp.{$this->php_ext}?i=-dmzx-youtubegallery-ucp-youtubegallery_ucp_module");
+
+		$sql_ary = array(
+			'SELECT'	=> 'v.*,
+			ct.video_cat_title,ct.video_cat_id,
+			u.username,u.user_colour,u.user_id',
+			'FROM'		=> array(
+				$this->video_table			=> 'v',
+				$this->video_cat_table		=> 'ct',
+				USERS_TABLE			=> 'u',
+			),
+			'WHERE'		=> 'u.user_id = v.user_id
+				AND ct.video_cat_id = v.video_cat_id
+				AND u.user_id = '. (int) $this->user->data['user_id'],
+			'ORDER_BY'	=> 'v.video_id DESC',
+		);
+
+		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
+		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$video_info = $this->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+
+			$this->template->assign_block_vars('video', array(
+				'VIDEO_TITLE'					=> $row['video_title'],
+				'VIDEO_CAT_ID'					=> $row['video_cat_id'],
+				'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
+				'VIDEO_VIEWS'					=> $row['video_views'],
+				'VIDEO_DURATION'				=> $row['video_duration'],
+				'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
+				'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
+				'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
+				'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
+				'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+				'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+				'VIDEO_ID'						=> censor_text($row['video_id']),
+				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+				'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+			));
+		}
+		$this->db->sql_freeresult($result);
+
+		$sql = 'SELECT COUNT(*) as video_count
+			FROM '. $this->video_table .'
+			WHERE user_id = ' . (int) $this->user->data['user_id'];
+		$result = $this->db->sql_query($sql);
+		$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
+		$this->db->sql_freeresult($result);
+
+		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
+
+		$this->template->assign_vars(array(
+			'ENABLE_VIDEO_YOUTUBE_STATS'		=> $this->config['enable_video_youtube_stats'],
+			'TOTAL_VIDEOS'						=> $this->user->lang('LIST_VIDEO', (int) $videorow['video_count']),
+		));
+	}
+
+	private function youtube_analytics($params)
+	{
+		$videoid = $params['id'];
+		$json = @file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" . $videoid . "&key=" . $this->config['google_api_key']);
+		$jsonData = json_decode($json);
+		$views = $jsonData->items[0]->statistics->viewCount;
+		$likes = $jsonData->items[0]->statistics->likeCount;
+		$dislikes = $jsonData->items[0]->statistics->dislikeCount;
+		$comments = $jsonData->items[0]->statistics->commentCount;
+
+		return array("views" => number_format($views), "likes" => number_format($likes), "dislikes" => number_format($dislikes), "comments" => number_format($comments));
+	}
+}

@@ -1,24 +1,11 @@
-{% INCLUDE 'overall_header.html' %}
+{% INCLUDE 'ucp_header.html' %}
 
-<h2>{{ lang('USER_VIDEOS') }} {{ USERNAME_SEARCH }}</h2>
+<h2>{{ lang('VIDEO_INDEX') }}</h2>
 
-<div class="action-bar bar-top">
-	{% if loops.pagination|length or TOTAL_VIDEOS %}
-	<div class="pagination">
-		{{ TOTAL_VIDEOS }}
-		{% if loops.pagination|length %}
-			{% INCLUDE 'pagination.html' %}
-		{% else %}
-			&bull; {{ PAGE_NUMBER }}
-		{% endif %}
-	</div>
-	{% endif %}
-</div>
-
-{% if S_SEARCH_USER_VIDEO %}
 {% if loops.video|length %}
-<div class="panel bg3">
+<div class="panel">
 	<div class="inner">
+	<p>{{ lang('UCP_YOUTUBEGALLERY_TITLE') }}</p>
 		{% for video in loops.video %}
 			<div id="video{{ video.VIDEO_ID }}" class="video_item {% if video.S_ROW_COUNT is even %}column11{% else %}column22{% endif %}">
 				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.S_VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
@@ -44,10 +31,10 @@
 	</div>
 </div>
 {% else %}
-<br class="clear" />
-<div id="information" class="rules">
+<div class="panel">
 	<div class="inner">
-		<strong>{{ lang('INFORMATION') }}{{ lang('COLON') }}</strong> {{ lang('NO_USER_VIDEOS') }}
+		<p>{{ lang('UCP_YOUTUBEGALLERY_TITLE') }}</p>
+		<strong>{{ lang('INFORMATION') }}{{ lang('COLON') }}</strong> {{ lang('UCP_NO_USER_VIDEOS') }}
 	</div>
 </div>
 {% endif %}
@@ -64,15 +51,5 @@
 	</div>
 	{% endif %}
 </div>
-{% endif %}
 
-<p class="jumpbox-return">
-	<a href="{{ U_VIDEO }}" class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }}" accesskey="r">
-		<i class="icon fa-angle-{{ S_CONTENT_FLOW_BEGIN }} fa-fw icon-black" aria-hidden="true"></i><span>{{ lang('RETURN_TO_VIDEO_INDEX') }}</span>
-	</a>
-</p>
-<br class="clear" />
-
-{% INCLUDE 'jumpbox.html' %}
-
-{% INCLUDE 'overall_footer.html' %}
+{% INCLUDE 'ucp_footer.html' %}

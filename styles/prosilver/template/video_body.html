@@ -8,6 +8,13 @@
 </div>
 {% endif %}
 
+<div class="panel bg3 panel-container" id="category-panel">
+	<div class="inner">
+		<h3>{{ lang('VIDEO_CATS') }}</h3>
+		<p>{% for videocat in loops.videocat %}&bull; <a href="{{ videocat.U_CAT }}" id="cat{{ videocat.VIDEO_CAT_ID }}">{{ videocat.VIDEO_CAT_TITLE }}</a> {% endfor %}</p>
+	</div>
+</div>
+
 {% if loops.video|length %}
 <div id="tabs" class="tabs">
 	<ul>
@@ -70,23 +77,6 @@
 	{% endif %}
 </div>
 <br />
-<div id="tabs" class="sub-panels tabs" data-show-panel="category-panel" role="tablist">
-	<ul>
-		<li id="category-panel-tab" class="tab activetab">
-			<a href="#tabs" data-subpanel="category-panel" role="tab" aria-controls="category-panel"><span>{{ lang('VIDEO_CATS') }}</span></a>
-		</li>
-		<li id="statistics-panel-tab" class="tab">
-			<a href="#tabs" data-subpanel="statistics-panel" role="tab" aria-controls="statistics-panel">{{ lang('STATISTICS') }}<strong id="file-total-progress"><strong id="file-total-progress-bar"></strong></strong></a>
-		</li>
-	</ul>
-</div>
-
-<div class="panel bg3 panel-container" id="category-panel">
-	<div class="inner">
-		<h3>{{ lang('VIDEO_CATS') }}</h3>
-		<p>{% for videocat in loops.videocat %}&bull; <a href="{{ videocat.U_CAT }}" id="cat{{ videocat.VIDEO_CAT_ID }}">{{ videocat.VIDEO_CAT_TITLE }}</a> {% endfor %}</p>
-	</div>
-</div>
 
 <div class="panel bg3 panel-container" id="statistics-panel">
 	<div class="inner">

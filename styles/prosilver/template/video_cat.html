@@ -28,6 +28,16 @@
 					{{ lang('VIDEO_DATE') }}{{ lang('COLON') }} {{ video.VIDEO_TIME }} <br />
 					{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br />
 					{{ lang('VIDEO_DURATION') }}{{ lang('COLON') }} {{ video.VIDEO_DURATION }}
+					{% if ENABLE_VIDEO_YOUTUBE_STATS %}
+					 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
+						<div class="post-meta d-flex justify-content-between">
+							<span><i class="icon fa fa-comments-o" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_COMMENTS }}</span>
+							<span><i class="icon fa fa-eye" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE }}</span>
+							<span><i class="icon fa fa-thumbs-o-up" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_LIKE }}</span>
+							<span><i class="icon fa fa-thumbs-o-down" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_DISLIKE }}</span>
+						</div>
+					<hr>
+					{% endif %}
 				</div>
 				</div>
 			</div>

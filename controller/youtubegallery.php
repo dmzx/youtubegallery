@@ -769,19 +769,25 @@ class youtubegallery
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
+					$video_info = $this->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+
 					$this->template->assign_block_vars('video', array(
-						'VIDEO_TITLE'		=> $row['video_title'],
-						'VIDEO_CAT_ID'		=> $row['video_cat_id'],
-						'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
-						'VIDEO_VIEWS'		=> $row['video_views'],
-						'VIDEO_DURATION'	=> $row['video_duration'],
-						'U_CAT'				=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
-						'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
-						'VIDEO_ID'			=> censor_text($row['video_id']),
-						'U_VIEW_VIDEO'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-						'U_POSTER'			=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
-						'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+						'VIDEO_TITLE'					=> $row['video_title'],
+						'VIDEO_CAT_ID'					=> $row['video_cat_id'],
+						'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
+						'VIDEO_VIEWS'					=> $row['video_views'],
+						'VIDEO_DURATION'				=> $row['video_duration'],
+						'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
+						'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
+						'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
+						'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
+						'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+						'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+						'VIDEO_ID'						=> censor_text($row['video_id']),
+						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
+						'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+						'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 					));
 				}
 				$this->db->sql_freeresult($result);
@@ -804,8 +810,9 @@ class youtubegallery
 				$this->db->sql_freeresult($result);
 
 				$this->template->assign_vars(array(
-					'CAT_NAME'			=> $row['video_cat_title'],
-					'TOTAL_VIDEOS'		=> $this->user->lang('LIST_VIDEO', (int) $videorow['video_count']),
+					'CAT_NAME'								=> $row['video_cat_title'],
+					'TOTAL_VIDEOS'							=> $this->user->lang('LIST_VIDEO', (int) $videorow['video_count']),
+					'ENABLE_VIDEO_YOUTUBE_STATS'			=> $this->config['enable_video_youtube_stats'],
 				));
 
 				$l_title = $row['video_cat_title'];
@@ -859,23 +866,30 @@ class youtubegallery
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
+					$video_info = $this->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+
 					$this->template->assign_block_vars('video', array(
-						'VIDEO_TITLE'		=> $row['video_title'],
-						'VIDEO_CAT_ID'		=> $row['video_cat_id'],
-						'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
-						'VIDEO_VIEWS'		=> $row['video_views'],
-						'VIDEO_DURATION'	=> $row['video_duration'],
-						'U_CAT'				=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
-						'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
-						'VIDEO_ID'			=> censor_text($row['video_id']),
-						'U_VIEW_VIDEO'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-						'U_POSTER'			=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
-						'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+						'VIDEO_TITLE'					=> $row['video_title'],
+						'VIDEO_CAT_ID'					=> $row['video_cat_id'],
+						'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
+						'VIDEO_VIEWS'					=> $row['video_views'],
+						'VIDEO_DURATION'				=> $row['video_duration'],
+						'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
+						'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
+						'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
+						'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
+						'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+						'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+						'VIDEO_ID'						=> censor_text($row['video_id']),
+						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
+						'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+						'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 					));
 
 					$this->template->assign_vars(array(
-						'USERNAME_SEARCH'	=> get_username_string('no_profile', $row['user_id'], $row['username']) . ' (' . $videorow['video_count'] . ')',
+						'USERNAME_SEARCH'						=> get_username_string('no_profile', $row['user_id'], $row['username']) . ' (' . $videorow['video_count'] . ')',
+						'ENABLE_VIDEO_YOUTUBE_STATS'			=> $this->config['enable_video_youtube_stats'],
 					));
 				}
 				$this->db->sql_freeresult($result);

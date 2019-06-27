@@ -32,6 +32,21 @@ services:
             - '@service_container'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
+    dmzx.youtubegallery.ucp.controller:
+        class: dmzx\youtubegallery\controller\ucp_controller
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@user'
+            - '@auth'
+            - '@pagination'
+            - '@dbal.conn'
+            - '@request'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%dmzx.youtubegallery.table.video%'
+            - '%dmzx.youtubegallery.table.video_cat%'
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
