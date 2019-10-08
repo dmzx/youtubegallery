@@ -9,16 +9,21 @@
 		<ul class="topiclist">
 			<li class="header">
 				<dl class="row-item">
-					<dt><div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}">{{ lang('VIDEO_LAST') }} {{ LAST_VIDEOS }} {{ lang('VIDEO') }}</a></div></dt>
+					<dt>
+						<div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}">{{ lang('VIDEO_LAST') }} {{ LAST_VIDEOS }} {{ lang('VIDEO') }}</a></div>
+					</dt>
 					<dd></dd>
 				</dl>
 				{% if VIDEO_IS_COLLAPSIBLE %}
 				<a href="{{ U_VIDEO_COLLAPSE_URL }}"
-					class="collapse-btn collapse-{% if S_VIDEO_HIDDEN %}show{% else %}hide{% endif %}"
+					class="collapse-btn video-collapse"
 					data-hidden="{{ S_VIDEO_HIDDEN }}"
 					data-ajax="phpbb_collapse"
 					data-overlay="true"
-					title="{{ lang('COLLAPSIBLE_CATEGORIES_TITLE') }}"></a>
+					data-title-alt="{{ lang('VIDEO_CATEGORIES_TITLE', ((not S_VIDEO_HIDDEN) * 1)) }}"
+					title="{{ lang('VIDEO_CATEGORIES_TITLE', (S_VIDEO_HIDDEN * 1)) }}">
+						<i class="fa {% if S_VIDEO_HIDDEN %}fa-plus-square{% else %}fa-minus-square{% endif %}"></i>
+				</a>
 				{% endif %}
 			</li>
 		</ul>

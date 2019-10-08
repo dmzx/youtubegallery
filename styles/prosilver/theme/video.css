@@ -1,9 +1,9 @@
 h3.center {
 	text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 110ch;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 110ch;
 }
 
 a {
@@ -27,18 +27,6 @@ a {
 .buttons div.video-icon	{ 
 	width: 96px; 
 	height: 25px; 
-}
-
-.rtl .icon-videos {
-	background-position: 100% 50%;
-	padding: 1px 17px 0 0;
-}
-
-.icon-videos { 
-	background-image: url("./images/icon_videos.gif"); 
-	background-position: 0 50%;
-	background-repeat: no-repeat;
-	padding: 1px 0 0 1px;
 }
 
 .icon_youtube { 
@@ -156,11 +144,11 @@ ul.video li.videolist {
 }
 
 .d-flex {
-  display: flex !important; 
+	display: flex !important; 
 }
   
 .justify-content-between {
-  justify-content: space-around !important; 
+	justify-content: space-around !important; 
 }
 
 .post-meta {
@@ -190,7 +178,7 @@ ul.video li.videolist {
 	float: left;
 	clear: left;
 	width: 49%;
-        margin-top: 8px;
+    margin-top: 8px;
 	border: 1px solid #757e86 !important;
 }
 
@@ -198,22 +186,22 @@ ul.video li.videolist {
 	float: right;
 	clear: right;
 	width: 49%;
-        margin-top: 8px;
+    margin-top: 8px;
 	border: 1px solid #757e86 !important;
 }
 
 @media all and (min-width : 350px) and (max-width : 900px) {
 	h3.center {
-	text-align: left;
+		text-align: left;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 75ch;
-        }
+    }
 }
 
 @media all and (min-width : 350px) and (max-width : 400px) {
     .justify-content-between {
-	display: none !important;
-        }
+		display: none !important;
+    }
 }

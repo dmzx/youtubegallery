@@ -50,6 +50,8 @@ class admin_controller
 
 	protected $video_cat_table;
 
+	protected $video_cmnts_table;
+
 	/** @var string Custom form action */
 	protected $u_action;
 
@@ -65,6 +67,7 @@ class admin_controller
 	 * @param Container 			$phpbb_container
 	 * @param string 				$video_table
 	 * @param string 				$video_cat_table
+	 * @param string 				$video_cmnts_table
 	 */
 	public function __construct(
 		config $config,
@@ -75,25 +78,26 @@ class admin_controller
 		request_interface $request,
 		Container $phpbb_container,
 		$video_table,
-		$video_cat_table
+		$video_cat_table,
+		$video_cmnts_table
 	)
 	{
-		$this->config 			= $config;
-		$this->template 		= $template;
-		$this->log 				= $log;
-		$this->user 			= $user;
-		$this->db 				= $db;
-		$this->request 			= $request;
-		$this->phpbb_container 	= $phpbb_container;
-		$this->video_table 		= $video_table;
-		$this->video_cat_table 	= $video_cat_table;
+		$this->config 				= $config;
+		$this->template 			= $template;
+		$this->log 					= $log;
+		$this->user 				= $user;
+		$this->db 					= $db;
+		$this->request 				= $request;
+		$this->phpbb_container 		= $phpbb_container;
+		$this->video_table 			= $video_table;
+		$this->video_cat_table 		= $video_cat_table;
+		$this->video_cmnts_table 	= $video_cmnts_table;
 	}
 
 	public function display_settings()
 	{
 		add_form_key('acp_video');
 
-		// Is the form being submitted to us?
 		if ($this->request->is_set_post('submit'))
 		{
 			if (!check_form_key('acp_video'))
@@ -101,10 +105,8 @@ class admin_controller
 				trigger_error($this->user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 			}
 
-			// Set the options the user configured
 			$this->set_options();
 
-			// Add option settings change action to the admin log
 			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_SETTINGS');
 
 			trigger_error($this->user->lang['ACP_VIDEO_SETTINGS_SAVED'] . adm_back_link($this->u_action));
@@ -176,7 +178,6 @@ class admin_controller
 				{
 					$this->db->sql_query('INSERT INTO ' . $this->video_cat_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 
-					// Add option category change action to the admin log
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_CATEGORY_ADD');
 
 					trigger_error($this->user->lang['ACP_CATEGORY_CREATED'] . adm_back_link($this->u_action));
@@ -208,7 +209,6 @@ class admin_controller
 				{
 					$this->db->sql_query('UPDATE ' . $this->video_cat_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE VIDEO_CAT_ID = ' . $video_cat_id);
 
-					// Add option category update change action to the admin log
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_CATEGORY_UPDATE');
 
 					trigger_error($this->user->lang['ACP_CATEGORY_UPDATED'] . adm_back_link($this->u_action));
@@ -217,11 +217,10 @@ class admin_controller
 			case 'delete':
 				if (confirm_box(true))
 				{
-					$sql = 'DELETE FROM ' . $this->video_cat_table . '
-						WHERE video_cat_id = ' . (int) $this->request->variable('id', 0);
+					$sql = 'DELETE FROM ' . $this->video_cmnts_table . '
+						WHERE cmnt_video_id = ' . (int) $this->request->variable('id', 0);
 					$this->db->sql_query($sql);
 
-					// Add option category delete change action to the admin log
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_CATEGORY_DELETED');
 
 					trigger_error($this->user->lang['ACP_CATEGORY_DELETED'] . adm_back_link($this->u_action));
@@ -276,7 +275,10 @@ class admin_controller
 						WHERE video_id = ' . (int) $this->request->variable('id', 0);
 					$this->db->sql_query($sql);
 
-					// Add option title delete change action to the admin log
+					$sql = 'DELETE FROM ' . $this->video_cmnts_table . '
+						WHERE cmnt_video_id = ' . (int) $this->request->variable('id', 0);
+					$this->db->sql_query($sql);
+
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_TITLE_DELETED');
 
 					trigger_error($this->user->lang['ACP_TITLE_DELETED'] . adm_back_link($this->u_action));
@@ -324,13 +326,6 @@ class admin_controller
 		));
 	}
 
-	/**
-	* Set page url
-	*
-	* @param string $u_action Custom form action
-	* @return null
-	* @access public
-	*/
 	public function set_page_url($u_action)
 	{
 		$this->u_action = $u_action;

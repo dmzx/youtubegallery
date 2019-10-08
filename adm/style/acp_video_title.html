@@ -20,7 +20,7 @@
 			<td>{{ title.VIDEO_TITLE }}</td>
 			<td>{{ title.VIDEO_CAT_TITLE }}</td>
 			<td>{{ title.USERNAME }}</td>
-			<td>&nbsp;<a href="{{ title.U_DEL }}">{{ ICON_DELETE }}</a>&nbsp;</td>
+			<td>&nbsp;<a href="{{ title.U_DEL }}" data-ajax="row_delete">{{ ICON_DELETE }}</a>&nbsp;</td>
 		</tr>
 	{% endfor %}
 	</tbody>

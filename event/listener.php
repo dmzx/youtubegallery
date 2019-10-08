@@ -11,6 +11,7 @@
 namespace dmzx\youtubegallery\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use dmzx\youtubegallery\core\functions;
 use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\controller\helper;
@@ -18,10 +19,12 @@ use phpbb\user;
 use phpbb\auth\auth;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\collapsiblecategories\operator\operator as operator;
-use phpbb\files\factory;
 
 class listener implements EventSubscriberInterface
 {
+	/** @var functions */
+	protected $functions;
+
 	/** @var config */
 	protected $config;
 
@@ -60,12 +63,10 @@ class listener implements EventSubscriberInterface
 	/** @var operator */
 	protected $operator;
 
-	/** @var factory */
-	protected $files_factory;
-
 	/**
 	* Constructor
 	*
+	* @param functions			$functions
 	* @param config				$config
 	* @param template			$template
 	* @param helper				$helper
@@ -78,10 +79,10 @@ class listener implements EventSubscriberInterface
 	* @param string 			$video_cat_table
 	* @param string 			$video_cmnts_table
 	* @param operator			$operator
-	* @param factory			$files_factory
 	*
 	*/
 	public function __construct(
+		functions $functions,
 		config $config,
 		helper $helper,
 		template $template,
@@ -93,10 +94,10 @@ class listener implements EventSubscriberInterface
 		$video_table,
 		$video_cat_table,
 		$video_cmnts_table,
-		operator $operator = null,
-		factory $files_factory = null
+		operator $operator = null
 	)
 	{
+		$this->functions 			= $functions;
 		$this->config 				= $config;
 		$this->template 			= $template;
 		$this->helper 				= $helper;
@@ -109,7 +110,6 @@ class listener implements EventSubscriberInterface
 		$this->video_cat_table 		= $video_cat_table;
 		$this->video_cmnts_table 	= $video_cmnts_table;
 		$this->operator 			= $operator;
-		$this->files_factory 		= $files_factory;
 	}
 
 	static public function getSubscribedEvents()
@@ -136,7 +136,6 @@ class listener implements EventSubscriberInterface
 	{
 		$this->template->assign_vars(array(
 			'U_VIDEO' 					=> $this->helper->route('dmzx_youtubegallery_controller'),
-			'PHPBB_IS_32'				=> ($this->files_factory !== null) ? true : false,
 			'VIDEO_ENABLE'				=> $this->config['enable_video_global'],
 			'S_CAN_VIEW_GALLERY_LINK'	=> $this->auth->acl_get('u_video_view_full'),
 		));
@@ -168,39 +167,17 @@ class listener implements EventSubscriberInterface
 			));
 		}
 
-		// Count the videos ...
-		$sql = 'SELECT COUNT(video_id) AS total_videos
-			FROM ' . $this->video_table;
-		$result = $this->db->sql_query($sql);
-		$total_videos = (int) $this->db->sql_fetchfield('total_videos');
-		$this->db->sql_freeresult($result);
-
-		// Count the videos categories ...
-		$sql = 'SELECT COUNT(video_cat_id) AS total_categories
-			FROM ' . $this->video_cat_table;
-		$result = $this->db->sql_query($sql);
-		$total_categories = (int) $this->db->sql_fetchfield('total_categories');
-		$this->db->sql_freeresult($result);
-
-		// Count the videos views ...
-		$sql = 'SELECT SUM(video_views) AS total_views
-			FROM ' . $this->video_table;
-		$result = $this->db->sql_query($sql);
-		$total_views = (int) $this->db->sql_fetchfield('total_views');
-		$this->db->sql_freeresult($result);
-
-		// Count the videos comments ...
-		$sql = 'SELECT COUNT(cmnt_id) AS total_comments
-			FROM ' . $this->video_cmnts_table;
-		$result = $this->db->sql_query($sql);
-		$total_comments = (int) $this->db->sql_fetchfield('total_comments');
-		$this->db->sql_freeresult($result);
+		if ($this->config['enable_video_statics_on_index'])
+		{
+			$this->template->assign_vars(array(
+				'TOTAL_VIDEOS_INDEX'				=> $this->user->lang('TOTAL_VIDEO', $this->functions->total_videos()),
+				'TOTAL_CATEGORIES'					=> $this->user->lang('TOTAL_CATEGORIES', $this->functions->total_categories()),
+				'TOTAL_VIEWS'						=> $this->user->lang('TOTAL_VIEWS', $this->functions->total_views()),
+				'TOTAL_COMMENTS'					=> $this->user->lang('TOTAL_COMMENTS', $this->functions->total_comments()),
+			));
+		}
 
 		$this->template->assign_vars(array(
-			'TOTAL_VIDEOS_INDEX'				=> $this->user->lang('TOTAL_VIDEO', $total_videos),
-			'TOTAL_CATEGORIES'					=> $this->user->lang('TOTAL_CATEGORIES', $total_categories),
-			'TOTAL_VIEWS'						=> $this->user->lang('TOTAL_VIEWS', $total_views),
-			'TOTAL_COMMENTS'					=> $this->user->lang('TOTAL_COMMENTS', $total_comments),
 			'S_ENABLE_VIDEO_STATICS_ON_INDEX'	=> $this->config['enable_video_statics_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX'			=> $this->config['enable_video_on_index'],
 			'S_ENABLE_VIDEO_ON_INDEX_LOCATION'	=> $this->config['enable_video_on_index_location'],

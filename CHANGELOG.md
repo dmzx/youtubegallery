@@ -1,5 +1,12 @@
 ## Changelog
 
+### 1.0.7 - 2019-10-08
+
+- Update Collapse.
+- Drop support for 3.1.x
+- Move function to core/functions.
+- Various code changes.
+
 ### 1.0.6 - 2019-06-27
 
 - Added UCP page.

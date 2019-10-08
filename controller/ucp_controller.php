@@ -10,6 +10,7 @@
 
 namespace dmzx\youtubegallery\controller;
 
+use dmzx\youtubegallery\core\functions;
 use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\controller\helper;
@@ -21,6 +22,9 @@ use phpbb\request\request_interface;
 
 class ucp_controller
 {
+	/** @var functions */
+	protected $functions;
+
 	/** @var config */
 	protected $config;
 
@@ -63,6 +67,7 @@ class ucp_controller
 	/**
 	* Constructor
 	*
+	* @param functions			$functions
 	* @param config				$config
 	* @param template			$template
 	* @param helper				$helper
@@ -78,6 +83,7 @@ class ucp_controller
 	*
 	*/
 	public function __construct(
+		functions $functions,
 		config $config,
 		helper $helper,
 		template $template,
@@ -92,6 +98,7 @@ class ucp_controller
 		$video_cat_table
 	)
 	{
+		$this->functions 			= $functions;
 		$this->config 				= $config;
 		$this->template 			= $template;
 		$this->helper 				= $helper;
@@ -137,7 +144,7 @@ class ucp_controller
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$video_info = $this->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+			$video_info = $this->functions->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
 
 			$this->template->assign_block_vars('video', array(
 				'VIDEO_TITLE'					=> $row['video_title'],
@@ -158,31 +165,15 @@ class ucp_controller
 		}
 		$this->db->sql_freeresult($result);
 
-		$sql = 'SELECT COUNT(*) as video_count
-			FROM '. $this->video_table .'
-			WHERE user_id = ' . (int) $this->user->data['user_id'];
-		$result = $this->db->sql_query($sql);
-		$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
-		$this->db->sql_freeresult($result);
+		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $this->functions->videorow_user_id($this->user->data['user_id']), $sql_limit, $sql_start);
 
-		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
+		$this->functions->assign_authors();
 
 		$this->template->assign_vars(array(
 			'ENABLE_VIDEO_YOUTUBE_STATS'		=> $this->config['enable_video_youtube_stats'],
-			'TOTAL_VIDEOS'						=> $this->user->lang('LIST_VIDEO', (int) $videorow['video_count']),
+			'TOTAL_VIDEOS'						=> $this->user->lang('LIST_VIDEO', (int) $this->functions->videorow_user_id($this->user->data['user_id'])),
+			'VIDEO_FOOTER_VIEW'					=> true,
+			'VIDEO_VERSION'						=> $this->config['youtubegallery_version'],
 		));
-	}
-
-	private function youtube_analytics($params)
-	{
-		$videoid = $params['id'];
-		$json = @file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" . $videoid . "&key=" . $this->config['google_api_key']);
-		$jsonData = json_decode($json);
-		$views = $jsonData->items[0]->statistics->viewCount;
-		$likes = $jsonData->items[0]->statistics->likeCount;
-		$dislikes = $jsonData->items[0]->statistics->dislikeCount;
-		$comments = $jsonData->items[0]->statistics->commentCount;
-
-		return array("views" => number_format($views), "likes" => number_format($likes), "dislikes" => number_format($dislikes), "comments" => number_format($comments));
 	}
 }

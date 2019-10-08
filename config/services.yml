@@ -4,6 +4,7 @@ services:
     dmzx.youtubegallery.controller:
         class: dmzx\youtubegallery\controller\youtubegallery
         arguments:
+            - '@dmzx.youtubegallery.core.functions'
             - '@config'
             - '@controller.helper'
             - '@template'
@@ -19,7 +20,6 @@ services:
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
-            - '@ext.manager'
     dmzx.youtubegallery.admin.controller:
         class: dmzx\youtubegallery\controller\admin_controller
         arguments:
@@ -32,9 +32,11 @@ services:
             - '@service_container'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
+            - '%dmzx.youtubegallery.table.video_cmnts%'
     dmzx.youtubegallery.ucp.controller:
         class: dmzx\youtubegallery\controller\ucp_controller
         arguments:
+            - '@dmzx.youtubegallery.core.functions'
             - '@config'
             - '@controller.helper'
             - '@template'
@@ -50,6 +52,7 @@ services:
     dmzx.youtubegallery.listener:
         class: dmzx\youtubegallery\event\listener
         arguments:
+            - '@dmzx.youtubegallery.core.functions'
             - '@config'
             - '@controller.helper'
             - '@template'
@@ -62,6 +65,16 @@ services:
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
             - '@?phpbb.collapsiblecategories.operator'
-            - '@?files.factory'
         tags:
             - { name: event.listener }
+    dmzx.youtubegallery.core.functions:
+        class: dmzx\youtubegallery\core\functions
+        arguments:
+            - '@config'
+            - '@template'
+            - '@user'
+            - '@dbal.conn'
+            - '%dmzx.youtubegallery.table.video%'
+            - '%dmzx.youtubegallery.table.video_cat%'
+            - '%dmzx.youtubegallery.table.video_cmnts%'
+            - '@ext.manager'

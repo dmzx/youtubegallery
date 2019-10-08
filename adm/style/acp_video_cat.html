@@ -33,7 +33,7 @@
 	{% for category in loops.category %}
 		{% if category.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
 			<td>{{ category.VIDEO_CAT_TITLE }}</td>
-			<td>&nbsp;<a href="{{ category.U_EDIT }}">{{ ICON_EDIT }}</a> <a href="{{ category.U_DEL }}">{{ ICON_DELETE }}</a>&nbsp;</td>
+			<td>&nbsp;<a href="{{ category.U_EDIT }}">{{ ICON_EDIT }}</a> <a href="{{ category.U_DEL }}" data-ajax="row_delete">{{ ICON_DELETE }}</a>&nbsp;</td>
 		</tr>
 	{% endfor %}
 	</tbody>

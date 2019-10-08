@@ -71,6 +71,7 @@ $lang = array_merge($lang, array(
 	'NO_VIDEOS_COMMENTS'		=> 'This video has no comments.',
 	'VIDEO_COMMENT'				=> 'Comment',
 	'VIDEO_COMMENTS'			=> 'Comments',
+	'NEED_VIDEO_MESSAGE'		=> 'No comment added',
 	'COMMENT_DELETED_SUCCESS'	=> 'This comment has been deleted successfully.',
 	'DELETE_COMMENT_CONFIRM'	=> 'Are you sure you want to delete this comment?',
 	'DELETE_COMMENT_NOT'		=> 'Comment <strong>not</strong> deleted.',
@@ -149,5 +150,10 @@ $lang = array_merge($lang, array(
 	'LIST_VIDEO'		=>	array(
 		1 => '%s video',
 		2 => '%s videos',
+	),
+
+	'VIDEO_CATEGORIES_TITLE'			=> array(
+		0 => 'Hide video',
+		1 => 'Show video',
 	),
 ));
