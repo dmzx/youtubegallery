@@ -119,6 +119,7 @@ $lang = array_merge($lang, array(
 	'USER_VIDEOS_EXPLAIN'		=> 'Show all',
 	'NO_KEY_ADMIN'				=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
 	'NO_KEY_USER'				=> 'Dear user, the gallery is unavailable. Please come back later.',
+	'NO_CURL'					=> 'You must enable curl.',
 	'COMMENTS_DISABLED'			=> 'Comments are disabled.',
 	'DELETE_COMMENT'			=> 'Delete comment',
 

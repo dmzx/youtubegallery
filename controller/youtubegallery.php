@@ -20,6 +20,8 @@ use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\request\request_interface;
 use phpbb\pagination;
 use Symfony\Component\DependencyInjection\Container;
+use phpbb\textformatter\parser_interface;
+use phpbb\textformatter\renderer_interface;
 use phpbb\exception\http_exception;
 
 class youtubegallery
@@ -54,6 +56,12 @@ class youtubegallery
 	/** @var Container */
 	protected $phpbb_container;
 
+	/** @var parser_interface */
+	protected $parser;
+
+	/** @var renderer_interface */
+	protected $renderer;
+
 	/** @var string */
 	protected $root_path;
 
@@ -87,6 +95,8 @@ class youtubegallery
 	 * @param request_interface		$request
 	 * @param pagination			$pagination
 	 * @param Container 			$phpbb_container
+	 * @param parser_interface		$parser
+	 * @param renderer_interface	$renderer
 	 * @param string				$root_path
 	 * @param string				$php_ext
 	 * @param string				$table_prefix
@@ -105,6 +115,8 @@ class youtubegallery
 		request_interface $request,
 		pagination $pagination,
 		Container $phpbb_container,
+		parser_interface $parser,
+		renderer_interface $renderer,
 		$root_path,
 		$php_ext,
 		$table_prefix,
@@ -123,6 +135,8 @@ class youtubegallery
 		$this->request 				= $request;
 		$this->pagination 			= $pagination;
 		$this->phpbb_container 		= $phpbb_container;
+		$this->parser				= $parser;
+		$this->renderer				= $renderer;
 		$this->root_path 			= $root_path;
 		$this->php_ext 				= $php_ext;
 		$this->table_prefix 		= $table_prefix;
@@ -144,6 +158,8 @@ class youtubegallery
 		$video_title 		= $this->request->variable('video_title', '', true);
 		$time 				= $this->request->variable('time', '', true);
 		$video_duration 	= $this->request->variable('video_duration', '', true);
+		$video_description	= $this->request->variable('video_description', '', true);
+		$video_description	= htmlspecialchars_decode($video_description, ENT_COMPAT);
 		$video_viewcount	= $this->request->variable('video_viewcount', '', true);
 		$video_cat_id 		= $this->request->variable('cid', 0);
 		$video_cat_ids 		= $this->request->variable('id', 0);
@@ -153,7 +169,6 @@ class youtubegallery
 		$sql_start 			= $this->request->variable('start', 0);
 		$sql_limit 			= $this->request->variable('limit', $this->config['videos_per_page']);
 		$sql_limits 		= $this->request->variable('limit', $this->config['comments_per_page']);
-		// Comments
 		$cmnt_id 			= $this->request->variable('cmntid', 0);
 		$mode 				= $this->request->variable('mode', '');
 		$submit 			= $this->request->is_set_post('submit');
@@ -170,45 +185,55 @@ class youtubegallery
 			}
 		}
 
-		/**
-		* Get youtube video ID from URL
-		* From: http://halgatewood.com/php-get-the-youtube-video-id-from-a-youtube-url/
-		*/
-		function getYouTubeIdFromURL($url)
+		if ($this->functions->curl_required() == false)
 		{
-			$pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
-			preg_match($pattern, $url, $matches);
-
-			return isset($matches[1]) ? $matches[1] : false;
+			throw new http_exception(401, 'NO_CURL');
 		}
-		$youtube_id = getYouTubeIdFromURL($video_url);
-		$jsonURL = @file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id={$youtube_id}&key={$this->config['google_api_key']}&fields=items(snippet(title),contentDetails(duration),statistics(viewCount))&part=snippet");
 
-		$json = json_decode($jsonURL);
+		$youtube_id = $this->functions->getYouTubeIdFromURL($video_url);
 
-		if (isset($json->items[0]->snippet))
+		if ($this->functions->curl_required() && $submit)
 		{
-			$video_title = $json->items[0]->snippet->title;
-			$time = $json->items[0]->contentDetails->duration;
+			$option = [
+				'part' 	=> 'snippet,contentDetails',
+				'id' 	=> $youtube_id,
+				'key' 	=> $this->config['google_api_key'],
+			];
+			$curl_handle = curl_init();
+			curl_setopt($curl_handle, CURLOPT_URL, "https://www.googleapis.com/youtube/v3/videos?".http_build_query($option, 'a', '&'));
+			curl_setopt($curl_handle, CURLOPT_HTTPHEADER,['Content-Type: application/json']);
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+			$json_response = curl_exec($curl_handle);
+			curl_close($curl_handle);
 
-			$d_colon = str_ireplace(array('PT', 'H', 'M', 'S'), array('',':',':',''), $time);
+			$jsonData = json_decode($json_response);
 
-			//seconds
-			if (substr_count($d_colon, ':') == 0)
+			if (isset($jsonData->items[0]))
 			{
-				$d_zeros = '00:00:'.$d_colon;
-				$video_duration = '0:'.date("s", strtotime($d_zeros));
-			}
-			//minutes
-			elseif (substr_count($d_colon, ':') == 1)
-			{
-				$d_zeros = "00:".$d_colon;
-				$video_duration = date("i:s", strtotime($d_zeros));
-			}
-			//hours
-			else
-			{
-				$video_duration = date("H:i:s", strtotime($d_colon));
+				$video_title 		= $jsonData->items[0]->snippet->title;
+				$video_description 	= $jsonData->items[0]->snippet->description;
+				$time 				= $jsonData->items[0]->contentDetails->duration;
+
+				$d_colon = str_ireplace(array('PT', 'H', 'M', 'S'), array('',':',':',''), $time);
+
+				//seconds
+				if (substr_count($d_colon, ':') == 0)
+				{
+					$d_zeros = '00:00:'.$d_colon;
+					$video_duration = '0:'.date("s", strtotime($d_zeros));
+				}
+				//minutes
+				elseif (substr_count($d_colon, ':') == 1)
+				{
+					$d_zeros = "00:".$d_colon;
+					$video_duration = date("i:s", strtotime($d_zeros));
+				}
+				//hours
+				else
+				{
+					$video_duration = date("H:i:s", strtotime($d_colon));
+				}
 			}
 		}
 
@@ -223,6 +248,7 @@ class youtubegallery
 			'create_time'		=> (int) time(),
 			'video_views'		=> $video_views,
 			'video_duration'	=> $video_duration,
+			'video_description'	=> $this->parser->parse($video_description),
 		);
 
 		$error = $row = array();
@@ -348,7 +374,7 @@ class youtubegallery
 									),
 									'WHERE'		=> 'u.user_id = v.user_id
 										AND ct.video_cat_id = v.video_cat_id
-										AND u.user_id = '. $user_id,
+										AND u.user_id = ' . (int) $user_id,
 									'ORDER_BY'	=> 'v.video_id DESC',
 								);
 								$sql = $this->db->sql_build_query('SELECT', $sql_ary);
@@ -433,18 +459,18 @@ class youtubegallery
 				display_custom_bbcodes();
 				generate_smilies('inline', 0);
 
-				$bbcode_status	= ($this->config['allow_bbcode']) ? true : false;
-				$smilies_status	= ($this->config['allow_smilies']) ? true : false;
-				$img_status		= ($bbcode_status) ? true : false;
-				$url_status		= ($this->config['allow_post_links']) ? true : false;
-				$flash_status	= ($bbcode_status && $this->config['allow_post_flash']) ? true : false;
-				$quote_status	= true;
-				$video_id		= $this->request->variable('v', 0);
+				$bbcode_status		= ($this->config['allow_bbcode']) ? true : false;
+				$smilies_status		= ($this->config['allow_smilies']) ? true : false;
+				$img_status			= ($bbcode_status) ? true : false;
+				$url_status			= ($this->config['allow_post_links']) ? true : false;
+				$flash_status		= ($bbcode_status && $this->config['allow_post_flash']) ? true : false;
+				$quote_status		= true;
+				$video_id			= $this->request->variable('v', 0);
 				$uid = $bitfield = $options = '';
 				$allow_bbcode = $allow_urls = $allow_smilies = true;
-				$s_action = $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'comment', 'v' => (int) $video_id));
-				$s_hidden_fields = '';
-				$form_enctype = '';
+				$s_action 			= $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'comment', 'v' => (int) $video_id));
+				$s_hidden_fields 	= '';
+				$form_enctype 		= '';
 
 				add_form_key('postform');
 
@@ -692,6 +718,7 @@ class youtubegallery
 					'VIDEO_TITLE'		=> censor_text($row['video_title']),
 					'VIDEO_VIEWS'		=> $row['video_views'],
 					'VIDEO_DURATION'	=> $row['video_duration'],
+					'VIDEO_DESCRIPTION'	=> $this->renderer->render($row['video_description']),
 					'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 					'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
 					'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
@@ -801,7 +828,7 @@ class youtubegallery
 						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 						'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+						'VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 					));
 				}
 				$this->db->sql_freeresult($result);
@@ -855,7 +882,7 @@ class youtubegallery
 					),
 					'WHERE'		=> 'u.user_id = v.user_id
 						AND ct.video_cat_id = v.video_cat_id
-						AND u.user_id = '. $user_id,
+						AND u.user_id = ' . (int) $user_id,
 					'ORDER_BY'	=> 'v.video_id DESC',
 				);
 
@@ -882,7 +909,7 @@ class youtubegallery
 						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
 						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
 						'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+						'VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 					));
 
 					$this->template->assign_vars(array(
@@ -927,62 +954,20 @@ class youtubegallery
 
 				$pagination_url = $this->helper->route('dmzx_youtubegallery_controller');
 
-				$sql_ary = array(
-					'SELECT'	=> 'v.*,
-					ct.video_cat_title,ct.video_cat_id,
-					u.username,u.user_colour,u.user_id',
-					'FROM'		=> array(
-						$this->video_table			=> 'v',
-						$this->video_cat_table		=> 'ct',
-						USERS_TABLE			=> 'u',
-					),
-					'WHERE'		=> 'ct.video_cat_id = v.video_cat_id
-						AND u.user_id = v.user_id',
-					'ORDER_BY'	=> 'v.video_id DESC',
-				);
-
-				$sql = $this->db->sql_build_query('SELECT', $sql_ary);
-				$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
-
-				while ($row = $this->db->sql_fetchrow($result))
-				{
-					$video_info = $this->functions->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
-
-					$this->template->assign_block_vars('video', array(
-						'VIDEO_TITLE'					=> $row['video_title'],
-						'VIDEO_CAT_ID'					=> $row['video_cat_id'],
-						'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
-						'VIDEO_VIEWS'					=> $row['video_views'],
-						'VIDEO_DURATION'				=> $row['video_duration'],
-						'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
-						'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
-						'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
-						'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
-						'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
-						'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
-						'VIDEO_ID'						=> censor_text($row['video_id']),
-						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
-						'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'YOUTUBE_ID'					=> censor_text($row['youtube_id']),
-						'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
-					));
-				}
-				$this->db->sql_freeresult($result);
+				// Build template
+				$this->functions->video_template();
 
 				// We need another query for the video count
 				$sql = 'SELECT COUNT(*) as video_count
 					FROM ' . $this->video_table;
 				$result = $this->db->sql_query($sql);
-				$videorow['video_count'] = $this->db->sql_fetchfield('video_count');
+				$videorow = $this->db->sql_fetchfield('video_count');
 				$this->db->sql_freeresult($result);
 
-				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow['video_count'], $sql_limit, $sql_start);
-
-				$this->functions->assign_authors();
+				$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $videorow, $sql_limit, $sql_start);
 
 				$this->template->assign_vars(array(
-					'TOTAL_VIDEOS'							=> $this->user->lang('LIST_VIDEO', (int) $videorow['video_count']),
+					'TOTAL_VIDEOS'							=> $this->user->lang('LIST_VIDEO', (int) $videorow),
 					'VIDEO_FOOTER_VIEW'						=> true,
 					'VIDEO_VERSION'							=> $this->config['youtubegallery_version'],
 					'ENABLE_VIDEO_YOUTUBE_STATS'			=> $this->config['enable_video_youtube_stats'],

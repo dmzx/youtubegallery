@@ -26,7 +26,7 @@
 	<div class="inner">
 		{% for video in loops.video %}
 			<div id="video{{ video.VIDEO_ID }}" class="video_item {% if video.S_ROW_COUNT is even %}column11{% else %}column22{% endif %}">
-				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.S_VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
+				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
 				<div>
 					{{ lang('VIDEO_AUTHOR') }}{{ lang('COLON') }} {{ video.USERNAME }} <br />

@@ -14,6 +14,8 @@ services:
             - '@request'
             - '@pagination'
             - '@service_container'
+            - '@text_formatter.parser'
+            - '@text_formatter.renderer'
             - '%core.root_path%'
             - '%core.php_ext%'
             - '%core.table_prefix%'
@@ -29,6 +31,8 @@ services:
             - '@user'
             - '@dbal.conn'
             - '@request'
+            - '@text_formatter.parser'
+            - '@dmzx.youtubegallery.core.functions'
             - '@service_container'
             - '%dmzx.youtubegallery.table.video%'
             - '%dmzx.youtubegallery.table.video_cat%'
@@ -71,6 +75,7 @@ services:
         class: dmzx\youtubegallery\core\functions
         arguments:
             - '@config'
+            - '@request'
             - '@template'
             - '@user'
             - '@dbal.conn'
@@ -78,3 +83,6 @@ services:
             - '%dmzx.youtubegallery.table.video_cat%'
             - '%dmzx.youtubegallery.table.video_cmnts%'
             - '@ext.manager'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'

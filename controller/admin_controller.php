@@ -16,6 +16,8 @@ use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\request\request_interface;
+use phpbb\textformatter\parser_interface;
+use dmzx\youtubegallery\core\functions;
 use Symfony\Component\DependencyInjection\Container;
 
 class admin_controller
@@ -37,6 +39,12 @@ class admin_controller
 
 	/** @var request_interface */
 	protected $request;
+
+	/** @var parser_interface */
+	protected $parser;
+
+	/** @var functions */
+	protected $functions;
 
 	/** @var Container */
 	protected $phpbb_container;
@@ -64,6 +72,8 @@ class admin_controller
 	 * @param user					$user
 	 * @param db_interface			$db
 	 * @param request_interface		$request
+	 * @param parser_interface		$parser
+	 * @param functions				$functions
 	 * @param Container 			$phpbb_container
 	 * @param string 				$video_table
 	 * @param string 				$video_cat_table
@@ -76,6 +86,8 @@ class admin_controller
 		user $user,
 		db_interface $db,
 		request_interface $request,
+		parser_interface $parser,
+		functions $functions,
 		Container $phpbb_container,
 		$video_table,
 		$video_cat_table,
@@ -88,7 +100,9 @@ class admin_controller
 		$this->user 				= $user;
 		$this->db 					= $db;
 		$this->request 				= $request;
+		$this->parser				= $parser;
 		$this->phpbb_container 		= $phpbb_container;
+		$this->functions 			= $functions;
 		$this->video_table 			= $video_table;
 		$this->video_cat_table 		= $video_cat_table;
 		$this->video_cmnts_table 	= $video_cmnts_table;
@@ -207,7 +221,7 @@ class admin_controller
 				}
 				else
 				{
-					$this->db->sql_query('UPDATE ' . $this->video_cat_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE VIDEO_CAT_ID = ' . $video_cat_id);
+					$this->db->sql_query('UPDATE ' . $this->video_cat_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE video_cat_id = ' . $video_cat_id);
 
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_CATEGORY_UPDATE');
 
@@ -264,7 +278,7 @@ class admin_controller
 		$form_action 		= $this->u_action. '&amp;action=delete';
 		$lang_mode			= $this->user->lang['ACP_VIDEO_TITLE'];
 		$video_id 			= $this->request->variable('video_id', 0);
-		$action				= ($this->request->is_set_post('delete')) ? 'delete' : $this->request->variable('action', '');
+		$action				= ($this->request->is_set_post('delete') ? 'delete' : ($this->request->is_set_post('sync')) ? 'sync' : $this->request->variable('action', ''));
 
 		switch ($action)
 		{
@@ -291,6 +305,32 @@ class admin_controller
 					)));
 				}
 			break;
+
+			case 'sync':
+				$form_action = $this->u_action. '&amp;action=sync';
+
+				$video_description	= $this->request->variable('video_description', '', true);
+				$video_description	= htmlspecialchars_decode($video_description, ENT_COMPAT);
+
+				$sql = 'SELECT youtube_id
+					FROM ' . $this->video_table . '
+					WHERE video_id = ' . (int) $this->request->variable('id', 0);
+				$result = $this->db->sql_query($sql);
+				$comment_row = $this->db->sql_fetchrow($result);
+				$this->db->sql_freeresult($result);
+
+				$video_info = $this->functions->youtube_analytics(array("id" => censor_text($comment_row['youtube_id'])));
+
+				$sql_ary = array(
+					'video_description'	=> $this->parser->parse($video_info['description']),
+				);
+
+				$this->db->sql_query('UPDATE ' . $this->video_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE video_id = ' . (int) $this->request->variable('id', 0));
+
+				$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_SYNC');
+
+				trigger_error($this->user->lang['ACP_VIDEO_SYNC_UPDATED'] . adm_back_link($this->u_action));
+			break;
 		}
 
 		$sql_title_ary = array(
@@ -315,6 +355,7 @@ class admin_controller
 				'VIDEO_TITLE'		=> $row['video_title'],
 				'U_EDIT'			=> $this->u_action . '&amp;action=edit&amp;id=' . $row['video_cat_id'],
 				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' . $row['video_id'],
+				'U_SYNC'			=> $this->u_action . '&amp;action=sync&amp;id=' . $row['video_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 			));
 		}

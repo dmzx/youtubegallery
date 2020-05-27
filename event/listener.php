@@ -186,40 +186,43 @@ class listener implements EventSubscriberInterface
 			'S_CAN_VIEW_GALLERY'				=> $this->auth->acl_get('u_video_view'),
 		));
 
-		$sql_ary = array(
-			'SELECT'	=> 'v.*,
-			ct.video_cat_title,ct.video_cat_id,
-			u.username,u.user_colour,u.user_id',
-			'FROM'		=> array(
-				$this->video_table			=> 'v',
-				$this->video_cat_table		=> 'ct',
-				USERS_TABLE					=> 'u',
-			),
-			'WHERE'	=> 'ct.video_cat_id = v.video_cat_id
-				AND u.user_id = v.user_id',
-			'ORDER_BY'	=> 'v.video_id DESC',
-		);
-		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
-		$result = $this->db->sql_query_limit($sql, $video_value, 0);
-
-		while ($row = $this->db->sql_fetchrow($result))
+		if ($this->config['enable_video_on_index'])
 		{
-			$this->template->assign_block_vars('video', array(
-				'VIDEO_TITLE'		=> $row['video_title'],
-				'VIDEO_CAT_ID'		=> $row['video_cat_id'],
-				'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
-				'VIDEO_VIEWS'		=> $row['video_views'],
-				'VIDEO_DURATION'	=> $row['video_duration'],
-				'U_CAT'				=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
-				'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
-				'VIDEO_ID'			=> censor_text($row['video_id']),
-				'U_VIEW_VIDEO'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-				'U_POSTER'			=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
-				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'S_VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
-			));
+			$sql_ary = array(
+				'SELECT'	=> 'v.*,
+				ct.video_cat_title,ct.video_cat_id,
+				u.username,u.user_colour,u.user_id',
+				'FROM'		=> array(
+					$this->video_table			=> 'v',
+					$this->video_cat_table		=> 'ct',
+					USERS_TABLE					=> 'u',
+				),
+				'WHERE'	=> 'ct.video_cat_id = v.video_cat_id
+					AND u.user_id = v.user_id',
+				'ORDER_BY'	=> 'v.video_id DESC',
+			);
+			$sql = $this->db->sql_build_query('SELECT', $sql_ary);
+			$result = $this->db->sql_query_limit($sql, $video_value, 0);
+
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->template->assign_block_vars('video', array(
+					'VIDEO_TITLE'		=> $row['video_title'],
+					'VIDEO_CAT_ID'		=> $row['video_cat_id'],
+					'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
+					'VIDEO_VIEWS'		=> $row['video_views'],
+					'VIDEO_DURATION'	=> $row['video_duration'],
+					'U_CAT'				=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+					'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
+					'VIDEO_ID'			=> censor_text($row['video_id']),
+					'U_VIEW_VIDEO'		=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+					'U_POSTER'			=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
+					'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+					'VIDEO_THUMBNAIL'	=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/default.jpg'
+				));
+			}
+			$this->db->sql_freeresult($result);
 		}
-		$this->db->sql_freeresult($result);
 	}
 
 	// Show permissions

@@ -30,7 +30,7 @@
 		<ul class="video collapsible bg1" style="max-height:190px; overflow-x:hidden; overflow-y:auto;">
 		{% for video in loops.video %}
 			<li class="videolist">
-				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img id="videolists" src="{{ video.S_VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
+				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img id="videolists" src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"></h3>
 				{{ lang('VIDEO_AUTHOR') }}{{ lang('COLON') }} {{ video.USERNAME }}<br />
 				{{ lang('VIDEO_CAT') }}{{ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br />

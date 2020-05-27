@@ -65,6 +65,7 @@ $lang = array_merge($lang, array(
 	'ACP_ENABLE_VIDEO_CHAT_COMMENT_EXPLAIN'			=> 'When set to yes uploaded comments on videos will be posted into mChat.',
 	'ACP_ENABLE_VIDEO_YOUTUBE_STATS'				=> 'Enable Youtube statistics',
 	'ACP_ENABLE_VIDEO_YOUTUBE_STATS_EXPLAIN'		=> 'When set to yes statistics from Youtube are shown.',
+	'ACP_VIDEO_SYNC_UPDATED'						=> 'Video description updated.',
 
 	// ACP Categories
 	'ACP_CATEGORY_CREATED'			=> 'This category has been added successfully.',

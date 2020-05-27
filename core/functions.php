@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Youtube Videos Gallery
-* @copyright (c) 2019 dmzx - https://www.dmzx-web.net
+* @copyright (c) 2020 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 * @Author _Vinny_ - http://www.suportephpbb.com.br
 *
@@ -11,15 +11,20 @@
 namespace dmzx\youtubegallery\core;
 
 use phpbb\config\config;
+use phpbb\request\request_interface;
 use phpbb\template\template;
 use phpbb\user;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\extension\manager;
+use phpbb\controller\helper;
 
 class functions
 {
 	/** @var config */
 	protected $config;
+
+	/** @var request_interface */
+	protected $request;
 
 	/** @var template */
 	protected $template;
@@ -44,10 +49,20 @@ class functions
 	/** @var manager */
 	protected $extension_manager;
 
+	/** @var helper */
+	protected $helper;
+
+	/** @var string */
+	protected $root_path;
+
+	/** @var string */
+	protected $php_ext;
+
 	/**
 	 * Constructor
 	 *
 	 * @param config				$config
+	 * @param request_interface		$request
 	 * @param template				$template
 	 * @param user					$user
 	 * @param db_interface			$db
@@ -55,19 +70,27 @@ class functions
 	 * @param string 				$video_cat_table
 	 * @param string 				$video_cmnts_table
 	 * @param manager				$extension_manager
+	 * @param helper				$helper
+	 * @param string				$root_path
+	 * @param string				$php_ext
 	 */
 	public function __construct(
 		config $config,
+		request_interface $request,
 		template $template,
 		user $user,
 		db_interface $db,
 		$video_table,
 		$video_cat_table,
 		$video_cmnts_table,
-		manager $extension_manager
+		manager $extension_manager,
+		helper $helper,
+		$root_path,
+		$php_ext
 	)
 	{
 		$this->config 				= $config;
+		$this->request 				= $request;
 		$this->template 			= $template;
 		$this->user 				= $user;
 		$this->db 					= $db;
@@ -75,10 +98,13 @@ class functions
 		$this->video_cat_table 		= $video_cat_table;
 		$this->video_cmnts_table 	= $video_cmnts_table;
 		$this->extension_manager	= $extension_manager;
+		$this->helper 				= $helper;
+		$this->root_path 			= $root_path;
+		$this->php_ext 				= $php_ext;
 	}
 
 	// assign_authors
-	function assign_authors()
+	public function assign_authors()
 	{
 		$md_manager = $this->extension_manager->create_extension_metadata_manager('dmzx/youtubegallery', $this->template);
 		$meta = $md_manager->get_metadata();
@@ -100,21 +126,41 @@ class functions
 	}
 
 	// youtube_analytics
-	function youtube_analytics($params)
+	public function youtube_analytics($params)
 	{
-		$videoid = $params['id'];
-		$json = @file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=statistics&id=" . $videoid . "&key=" . $this->config['google_api_key']);
-		$jsonData = json_decode($json);
-		$views = $jsonData->items[0]->statistics->viewCount;
-		$likes = $jsonData->items[0]->statistics->likeCount;
-		$dislikes = $jsonData->items[0]->statistics->dislikeCount;
-		$comments = $jsonData->items[0]->statistics->commentCount;
+		if ($this->curl_required() && $this->config['enable_video_youtube_stats'])
+		{
+			$videoid = $params['id'];
 
-		return array("views" => number_format($views), "likes" => number_format($likes), "dislikes" => number_format($dislikes), "comments" => number_format($comments));
+			$option = [
+				'part' 	=> 'snippet,statistics',
+				'id' 	=> $videoid,
+				'key' 	=> $this->config['google_api_key'],
+			];
+			$curl_handle = curl_init();
+			curl_setopt($curl_handle, CURLOPT_URL, "https://www.googleapis.com/youtube/v3/videos?".http_build_query($option, 'a', '&'));
+			curl_setopt($curl_handle, CURLOPT_HTTPHEADER,['Content-Type: application/json']);
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+			$json_response = curl_exec($curl_handle);
+			curl_close($curl_handle);
+
+			$jsonData = json_decode($json_response);
+
+			if(isset($jsonData->items[0]))
+			{
+				$views 		= isset($jsonData->items[0]->statistics->viewCount) ? $jsonData->items[0]->statistics->viewCount : 0;
+				$likes 		= isset($jsonData->items[0]->statistics->likeCount) ? $jsonData->items[0]->statistics->likeCount : 0;
+				$dislikes 	= isset($jsonData->items[0]->statistics->dislikeCount) ? $jsonData->items[0]->statistics->dislikeCount : 0;
+				$comments 	= isset($jsonData->items[0]->statistics->commentCount) ? $jsonData->items[0]->statistics->commentCount : 0;
+				$video_description = $jsonData->items[0]->snippet->description;
+			}
+			return array("views" => number_format($views), "likes" => number_format($likes), "dislikes" => number_format($dislikes), "comments" => number_format($comments), "description" => $video_description);
+		}
 	}
 
 	// video count user_id
-	function videorow_user_id($user_id)
+	public function videorow_user_id($user_id)
 	{
 		$sql = 'SELECT COUNT(*) as video_count
 			FROM '. $this->video_table .'
@@ -127,7 +173,7 @@ class functions
 	}
 
 	// video count video_id
-	function video_cat_id($video_cat_id)
+	public function video_cat_id($video_cat_id)
 	{
 		$sql = 'SELECT COUNT(*) as video_count
 			FROM ' . $this->video_table .'
@@ -140,7 +186,7 @@ class functions
 	}
 
 	// video comment count user_id
-	function video_comment_count($video_id)
+	public function video_comment_count($video_id)
 	{
 		$sql = 'SELECT COUNT(*) as comment_count
 			FROM ' . $this->video_cmnts_table. '
@@ -153,7 +199,7 @@ class functions
 	}
 
 	// Count the videos ...
-	function total_videos()
+	public function total_videos()
 	{
 		$sql = 'SELECT COUNT(video_id) AS total_videos
 			FROM ' . $this->video_table;
@@ -165,7 +211,7 @@ class functions
 	}
 
 	// Count the videos categories ...
-	function total_categories()
+	public function total_categories()
 	{
 		$sql = 'SELECT COUNT(video_cat_id) AS total_categories
 			FROM ' . $this->video_cat_table;
@@ -177,7 +223,7 @@ class functions
 	}
 
 	// Count the videos views ...
-	function total_views()
+	public function total_views()
 	{
 		$sql = 'SELECT SUM(video_views) AS total_views
 			FROM ' . $this->video_table;
@@ -189,7 +235,7 @@ class functions
 	}
 
 	// Count the videos comments ...
-	function total_comments()
+	public function total_comments()
 	{
 		$sql = 'SELECT COUNT(cmnt_id) AS total_comments
 			FROM ' . $this->video_cmnts_table;
@@ -215,5 +261,73 @@ class functions
 
 		$message .= '<br /><br />' . $this->user->lang($redirect_text, '<a href="' . $redirect . '">', '</a>');
 		trigger_error($message);
+	}
+
+	// build template
+	public function video_template()
+	{
+		$sql_start 			= $this->request->variable('start', 0);
+		$sql_limit 			= $this->request->variable('limit', $this->config['videos_per_page']);
+
+		$sql_ary = array(
+			'SELECT'	=> 'v.*,
+			ct.video_cat_title,ct.video_cat_id,
+			u.username,u.user_colour,u.user_id',
+			'FROM'		=> array(
+				$this->video_table			=> 'v',
+				$this->video_cat_table		=> 'ct',
+				USERS_TABLE			=> 'u',
+			),
+			'WHERE'		=> 'ct.video_cat_id = v.video_cat_id
+				AND u.user_id = v.user_id',
+			'ORDER_BY'	=> 'v.video_id DESC',
+		);
+
+		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
+		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$video_info = $this->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+
+			$this->template->assign_block_vars('video', array(
+				'VIDEO_TITLE'					=> $row['video_title'],
+				'VIDEO_CAT_ID'					=> $row['video_cat_id'],
+				'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
+				'VIDEO_VIEWS'					=> $row['video_views'],
+				'VIDEO_DURATION'				=> $row['video_duration'],
+				'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
+				'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
+				'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
+				'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
+				'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+				'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+				'VIDEO_ID'						=> censor_text($row['video_id']),
+				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+				'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", array('mode' => 'viewprofile', 'u' => $row['user_id'])),
+				'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'YOUTUBE_ID'					=> censor_text($row['youtube_id']),
+				'VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+			));
+		}
+		$this->db->sql_freeresult($result);
+	}
+
+	/**
+	* Get youtube video ID from URL
+	* From: http://halgatewood.com/php-get-the-youtube-video-id-from-a-youtube-url/
+	*/
+	public function getYouTubeIdFromURL($url)
+	{
+		$pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
+		preg_match($pattern, $url, $matches);
+
+		return isset($matches[1]) ? $matches[1] : false;
+	}
+
+	// check curl
+	public function curl_required()
+	{
+		return (function_exists('curl_version')) ? true : false;
 	}
 }

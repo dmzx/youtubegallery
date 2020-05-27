@@ -135,7 +135,7 @@ class ucp_controller
 			),
 			'WHERE'		=> 'u.user_id = v.user_id
 				AND ct.video_cat_id = v.video_cat_id
-				AND u.user_id = '. (int) $this->user->data['user_id'],
+				AND u.user_id = ' . (int) $this->user->data['user_id'],
 			'ORDER_BY'	=> 'v.video_id DESC',
 		);
 
@@ -160,7 +160,7 @@ class ucp_controller
 				'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
 				'VIDEO_ID'						=> censor_text($row['video_id']),
 				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
-				'S_VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
+				'VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
 			));
 		}
 		$this->db->sql_freeresult($result);

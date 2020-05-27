@@ -44,4 +44,5 @@ $lang = array_merge($lang, array(
 	'LOG_VIDEO_CATEGORY_UPDATE'		=> '<strong>Updated Youtube Video Gallery Category</strong>',
 	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Deleted Youtube Video Gallery Category</strong>',
 	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Deleted Youtube Video Gallery Title</strong>',
+	'LOG_VIDEO_SYNC'				=> '<strong>Sync video for description.</strong>',
 ));

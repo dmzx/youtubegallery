@@ -1,4 +1,10 @@
-## Changelog
+## Youtube Videos Gallery Changelog
+
+### 1.0.8 - 2020-05-12
+
+- Added Youtube description to posted files.
+- Added Sync per title in ACP to get descriptions, see Video Titles page.
+- Various code updates.
 
 ### 1.0.7 - 2019-10-08
 
