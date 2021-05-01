@@ -11,17 +11,17 @@
 				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
 				<div>
-					{{ lang('VIDEO_CAT') }}{{ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a> <br />
-					{{ lang('VIDEO_DATE') }}{{ lang('COLON') }} {{ video.VIDEO_TIME }} <br />
-					{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br />
-					{{ lang('VIDEO_DURATION') }}{{ lang('COLON') }} {{ video.VIDEO_DURATION }}
+					{{ lang('VIDEO_CAT') ~ lang('COLON') }}&nbsp;<a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br>
+					{{ lang('VIDEO_DATE') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_TIME }}<br>
+					{{ lang('VIDEO_VIEWS') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_VIEWS }}<br>
+					{{ lang('VIDEO_DURATION') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_DURATION }}
 					{% if ENABLE_VIDEO_YOUTUBE_STATS %}
 					 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
 						<div class="post-meta d-flex justify-content-between">
-							<span><i class="icon fa fa-comments-o" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_COMMENTS }}</span>
-							<span><i class="icon fa fa-eye" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE }}</span>
-							<span><i class="icon fa fa-thumbs-o-up" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_LIKE }}</span>
-							<span><i class="icon fa fa-thumbs-o-down" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_DISLIKE }}</span>
+							<span><i class="icon fa fa-comments-o" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_COMMENTS }}</span>
+							<span><i class="icon fa fa-eye" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE }}</span>
+							<span><i class="icon fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_LIKE }}</span>
+							<span><i class="icon fa fa-thumbs-o-down" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_DISLIKE }}</span>
 						</div>
 					<hr>
 					{% endif %}
@@ -34,7 +34,7 @@
 <div class="panel">
 	<div class="inner">
 		<p>{{ lang('UCP_YOUTUBEGALLERY_TITLE') }}</p>
-		<strong>{{ lang('INFORMATION') }}{{ lang('COLON') }}</strong> {{ lang('UCP_NO_USER_VIDEOS') }}
+		<strong>{{ lang('INFORMATION') ~ lang('COLON') }}</strong>&nbsp;{{ lang('UCP_NO_USER_VIDEOS') }}
 	</div>
 </div>
 {% endif %}

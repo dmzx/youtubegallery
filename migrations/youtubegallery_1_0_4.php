@@ -14,20 +14,20 @@ class youtubegallery_1_0_4 extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return array(
+		return [
 			'\dmzx\youtubegallery\migrations\youtubegallery_1_0_3',
-		);
+		];
 	}
 
 	public function update_data()
 	{
-		return array(
+		return [
 			// Update config
-			array('config.update', array('youtubegallery_version', '1.0.4')),
+			['config.update', ['youtubegallery_version', '1.0.4']],
 			// Add configs
-			array('config.add', array('videos_per_page', '10')),
-			array('config.add', array('enable_video_chat', false)),
-			array('config.add', array('enable_video_chat_comment', false)),
-		);
+			['config.add', ['videos_per_page', '10']],
+			['config.add', ['enable_video_chat', false]],
+			['config.add', ['enable_video_chat_comment', false]],
+		];
 	}
 }

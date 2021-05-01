@@ -18,7 +18,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'VIDEO_INDEX'				=> 'Video Gallery',
 	'VIDEO_SELECT_CAT'			=> 'Select a category',
 	'VIDEO_SUBMIT'				=> 'New Video',
@@ -90,31 +90,31 @@ $lang = array_merge($lang, array(
 	'TOTAL_VIDEOS'				=> 'Total videos',
 	'VIDEO_ADD_CHAT'			=> '[i]Added a new video:[/i] [url=%2$s]%1$s[/url] [i]in the category: [b]%3$s[/b][/i]',
 	'VIDEO_COMMENT_CHAT'		=> '[i]Made a comment on:[/i] [url=%2$s]%1$s[/url]',
-	'TOTAL_CATEGORIES'	=> array(
+	'TOTAL_CATEGORIES'	=> [
 		0 => 'No categories',
 		1 => 'Total <strong>%1$d</strong> category',
 		2 => 'Total <strong>%1$d</strong> categories',
-	),
-	'TOTAL_VIDEO'		=> array(
+	],
+	'TOTAL_VIDEO'		=> [
 		0 => 'No videos',
 		1 => 'Total <strong>%1$d</strong> video',
 		2 => 'Total <strong>%1$d</strong> videos',
-	),
-	'TOTAL_VIEWS'		=> array(
+	],
+	'TOTAL_VIEWS'		=> [
 		0 => 'No views',
 		1 => 'Total <strong>%1$d</strong> view',
 		2 => 'Total <strong>%1$d</strong> views',
-	),
-	'TOTAL_COMMENTS'	=> array(
+	],
+	'TOTAL_COMMENTS'	=> [
 		0 => 'No Comments',
 		1 => 'Total <strong>%1$d</strong> comment',
 		2 => 'Total <strong>%1$d</strong> comments',
-	),
-	'VIDEO_VIEWS_YOUTUBE'	=> array(
+	],
+	'VIDEO_VIEWS_YOUTUBE'	=> [
 		0 => 'No views on youtube',
 		1 => 'Total <strong>%s</strong> view on youtube',
 		2 => 'Total <strong>%s</strong> views on youtube',
-	),
+	],
 	'USER_VIDEOS'				=> 'All videos from User',
 	'USER_VIDEOS_EXPLAIN'		=> 'Show all',
 	'NO_KEY_ADMIN'				=> 'Dear board administrator, in order to use Video Gallery, you must set up a <strong>Google Public API key</strong>, go to the Administration Control Panel and follow the instructions.',
@@ -144,17 +144,17 @@ $lang = array_merge($lang, array(
 	'UCP_NO_USER_VIDEOS'		=> 'No videos by you uploaded yet.',
 
 	//Pagination
-	'LIST_COMMENT'		=>	array(
+	'LIST_COMMENT'		=>	[
 		1 => '%s comment',
 		2 => '%s comments',
-	),
-	'LIST_VIDEO'		=>	array(
+	],
+	'LIST_VIDEO'		=>	[
 		1 => '%s video',
 		2 => '%s videos',
-	),
+	],
 
-	'VIDEO_CATEGORIES_TITLE'			=> array(
+	'VIDEO_CATEGORIES_TITLE'			=> [
 		0 => 'Hide video',
 		1 => 'Show video',
-	),
-));
+	],
+]);

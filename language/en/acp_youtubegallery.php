@@ -15,7 +15,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,7 +33,7 @@ if (empty($lang) || !is_array($lang))
 // Some characters for use
 // ’ » “ ” …
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_VIDEO_EXPLAIN'								=> 'Video Gallery Extension',
 	'ACP_VIDEO_GENERAL_SETTINGS'					=> 'General Settings',
 	'ACP_VIDEO_ENABLE'								=> 'Enable Videos Page',
@@ -82,4 +82,4 @@ $lang = array_merge($lang, array(
 	'ACP_VIDEO_TITLE_EXPLAIN'		=> 'Here you can manage the Video Titles of your board.',
 	'ACP_TITLE_DELETE'				=> 'Are you sure you wish to delete this title?',
 	'ACP_TITLE_DELETED'				=> 'This title has been deleted successfully',
-));
+]);

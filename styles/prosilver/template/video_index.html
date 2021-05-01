@@ -10,7 +10,7 @@
 			<li class="header">
 				<dl class="row-item">
 					<dt>
-						<div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}">{{ lang('VIDEO_LAST') }} {{ LAST_VIDEOS }} {{ lang('VIDEO') }}</a></div>
+						<div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}">{{ lang('VIDEO_LAST') }}&nbsp;{{ LAST_VIDEOS }}&nbsp;{{ lang('VIDEO') }}</a></div>
 					</dt>
 					<dd></dd>
 				</dl>
@@ -22,7 +22,7 @@
 					data-overlay="true"
 					data-title-alt="{{ lang('VIDEO_CATEGORIES_TITLE', ((not S_VIDEO_HIDDEN) * 1)) }}"
 					title="{{ lang('VIDEO_CATEGORIES_TITLE', (S_VIDEO_HIDDEN * 1)) }}">
-						<i class="fa {% if S_VIDEO_HIDDEN %}fa-plus-square{% else %}fa-minus-square{% endif %}"></i>
+					<i class="fa {% if S_VIDEO_HIDDEN %}fa-plus-square{% else %}fa-minus-square{% endif %}"></i>
 				</a>
 				{% endif %}
 			</li>
@@ -32,10 +32,10 @@
 			<li class="videolist">
 				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img id="videolists" src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"></h3>
-				{{ lang('VIDEO_AUTHOR') }}{{ lang('COLON') }} {{ video.USERNAME }}<br />
-				{{ lang('VIDEO_CAT') }}{{ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br />
-				{{ lang('VIDEO_DATE') }}{{ lang('COLON') }} {{ video.VIDEO_TIME }}<br />
-				{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }} {{ video.VIDEO_VIEWS }} {{ lang('VIDEO_DURATION') }}{{ lang('COLON') }} {{ video.VIDEO_DURATION }}
+				{{ lang('VIDEO_AUTHOR') ~ lang('COLON') }}&nbsp;{{ video.USERNAME }}<br>
+				{{ lang('VIDEO_CAT') ~ lang('COLON') }}&nbsp;<a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br>
+				{{ lang('VIDEO_DATE') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_TIME }}<br>
+				{{ lang('VIDEO_VIEWS') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_VIEWS }}&nbsp;{{ lang('VIDEO_DURATION') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_DURATION }}
 			</li>
 		{% endfor %}
 		</ul>
@@ -48,7 +48,7 @@
 			<li class="header">
 				<dl class="row-item">
 					<dt>
-						<div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}" role="menuitem">{{ lang('VIDEO_LAST') }} {{ lang('VIDEO') }}</a></div></dt>
+						<div class="list-inner"><a href="{{ U_VIDEO }}" title="{{ lang('VIDEO_EXPLAIN') }}" role="menuitem">{{ lang('VIDEO_LAST') }}&nbsp;{{ lang('VIDEO') }}</a></div></dt>
 					<dd></dd>
 				</dl>
 			</li>

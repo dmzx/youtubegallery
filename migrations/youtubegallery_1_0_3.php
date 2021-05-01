@@ -14,21 +14,21 @@ class youtubegallery_1_0_3 extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return array(
+		return [
 			'\dmzx\youtubegallery\migrations\youtubegallery_install',
-		);
+		];
 	}
 
 	public function update_data()
 	{
-		return array(
+		return [
 			// Update config
-			array('config.update', array('youtubegallery_version', '1.0.3')),
+			['config.update', ['youtubegallery_version', '1.0.3']],
 			// Add config
-			array('config.add', array('enable_video_global', true)),
+			['config.add', ['enable_video_global', true]],
 			// Remove config
-			array('config.remove', array('video_width')),
-			array('config.remove', array('video_height')),
-		);
+			['config.remove', ['video_width']],
+			['config.remove', ['video_height']],
+		];
 	}
 }

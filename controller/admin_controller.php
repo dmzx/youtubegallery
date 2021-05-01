@@ -126,7 +126,7 @@ class admin_controller
 			trigger_error($this->user->lang['ACP_VIDEO_SETTINGS_SAVED'] . adm_back_link($this->u_action));
 		}
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'VIDEO_GALLERY_VERSION'				=> $this->config['youtubegallery_version'],
 			'ENABLE_VIDEO_GLOBAL'				=> $this->config['enable_video_global'],
 			'GOOGLE_KEY_ACP'					=> $this->config['google_api_key'],
@@ -141,7 +141,7 @@ class admin_controller
 			'ENABLE_VIDEO_CHAT_COMMENT'			=> $this->config['enable_video_chat_comment'],
 			'ENABLE_VIDEO_YOUTUBE_STATS'		=> $this->config['enable_video_youtube_stats'],
 			'U_ACTION'							=> $this->u_action,
-		));
+		]);
 
 		if ($this->phpbb_container->has('dmzx.mchat.settings'))
 		{
@@ -174,12 +174,12 @@ class admin_controller
 		$lang_mode			= $this->user->lang['ACP_VIDEO_CATEGORY'];
 		$video_cat_id 		= $this->request->variable('video_cat_id', 0);
 		$video_cat_title 	= $this->request->variable('video_cat_title', '', true);
-		$action				= ($this->request->is_set_post('add') ? 'add' : ($this->request->is_set_post('delete')) ? 'delete' : $this->request->variable('action', ''));
+		$action				= (($this->request->is_set_post('add') ? 'add' : ($this->request->is_set_post('delete'))) ? 'delete' : $this->request->variable('action', ''));
 
-		$sql_ary = array(
+		$sql_ary = [
 			'video_cat_id'		=> $video_cat_id,
 			'video_cat_title'	=> $video_cat_title,
-		);
+		];
 
 		switch ($action)
 		{
@@ -207,11 +207,11 @@ class admin_controller
 				$result = $this->db->sql_query_limit($sql,1);
 				$row = $this->db->sql_fetchrow($result);
 
-				$this->template->assign_vars(array(
+				$this->template->assign_vars([
 					'S_EDIT_MODE'		=> true,
 					'VIDEO_CAT_ID'		=> $row['video_cat_id'],
 					'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
-				));
+				]);
 				$this->db->sql_freeresult($result);
 			break;
 			case 'update':
@@ -231,8 +231,12 @@ class admin_controller
 			case 'delete':
 				if (confirm_box(true))
 				{
-					$sql = 'DELETE FROM ' . $this->video_cmnts_table . '
-						WHERE cmnt_video_id = ' . (int) $this->request->variable('id', 0);
+					$sql = 'DELETE FROM ' . $this->video_table . '
+						WHERE video_cat_id = ' . (int) $this->request->variable('id', 0);
+					$this->db->sql_query($sql);
+
+					$sql = 'DELETE FROM ' . $this->video_cat_table . '
+						WHERE video_cat_id = ' . (int) $this->request->variable('id', 0);
 					$this->db->sql_query($sql);
 
 					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_VIDEO_CATEGORY_DELETED');
@@ -241,10 +245,10 @@ class admin_controller
 				}
 				else
 				{
-					confirm_box(false, $this->user->lang['ACP_CATEGORY_DELETE'], build_hidden_fields(array(
+					confirm_box(false, $this->user->lang['ACP_CATEGORY_DELETE'], build_hidden_fields([
 						'video_cat_id'		=> $video_cat_id,
 						'action'			=> 'delete',
-					)));
+					]));
 				}
 			break;
 		}
@@ -256,18 +260,18 @@ class admin_controller
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$this->template->assign_block_vars('category', array(
+			$this->template->assign_block_vars('category', [
 				'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
 				'U_EDIT'			=> $this->u_action . '&amp;action=edit&amp;id=' .$row['video_cat_id'],
 				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' .$row['video_cat_id'],
-			));
+			]);
 		}
 		$this->db->sql_freeresult($result);
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'U_ACTION'		=> $form_action,
 			'L_MODE_TITLE'	=> $lang_mode,
-		));
+		]);
 	}
 
 	public function display_title()
@@ -278,7 +282,7 @@ class admin_controller
 		$form_action 		= $this->u_action. '&amp;action=delete';
 		$lang_mode			= $this->user->lang['ACP_VIDEO_TITLE'];
 		$video_id 			= $this->request->variable('video_id', 0);
-		$action				= ($this->request->is_set_post('delete') ? 'delete' : ($this->request->is_set_post('sync')) ? 'sync' : $this->request->variable('action', ''));
+		$action				= (($this->request->is_set_post('delete') ? 'delete' : ($this->request->is_set_post('sync'))) ? 'sync' : $this->request->variable('action', ''));
 
 		switch ($action)
 		{
@@ -299,10 +303,10 @@ class admin_controller
 				}
 				else
 				{
-					confirm_box(false, $this->user->lang['ACP_TITLE_DELETE'], build_hidden_fields(array(
+					confirm_box(false, $this->user->lang['ACP_TITLE_DELETE'], build_hidden_fields([
 						'video_id'		=> $video_id,
 						'action'		=> 'delete',
-					)));
+					]));
 				}
 			break;
 
@@ -319,11 +323,11 @@ class admin_controller
 				$comment_row = $this->db->sql_fetchrow($result);
 				$this->db->sql_freeresult($result);
 
-				$video_info = $this->functions->youtube_analytics(array("id" => censor_text($comment_row['youtube_id'])));
+				$video_info = $this->functions->youtube_analytics(["id" => censor_text($comment_row['youtube_id'])]);
 
-				$sql_ary = array(
+				$sql_ary = [
 					'video_description'	=> $this->parser->parse($video_info['description']),
-				);
+				];
 
 				$this->db->sql_query('UPDATE ' . $this->video_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE video_id = ' . (int) $this->request->variable('id', 0));
 
@@ -333,23 +337,23 @@ class admin_controller
 			break;
 		}
 
-		$sql_title_ary = array(
+		$sql_title_ary = [
 			'SELECT' => 'v.*, ct.*, u.username,u.user_colour,u.user_id',
-			'FROM'	=> array(
+			'FROM'	=> [
 				$this->video_table			=> 'v',
 				$this->video_cat_table		=> 'ct',
 				USERS_TABLE			=> 'u',
-			),
+			],
 			'WHERE'	=> 'ct.video_cat_id = v.video_cat_id
 				AND u.user_id = v.user_id',
 			'ORDER_BY'	=> 'v.video_id DESC',
-		);
+		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_title_ary);
 		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$this->template->assign_block_vars('title', array(
+			$this->template->assign_block_vars('title', [
 				'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
 				'VIDEO_CAT_ID'		=> $row['video_cat_id'],
 				'VIDEO_TITLE'		=> $row['video_title'],
@@ -357,14 +361,14 @@ class admin_controller
 				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' . $row['video_id'],
 				'U_SYNC'			=> $this->u_action . '&amp;action=sync&amp;id=' . $row['video_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-			));
+			]);
 		}
 		$this->db->sql_freeresult($result);
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'U_ACTION'		=> $form_action,
 			'L_MODE_TITLE'	=> $lang_mode,
-		));
+		]);
 	}
 
 	public function set_page_url($u_action)

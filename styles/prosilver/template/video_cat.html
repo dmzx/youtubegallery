@@ -20,35 +20,35 @@
 	<div class="inner">
 		{% for video in loops.video %}
 			<div id="video{{ video.VIDEO_ID }}" class="video_item {% if video.S_ROW_COUNT is even %}column11{% else %}column22{% endif %}">
-			<div class="inner">
-				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
-				<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
-				<div>
-					{{ lang('VIDEO_AUTHOR') }}{{ lang('COLON') }} {{ video.USERNAME }} <br />
-					{{ lang('VIDEO_DATE') }}{{ lang('COLON') }} {{ video.VIDEO_TIME }} <br />
-					{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br />
-					{{ lang('VIDEO_DURATION') }}{{ lang('COLON') }} {{ video.VIDEO_DURATION }}
-					{% if ENABLE_VIDEO_YOUTUBE_STATS %}
-					 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
-						<div class="post-meta d-flex justify-content-between">
-							<span><i class="icon fa fa-comments-o" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_COMMENTS }}</span>
-							<span><i class="icon fa fa-eye" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE }}</span>
-							<span><i class="icon fa fa-thumbs-o-up" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_LIKE }}</span>
-							<span><i class="icon fa fa-thumbs-o-down" aria-hidden="true"></i> {{ video.VIDEO_VIEWS_YOUTUBE_DISLIKE }}</span>
-						</div>
-					<hr>
-					{% endif %}
-				</div>
+				<div class="inner">
+					<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
+					<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
+					<div>
+						{{ lang('VIDEO_AUTHOR') ~ lang('COLON') }}&nbsp;{{ video.USERNAME }}<br>
+						{{ lang('VIDEO_DATE') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_TIME }}<br>
+						{{ lang('VIDEO_VIEWS') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_VIEWS }}<br>
+						{{ lang('VIDEO_DURATION') ~ lang('COLON') }}&nbsp;{{ video.VIDEO_DURATION }}
+						{% if ENABLE_VIDEO_YOUTUBE_STATS %}
+						 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
+							<div class="post-meta d-flex justify-content-between">
+								<span><i class="icon fa fa-comments-o" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_COMMENTS }}</span>
+								<span><i class="icon fa fa-eye" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE }}</span>
+								<span><i class="icon fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_LIKE }}</span>
+								<span><i class="icon fa fa-thumbs-o-down" aria-hidden="true"></i>&nbsp;{{ video.VIDEO_VIEWS_YOUTUBE_DISLIKE }}</span>
+							</div>
+						<hr>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 		{% endfor %}
 	</div>
 </div>
 {% else %}
-<br class="clear" />
+<br class="clear">
 <div id="information" class="rules">
 	<div class="inner">
-		<strong>{{ lang('INFORMATION') }}{{ lang('COLON') }}</strong> {{ lang('NO_CAT_VIDEOS') }}
+		<strong>{{ lang('INFORMATION') ~ lang('COLON') }}</strong>&nbsp;{{ lang('NO_CAT_VIDEOS') }}
 	</div>
 </div>
 {% endif %}

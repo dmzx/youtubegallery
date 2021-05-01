@@ -14,31 +14,31 @@ class youtubegallery_1_0_6 extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return array(
+		return [
 			'\dmzx\youtubegallery\migrations\youtubegallery_1_0_5',
-		);
+		];
 	}
 
 	public function update_data()
 	{
-		return array(
-			array('config.update', array('youtubegallery_version', '1.0.6')),
+		return [
+			['config.update', ['youtubegallery_version', '1.0.6']],
 
 			//UCP module
-			array('module.add', array(
+			['module.add', [
 				'ucp',
 				0,
 				'VIDEO_INDEX'
-			)),
-			array('module.add', array(
+			]],
+			['module.add', [
 				'ucp',
 				'VIDEO_INDEX',
-				array(
+				[
 					'module_basename'	=> '\dmzx\youtubegallery\ucp\youtubegallery_ucp_module',
 					'auth'				=> 'ext_dmzx/youtubegallery',
-					'modes'				=> array('main'),
-				),
-			)),
-		);
+					'modes'				=> ['main'],
+				],
+			]],
+		];
 	}
 }

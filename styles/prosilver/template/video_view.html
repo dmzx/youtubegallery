@@ -35,14 +35,14 @@
 				<br>
 				<div class="content" style="text-align: left;">{{ VIDEO_DESCRIPTION }}</div>
 				<br>
-				<a href="{{ YOUTUBE_VIDEO }}" onclick="this.target= '_blank';return true;"><span class="icon_youtube" title="{{ lang('VIDEO_WATCH') }}"></span> {{ lang('VIDEO_WATCH') }}</a>
+				<a href="{{ YOUTUBE_VIDEO }}" onclick="this.target= '_blank';return true;"><span class="icon_youtube" title="{{ lang('VIDEO_WATCH') }}"></span>{{ lang('VIDEO_WATCH') }}</a>
 			</div>
 		</div>
 		<dl class="postprofile" id="profile{{ VIDEO_ID }}">
-			<dd><strong>{{ lang('VIDEO_ADD_BY') }}{{ lang('COLON') }}</strong> {{ USERNAME }}</dd>
-			<dd><strong>{{ lang('TOTAL_VIDEOS') }}{{ lang('COLON') }}</strong> {{ TOTAL_VIDEOS }} (<a href="{{ U_USER_VIDEOS }}" title="{{ lang('USER_VIDEOS_EXPLAIN') }}">{{ lang('USER_VIDEOS_EXPLAIN') }}</a>)</dd>
-			<dd><strong>{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }}</strong> {{ VIDEO_VIEWS }}</dd>
-			<dd><strong>{{ lang('VIDEO_DURATION') }}{{ lang('COLON') }}</strong> {{ VIDEO_DURATION }}</dd>
+			<dd><strong>{{ lang('VIDEO_ADD_BY') ~ lang('COLON') }}</strong>&nbsp;{{ USERNAME }}</dd>
+			<dd><strong>{{ lang('TOTAL_VIDEOS') ~ lang('COLON') }}</strong>&nbsp;{{ TOTAL_VIDEOS }} (<a href="{{ U_USER_VIDEOS }}" title="{{ lang('USER_VIDEOS_EXPLAIN') }}">{{ lang('USER_VIDEOS_EXPLAIN') }}</a>)</dd>
+			<dd><strong>{{ lang('VIDEO_VIEWS') ~ lang('COLON') }}</strong>&nbsp;{{ VIDEO_VIEWS }}</dd>
+			<dd><strong>{{ lang('VIDEO_DURATION') ~ lang('COLON') }}</strong>&nbsp;{{ VIDEO_DURATION }}</dd>
 		</dl>
 		<div class="back2top"><a href="#top" class="top" title="{{ lang('BACK_TO_TOP') }}"><i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">{{ lang('BACK_TO_TOP') }}</span></a></div>
 	</div>
@@ -50,30 +50,29 @@
 <div class="panel bg1">
 	<div class="inner">
 		<h3>{{ lang('VIDEO_LINKS') }}</h3>
-
 		<fieldset class="fields2">
 			<dl>
-				<dt><label id="codehtml">{{ lang('VIDEO_LINK') }}{{ lang('COLON') }}</label></dt>
+				<dt><label id="codehtml">{{ lang('VIDEO_LINK') ~ lang('COLON') }}</label></dt>
 				<dd><input type="text" class="inputbox" value="{{ VIDEO_LINK }}" title="{{ VIDEO_TITLE }}" id="video_link" /><i class="buttoncopy" data-copytarget="#video_link">{{ lang('VIDEO_COPY_BUTTON') }}</i></dd>
 			</dl>
 			<dl>
-				<dt><label>{{ lang('VIDEO_LINK_YOUTUBE') }}{{ lang('COLON') }}</label></dt>
+				<dt><label>{{ lang('VIDEO_LINK_YOUTUBE') ~ lang('COLON') }}</label></dt>
 				<dd><input type="text" class="inputbox" value="{{ YOUTUBE_VIDEO }}" title="{{ VIDEO_TITLE }}" id="video_title" /><i class="buttoncopy" data-copytarget="#video_title">{{ lang('VIDEO_COPY_BUTTON') }}</i></dd>
 			</dl>
 			<dl>
-				<dt><label>{{ lang('VIDEO_BBCODE') }}{{ lang('COLON') }}</label></dt>
+				<dt><label>{{ lang('VIDEO_BBCODE') ~ lang('COLON') }}</label></dt>
 				<dd><input type="text" class="inputbox" value="[url={{ VIDEO_LINK }}]{{ VIDEO_TITLE }}[/url]" title="{{ VIDEO_TITLE }}" id="video_bbcode" /><i class="buttoncopy" data-copytarget="#video_bbcode">{{ lang('VIDEO_COPY_BUTTON') }}</i></dd>
 			</dl>
 			{% if S_BBCODE_FLASH %}
 			<dl>
-				<dt><label>{{ lang('VIDEO_EMBED') }}{{ lang('COLON') }}</label><br /><span>{{ FLASH_STATUS }}</span></dt>
+				<dt><label>{{ lang('VIDEO_EMBED') ~ lang('COLON') }}</label><br><span>{{ FLASH_STATUS }}</span></dt>
 				<dd><input type="text" class="inputbox" value="[flash=180,180]{{ VIDEO_LINK_FLASH }}[/flash]" title="{{ VIDEO_TITLE }}" id="video_embed" /><i class="buttoncopy" data-copytarget="#video_embed">{{ lang('VIDEO_COPY_BUTTON') }}</i></dd>
 			</dl>
 			{% endif %}
 		</fieldset>
 	</div>
 </div>
-<br />
+<br>
 {% if S_ENABLE_COMMENTS %}
 <div class="action-bar bar-top">
 	<div class="buttons">
@@ -107,7 +106,7 @@
 				{% endif %}
 				{% endif %}
 				<h3><a href="#p{{ commentrow.COMMENT_ID }}">{{ commentrow.VIDEO_TITLE }}</a></h3>
-				<p class="author">{{ lang('POST_BY_AUTHOR') }} <strong>{{ commentrow.USERNAME }}</strong> &raquo; {{ commentrow.COMMENT_TIME }} </p>
+				<p class="author">{{ lang('POST_BY_AUTHOR') }}&nbsp;<strong>{{ commentrow.USERNAME }}</strong> &raquo; {{ commentrow.COMMENT_TIME }}</p>
 
 				<div class="content">{{ commentrow.COMMENT_TEXT }}</div>
 			</div>

@@ -16,17 +16,17 @@ class youtubegallery_ucp_info
 	{
 		global $config;
 
-		return array(
+		return [
 			'filename'		=> 'dmzx\youtubegallery\ucp\youtubegallery_ucp_module',
 			'title'			=> 'VIDEO_INDEX',
 			'version'		=> $config['youtubegallery_version'],
-			'modes'			=> array(
-				'main'	=> array(
+			'modes'			=> [
+				'main'	=> [
 					'title'	=> 'VIDEO_INDEX',
 					'auth'	=> 'ext_dmzx/youtubegallery',
-					'cat'	=> array('UCP_MAIN')
-				),
-			),
-		);
+					'cat'	=> ['UCP_MAIN']
+				],
+			],
+		];
 	}
 }

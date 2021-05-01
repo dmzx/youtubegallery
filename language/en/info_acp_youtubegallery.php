@@ -15,7 +15,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,7 +33,7 @@ if (empty($lang) || !is_array($lang))
 // Some characters for use
 // ’ » “ ” …
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_VIDEO'				=> 'Youtube Video Gallery',
 	'ACP_VIDEO_SETTINGS'	=> 'Video Settings',
 	'ACP_VIDEO_CATEGORY'	=> 'Video Categories',
@@ -45,4 +45,4 @@ $lang = array_merge($lang, array(
 	'LOG_VIDEO_CATEGORY_DELETED'	=> '<strong>Deleted Youtube Video Gallery Category</strong>',
 	'LOG_VIDEO_TITLE_DELETED'		=> '<strong>Deleted Youtube Video Gallery Title</strong>',
 	'LOG_VIDEO_SYNC'				=> '<strong>Sync video for description.</strong>',
-));
+]);

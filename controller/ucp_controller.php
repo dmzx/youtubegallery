@@ -124,44 +124,44 @@ class ucp_controller
 		$sql_limit 	= $this->request->variable('limit', $this->config['videos_per_page']);
 		$base_url = append_sid("{$this->root_path }ucp.{$this->php_ext}?i=-dmzx-youtubegallery-ucp-youtubegallery_ucp_module");
 
-		$sql_ary = array(
+		$sql_ary = [
 			'SELECT'	=> 'v.*,
 			ct.video_cat_title,ct.video_cat_id,
 			u.username,u.user_colour,u.user_id',
-			'FROM'		=> array(
+			'FROM'		=> [
 				$this->video_table			=> 'v',
 				$this->video_cat_table		=> 'ct',
 				USERS_TABLE			=> 'u',
-			),
+			],
 			'WHERE'		=> 'u.user_id = v.user_id
 				AND ct.video_cat_id = v.video_cat_id
 				AND u.user_id = ' . (int) $this->user->data['user_id'],
 			'ORDER_BY'	=> 'v.video_id DESC',
-		);
+		];
 
 		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$video_info = $this->functions->youtube_analytics(array("id" => censor_text($row['youtube_id'])));
+			$video_info = $this->functions->youtube_analytics(["id" => censor_text($row['youtube_id'])]);
 
-			$this->template->assign_block_vars('video', array(
+			$this->template->assign_block_vars('video', [
 				'VIDEO_TITLE'					=> $row['video_title'],
 				'VIDEO_CAT_ID'					=> $row['video_cat_id'],
 				'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
 				'VIDEO_VIEWS'					=> $row['video_views'],
 				'VIDEO_DURATION'				=> $row['video_duration'],
-				'VIDEO_VIEWS_YOUTUBE'			=> $video_info['views'],
-				'VIDEO_VIEWS_YOUTUBE_LIKE'		=> $video_info['likes'],
-				'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> $video_info['dislikes'],
-				'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> $video_info['comments'],
-				'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'cat', 'id' => $row['video_cat_id'])),
+				'VIDEO_VIEWS_YOUTUBE'			=> isset($video_info['views']) ? $video_info['views'] : '',
+				'VIDEO_VIEWS_YOUTUBE_LIKE'		=> isset($video_info['likes']) ? $video_info['likes'] : '',
+				'VIDEO_VIEWS_YOUTUBE_DISLIKE'	=> isset($video_info['dislikes']) ? $video_info['dislikes'] : '',
+				'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> isset($video_info['comments']) ? $video_info['comments'] : '',
+				'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'cat', 'id' => $row['video_cat_id']]),
 				'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
 				'VIDEO_ID'						=> censor_text($row['video_id']),
-				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', array('mode' => 'view', 'id' => $row['video_id'])),
+				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'view', 'id' => $row['video_id']]),
 				'VIDEO_THUMBNAIL'				=> 'https://img.youtube.com/vi/' . censor_text($row['youtube_id']) . '/hqdefault.jpg'
-			));
+			]);
 		}
 		$this->db->sql_freeresult($result);
 
@@ -169,11 +169,11 @@ class ucp_controller
 
 		$this->functions->assign_authors();
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'ENABLE_VIDEO_YOUTUBE_STATS'		=> $this->config['enable_video_youtube_stats'],
 			'TOTAL_VIDEOS'						=> $this->user->lang('LIST_VIDEO', (int) $this->functions->videorow_user_id($this->user->data['user_id'])),
 			'VIDEO_FOOTER_VIEW'					=> true,
 			'VIDEO_VERSION'						=> $this->config['youtubegallery_version'],
-		));
+		]);
 	}
 }

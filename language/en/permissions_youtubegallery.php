@@ -15,7 +15,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,11 +33,11 @@ if (empty($lang) || !is_array($lang))
 // Some characters for use
 // ’ » “ ” …
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACL_U_VIDEO_VIEW_FULL'			=> 'Can view Video Gallery',
 	'ACL_U_VIDEO_VIEW'				=> 'Can view videos',
 	'ACL_U_VIDEO_DELETE'			=> 'Can delete own videos',
 	'ACL_U_VIDEO_POST'				=> 'Can post videos',
 	'ACL_U_VIDEO_COMMENT'			=> 'Can post video comments',
 	'ACL_U_VIDEO_COMMENT_DELETE'	=> 'Can delete own video comments',
-));
+]);

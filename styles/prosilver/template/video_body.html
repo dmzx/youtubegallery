@@ -29,11 +29,11 @@
 				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
 				<div>
-					{{ lang('VIDEO_AUTHOR') }}{{ lang('COLON') }} {{ video.USERNAME }} <br />
-					{{ lang('VIDEO_CAT') }}{{ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br />
-					{{ lang('VIDEO_DATE') }}{{ lang('COLON') }} {{ video.VIDEO_TIME }}<br />
-					{{ lang('VIDEO_VIEWS') }}{{ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br />
-					{{ lang('VIDEO_DURATION') }}{{ lang('COLON') }} {{ video.VIDEO_DURATION }}
+					{{ lang('VIDEO_AUTHOR') ~ lang('COLON') }} {{ video.USERNAME }}<br>
+					{{ lang('VIDEO_CAT') ~ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br>
+					{{ lang('VIDEO_DATE') ~ lang('COLON') }} {{ video.VIDEO_TIME }}<br>
+					{{ lang('VIDEO_VIEWS') ~ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br>
+					{{ lang('VIDEO_DURATION') ~ lang('COLON') }} {{ video.VIDEO_DURATION }}
 					{% if ENABLE_VIDEO_YOUTUBE_STATS %}
 					 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
 						<div class="post-meta d-flex justify-content-between">
@@ -50,10 +50,10 @@
 	</div>
 </div>
 {% else %}
-<br class="clear" />
+<br class="clear">
 <div id="information" class="rules">
 	<div class="inner">
-		<strong>{{ lang('INFORMATION') }}{{ lang('COLON') }}</strong> {{ NO_ENTRY }}
+		<strong>{{ lang('INFORMATION') ~ lang('COLON') }}</strong> {{ NO_ENTRY }}
 	</div>
 </div>
 {% endif %}
@@ -76,7 +76,7 @@
 	</div>
 	{% endif %}
 </div>
-<br />
+<br>
 
 <div class="panel bg3 panel-container" id="statistics-panel">
 	<div class="inner">
