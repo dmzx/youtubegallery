@@ -224,7 +224,7 @@ class youtubegallery
 					$video_duration = '0:'.date("s", strtotime($d_zeros));
 				}
 				//minutes
-				elseif (substr_count($d_colon, ':') == 1)
+				else if (substr_count($d_colon, ':') == 1)
 				{
 					$d_zeros = "00:".$d_colon;
 					$video_duration = date("i:s", strtotime($d_zeros));
