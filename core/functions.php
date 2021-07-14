@@ -147,7 +147,7 @@ class functions
 
 			$jsonData = json_decode($json_response);
 
-			if(isset($jsonData->items[0]))
+			if (isset($jsonData->items[0]))
 			{
 				$views 		= isset($jsonData->items[0]->statistics->viewCount) ? $jsonData->items[0]->statistics->viewCount : 0;
 				$likes 		= isset($jsonData->items[0]->statistics->likeCount) ? $jsonData->items[0]->statistics->likeCount : 0;
