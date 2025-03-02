@@ -153,25 +153,27 @@ class youtubegallery
 		}
 
 		// Initial var setup
-		$video_id			= $this->request->variable('id', 0);
-		$video_url 			= $this->request->variable('video_url', '', true);
-		$video_title 		= $this->request->variable('video_title', '', true);
-		$time 				= $this->request->variable('time', '', true);
-		$video_duration 	= $this->request->variable('video_duration', '', true);
-		$video_description	= $this->request->variable('video_description', '', true);
-		$video_description	= htmlspecialchars_decode($video_description, ENT_COMPAT);
-		$video_viewcount	= $this->request->variable('video_viewcount', '', true);
-		$video_cat_id 		= $this->request->variable('cid', 0);
-		$video_cat_ids 		= $this->request->variable('id', 0);
-		$username 			= $this->request->variable('username', '', true);
-		$user_id 			= $this->request->variable('user_id', 0);
-		$video_views 		= $this->request->variable('video_views', 0);
-		$sql_start 			= $this->request->variable('start', 0);
-		$sql_limit 			= $this->request->variable('limit', $this->config['videos_per_page']);
-		$sql_limits 		= $this->request->variable('limit', $this->config['comments_per_page']);
-		$cmnt_id 			= $this->request->variable('cmntid', 0);
-		$mode 				= $this->request->variable('mode', '');
-		$submit 			= $this->request->is_set_post('submit');
+		$video_id					= $this->request->variable('id', 0);
+		$video_url 					= $this->request->variable('video_url', '', true);
+		$video_title 				= $this->request->variable('video_title', '', true);
+		$time 						= $this->request->variable('time', '', true);
+		$video_duration 			= $this->request->variable('video_duration', '', true);
+		$video_description			= $this->request->variable('video_description', '', true);
+		$video_description			= htmlspecialchars_decode($video_description, ENT_COMPAT);
+		$video_short_description	= $this->request->variable('video_short_description', '', true);
+		$video_short_description	= htmlspecialchars_decode($video_short_description, ENT_COMPAT);
+		$video_viewcount			= $this->request->variable('video_viewcount', '', true);
+		$video_cat_id 				= $this->request->variable('cid', 0);
+		$video_cat_ids 				= $this->request->variable('id', 0);
+		$username 					= $this->request->variable('username', '', true);
+		$user_id 					= $this->request->variable('user_id', 0);
+		$video_views 				= $this->request->variable('video_views', 0);
+		$sql_start 					= $this->request->variable('start', 0);
+		$sql_limit 					= $this->request->variable('limit', $this->config['videos_per_page']);
+		$sql_limits 				= $this->request->variable('limit', $this->config['comments_per_page']);
+		$cmnt_id 					= $this->request->variable('cmntid', 0);
+		$mode 						= $this->request->variable('mode', '');
+		$submit 					= $this->request->is_set_post('submit');
 
 		if (!$this->config['google_api_key'])
 		{
@@ -224,7 +226,7 @@ class youtubegallery
 					$video_duration = '0:'.date("s", strtotime($d_zeros));
 				}
 				//minutes
-				else if (substr_count($d_colon, ':') == 1)
+				elseif (substr_count($d_colon, ':') == 1)
 				{
 					$d_zeros = "00:".$d_colon;
 					$video_duration = date("i:s", strtotime($d_zeros));
@@ -238,17 +240,18 @@ class youtubegallery
 		}
 
 		$sql_ary = [
-			'video_id'			=> $video_id,
-			'video_url'			=> $video_url,
-			'video_title'		=> $video_title,
-			'video_cat_id'		=> $video_cat_id,
-			'username'			=> $username,
-			'user_id'			=> $user_id,
-			'youtube_id'		=> $youtube_id,
-			'create_time'		=> (int) time(),
-			'video_views'		=> $video_views,
-			'video_duration'	=> $video_duration,
-			'video_description'	=> $this->parser->parse($video_description),
+			'video_id'					=> $video_id,
+			'video_url'					=> $video_url,
+			'video_title'				=> $video_title,
+			'video_cat_id'				=> $video_cat_id,
+			'username'					=> $username,
+			'user_id'					=> $user_id,
+			'youtube_id'				=> $youtube_id,
+			'create_time'				=> (int) time(),
+			'video_views'				=> $video_views,
+			'video_duration'			=> $video_duration,
+			'video_description'			=> $this->parser->parse($video_description),
+			'video_short_description'	=> $this->parser->parse(substr($video_short_description, 0, 120)),
 		];
 
 		$error = $row = [];
@@ -714,25 +717,26 @@ class youtubegallery
 				$board_url 		= generate_board_url();
 
 				$this->template->assign_vars([
-					'VIDEO_ID'			=> censor_text($row['video_id']),
-					'VIDEO_TITLE'		=> censor_text($row['video_title']),
-					'VIDEO_VIEWS'		=> $row['video_views'],
-					'VIDEO_DURATION'	=> $row['video_duration'],
-					'VIDEO_DESCRIPTION'	=> $this->renderer->render($row['video_description']),
-					'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-					'YOUTUBE_ID'		=> censor_text($row['youtube_id']),
-					'VIDEO_TIME'		=> $this->user->format_date($row['create_time']),
-					'YOUTUBE_VIDEO'		=> 'https://www.youtube.com/watch?v='.$row['youtube_id'],
-					'VIDEO_LINK' 		=> append_sid("{$board_url}/video", 'mode=view&id=' . $row['video_id']),
-					'VIDEO_LINK_FLASH'	=> 'https://www.youtube.com/v/' . $row['youtube_id'],
-					'U_USER_VIDEOS' 	=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'user_videos', 'user_id' => $row['user_id'], 'usernamesearch' => $row['username']]),
-					'U_DELETE'			=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'delete', 'id' => $row['video_id']]),
-					'DELETE_ALLOW'		=> $delete_allowed,
-					'S_BBCODE_FLASH'	=> $flash_status,
-					'FLASH_STATUS'		=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
-					'U_POST_COMMENT'	=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'comment', 'v' => $row['video_id']]),
-					'S_ENABLE_COMMENTS'	=> $this->config['enable_comments'],
-					'S_POST_COMMENT'	=> $this->auth->acl_get('u_video_comment'),
+					'VIDEO_ID'					=> censor_text($row['video_id']),
+					'VIDEO_TITLE'				=> censor_text($row['video_title']),
+					'VIDEO_VIEWS'				=> $row['video_views'],
+					'VIDEO_DURATION'			=> $row['video_duration'],
+					'VIDEO_DESCRIPTION'			=> $this->renderer->render($row['video_description']),
+					'VIDEO_SHORT_DESCRIPTION'	=> $row['video_short_description'],
+					'USERNAME'					=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+					'YOUTUBE_ID'				=> censor_text($row['youtube_id']),
+					'VIDEO_TIME'				=> $this->user->format_date($row['create_time']),
+					'YOUTUBE_VIDEO'				=> 'https://www.youtube.com/watch?v='.$row['youtube_id'],
+					'VIDEO_LINK' 				=> append_sid("{$board_url}/video", 'mode=view&id=' . $row['video_id']),
+					'VIDEO_LINK_FLASH'			=> 'https://www.youtube.com/v/' . $row['youtube_id'],
+					'U_USER_VIDEOS' 			=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'user_videos', 'user_id' => $row['user_id'], 'usernamesearch' => $row['username']]),
+					'U_DELETE'					=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'delete', 'id' => $row['video_id']]),
+					'DELETE_ALLOW'				=> $delete_allowed,
+					'S_BBCODE_FLASH'			=> $flash_status,
+					'FLASH_STATUS'				=> ($flash_status) ? $this->user->lang['FLASH_IS_ON'] : $this->user->lang['FLASH_IS_OFF'],
+					'U_POST_COMMENT'			=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'comment', 'v' => $row['video_id']]),
+					'S_ENABLE_COMMENTS'			=> $this->config['enable_comments'],
+					'S_POST_COMMENT'			=> $this->auth->acl_get('u_video_comment'),
 				]);
 
 				// Comments
@@ -824,6 +828,7 @@ class youtubegallery
 						'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> isset($video_info['comments']) ? $video_info['comments'] : '',
 						'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'cat', 'id' => $row['video_cat_id']]),
 						'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+						'VIDEO_SHORT_DESCRIPTION'		=> $this->renderer->render($row['video_short_description']),
 						'VIDEO_ID'						=> censor_text($row['video_id']),
 						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'view', 'id' => $row['video_id']]),
 						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", ['mode' => 'viewprofile', 'u' => $row['user_id']]),
@@ -905,6 +910,7 @@ class youtubegallery
 						'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> isset($video_info['comments']) ? $video_info['comments'] : '',
 						'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'cat', 'id' => $row['video_cat_id']]),
 						'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+						'VIDEO_SHORT_DESCRIPTION'		=> $this->renderer->render($row['video_short_description']),
 						'VIDEO_ID'						=> censor_text($row['video_id']),
 						'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'view', 'id' => $row['video_id']]),
 						'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", ['mode' => 'viewprofile', 'u' => $row['user_id']]),

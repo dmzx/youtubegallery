@@ -90,6 +90,7 @@ $lang = array_merge($lang, [
 	'TOTAL_VIDEOS'				=> 'Total videos',
 	'VIDEO_ADD_CHAT'			=> '[i]Added a new video:[/i] [url=%2$s]%1$s[/url] [i]in the category: [b]%3$s[/b][/i]',
 	'VIDEO_COMMENT_CHAT'		=> '[i]Made a comment on:[/i] [url=%2$s]%1$s[/url]',
+	'VIDEO_SHORT_DESCRIPTION'	=> 'Video short description, 120 characters max',
 	'TOTAL_CATEGORIES'	=> [
 		0 => 'No categories',
 		1 => 'Total <strong>%1$d</strong> category',

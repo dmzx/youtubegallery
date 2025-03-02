@@ -270,6 +270,7 @@ class admin_controller
 
 		$this->template->assign_vars([
 			'U_ACTION'		=> $form_action,
+			'U_BACK'		=> $this->u_action,
 			'L_MODE_TITLE'	=> $lang_mode,
 		]);
 	}
@@ -327,6 +328,7 @@ class admin_controller
 
 				$sql_ary = [
 					'video_description'	=> $this->parser->parse($video_info['description']),
+					'video_duration'	=> $video_info['video_duration'],
 				];
 
 				$this->db->sql_query('UPDATE ' . $this->video_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_ary) . ' WHERE video_id = ' . (int) $this->request->variable('id', 0));
@@ -353,14 +355,19 @@ class admin_controller
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
+			$short_description = substr($row['video_description'], 0, 25) . (strlen($row['video_description']) > 25 ? '...' : '');
 			$this->template->assign_block_vars('title', [
-				'VIDEO_CAT_TITLE'	=> $row['video_cat_title'],
-				'VIDEO_CAT_ID'		=> $row['video_cat_id'],
-				'VIDEO_TITLE'		=> $row['video_title'],
-				'U_EDIT'			=> $this->u_action . '&amp;action=edit&amp;id=' . $row['video_cat_id'],
-				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' . $row['video_id'],
-				'U_SYNC'			=> $this->u_action . '&amp;action=sync&amp;id=' . $row['video_id'],
-				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'VIDEO_CAT_TITLE'				=> $row['video_cat_title'],
+				'VIDEO_CAT_ID'					=> $row['video_cat_id'],
+				'VIDEO_TITLE'					=> $row['video_title'],
+				'VIDEO_DESCRIPTION'				=> $short_description,
+				'VIDEO_FULL_DESCRIPTION'		=> $row['video_description'],
+				'VIDEO_SHORT_DESCRIPTION'		=> $row['video_short_description'],
+				'VIDEO_DURATION'				=> $row['video_duration'],
+				'U_EDIT'						=> $this->u_action . '&amp;action=edit&amp;id=' . $row['video_cat_id'],
+				'U_DEL'							=> $this->u_action . '&amp;action=delete&amp;id=' . $row['video_id'],
+				'U_SYNC'						=> $this->u_action . '&amp;action=sync&amp;id=' . $row['video_id'],
+				'USERNAME'						=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 			]);
 		}
 		$this->db->sql_freeresult($result);

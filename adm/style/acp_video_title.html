@@ -1,31 +1,43 @@
 {% INCLUDE 'overall_header.html' %}
+{% INCLUDECSS '@dmzx_youtubegallery/css/video_acp.css' %}
 
-<h1>{{ lang('ACP_VIDEO_TITLE') }}</h1>
+<h1><i class="icon fa-youtube fa-fw" aria-hidden="true"></i> {{ lang('ACP_VIDEO_TITLE') }}</h1>
 
 <p>{{ lang('ACP_VIDEO_TITLE_EXPLAIN') }}</p>
 
 {% if loops.title|length %}
-<table cellspacing="1">
-	<thead>
-		<tr>
-			<th>{{ lang('ACP_VIDEO_TITLE') }}</th>
-			<th>{{ lang('ACP_VIDEO_CAT_TITLE') }}</th>
-			<th>{{ lang('VIDEO_AUTHOR') }}</th>
-			<th>{{ lang('ACTION') }}</th>
-		</tr>
-	</thead>
-	<tbody>
+<div class="youtubegallery-container">
+	<div class="youtubegallery-header">
+		<div class="youtubegallery-cell">{{ lang('ACP_VIDEO_TITLE') }}</div>
+		<div class="youtubegallery-cell">{{ lang('ACP_VIDEO_DESCRIPTION') }}</div>
+		<div class="youtubegallery-cell">{{ lang('ACP_VIDEO_SHORT_DESCRIPTION') }}</div>
+		<div class="youtubegallery-cell">{{ lang('ACP_VIDEO_DURATION') }}</div>
+		<div class="youtubegallery-cell">{{ lang('ACP_VIDEO_CAT_TITLE') }}</div>
+		<div class="youtubegallery-cell">{{ lang('VIDEO_AUTHOR') }}</div>
+		<div class="youtubegallery-cell">{{ lang('ACTION') }}</div>
+	</div>
+	<div class="youtubegallery-body">
 	{% for title in loops.title %}
-		{% if title.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
-			<td>{{ title.VIDEO_TITLE }}</td>
-			<td>{{ title.VIDEO_CAT_TITLE }}</td>
-			<td>{{ title.USERNAME }}</td>
-			<td>&nbsp;<a href="{{ title.U_DEL }}" data-ajax="row_delete">{{ ICON_DELETE }}</a>&nbsp;<a href="{{ title.U_SYNC }}">{{ ICON_SYNC }}</a></td>
-		</tr>
+		<div class="youtubegallery-row {% if title.S_ROW_COUNT is even %}row1{% else %}row2{% endif %}">
+			<div class="youtubegallery-cell">{{ title.VIDEO_TITLE }}</div>
+			<div class="youtubegallery-cell">
+				<div class="tooltip">{{ title.VIDEO_DESCRIPTION }}
+					<span class="tooltiptext">{{ title.VIDEO_FULL_DESCRIPTION }}</span>
+				</div>
+			</div>
+			<div class="youtubegallery-cell">{{ title.VIDEO_SHORT_DESCRIPTION }}</div>
+			<div class="youtubegallery-cell">{{ title.VIDEO_DURATION }}</div>
+			<div class="youtubegallery-cell">{{ title.VIDEO_CAT_TITLE }}</div>
+			<div class="youtubegallery-cell">{{ title.USERNAME }}</div>
+			<div class="youtubegallery-cell">
+				&nbsp;<a href="{{ title.U_DEL }}" data-ajax="row_delete">{{ ICON_DELETE }}</a>
+				&nbsp;<a href="{{ title.U_SYNC }}">{{ ICON_SYNC }}</a>
+			</div>
+		</div>
 	{% endfor %}
-	</tbody>
-</table>
-<br />
+	</div>
+</div>
+<br>
 {% endif %}
 
 {% if not loops.title|length %}

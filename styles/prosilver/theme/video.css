@@ -22,6 +22,12 @@ a {
 	position: relative; 
 	vertical-align: middle;
 	width: 96px;
+	transition: transform 0.3s ease-in-out;
+}
+
+.video_item:hover img {
+	transform: scale(2.1);
+	z-index:10;
 }
 
 .buttons div.video-icon	{ 

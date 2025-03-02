@@ -1,8 +1,9 @@
 {% INCLUDE 'overall_header.html' %}
+{% INCLUDECSS '@dmzx_youtubegallery/css/video_acp.css' %}
 
 <a name="maincontent"></a>
 
-<h1>{{ lang('ACP_VIDEO') }}</h1>
+<h1><i class="icon fa-youtube fa-fw" aria-hidden="true"></i> {{ lang('ACP_VIDEO') }}</h1>
 
 <p>{{ lang('ACP_VIDEO_EXPLAIN') }}</p>
 
@@ -77,8 +78,8 @@
 	<fieldset>
 		<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+			<input class="button" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
 		</p>
 		{{ S_FORM_TOKEN }}
 	</fieldset>

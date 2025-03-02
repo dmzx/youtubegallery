@@ -35,17 +35,6 @@ class functions
 	/** @var db_interface */
 	protected $db;
 
-	/**
-	* The database tables
-	*
-	* @var string
-	*/
-	protected $video_table;
-
-	protected $video_cat_table;
-
-	protected $video_cmnts_table;
-
 	/** @var manager */
 	protected $extension_manager;
 
@@ -59,6 +48,17 @@ class functions
 	protected $php_ext;
 
 	/**
+	* The database tables
+	*
+	* @var string
+	*/
+	protected $video_table;
+
+	protected $video_cat_table;
+
+	protected $video_cmnts_table;
+
+	/**
 	 * Constructor
 	 *
 	 * @param config				$config
@@ -66,13 +66,13 @@ class functions
 	 * @param template				$template
 	 * @param user					$user
 	 * @param db_interface			$db
-	 * @param string 				$video_table
-	 * @param string 				$video_cat_table
-	 * @param string 				$video_cmnts_table
 	 * @param manager				$extension_manager
 	 * @param helper				$helper
 	 * @param string				$root_path
 	 * @param string				$php_ext
+	 * @param string 				$video_table
+	 * @param string 				$video_cat_table
+	 * @param string 				$video_cmnts_table
 	 */
 	public function __construct(
 		config $config,
@@ -80,13 +80,13 @@ class functions
 		template $template,
 		user $user,
 		db_interface $db,
-		$video_table,
-		$video_cat_table,
-		$video_cmnts_table,
 		manager $extension_manager,
 		helper $helper,
 		$root_path,
-		$php_ext
+		$php_ext,
+		$video_table,
+		$video_cat_table,
+		$video_cmnts_table
 	)
 	{
 		$this->config 				= $config;
@@ -94,13 +94,13 @@ class functions
 		$this->template 			= $template;
 		$this->user 				= $user;
 		$this->db 					= $db;
-		$this->video_table 			= $video_table;
-		$this->video_cat_table 		= $video_cat_table;
-		$this->video_cmnts_table 	= $video_cmnts_table;
 		$this->extension_manager	= $extension_manager;
 		$this->helper 				= $helper;
 		$this->root_path 			= $root_path;
 		$this->php_ext 				= $php_ext;
+		$this->video_table 			= $video_table;
+		$this->video_cat_table 		= $video_cat_table;
+		$this->video_cmnts_table 	= $video_cmnts_table;
 	}
 
 	// assign_authors
@@ -133,7 +133,7 @@ class functions
 			$videoid = $params['id'];
 
 			$option = [
-				'part' 	=> 'snippet,statistics',
+				'part' 	=> 'snippet,statistics,contentDetails',
 				'id' 	=> $videoid,
 				'key' 	=> $this->config['google_api_key'],
 			];
@@ -147,15 +147,42 @@ class functions
 
 			$jsonData = json_decode($json_response);
 
-			if (isset($jsonData->items[0]))
+			if(isset($jsonData->items[0]))
 			{
 				$views 		= isset($jsonData->items[0]->statistics->viewCount) ? $jsonData->items[0]->statistics->viewCount : 0;
 				$likes 		= isset($jsonData->items[0]->statistics->likeCount) ? $jsonData->items[0]->statistics->likeCount : 0;
 				$dislikes 	= isset($jsonData->items[0]->statistics->dislikeCount) ? $jsonData->items[0]->statistics->dislikeCount : 0;
 				$comments 	= isset($jsonData->items[0]->statistics->commentCount) ? $jsonData->items[0]->statistics->commentCount : 0;
 				$video_description = $jsonData->items[0]->snippet->description;
+				$time 		= $jsonData->items[0]->contentDetails->duration;
+				$d_colon = str_ireplace(['PT', 'H', 'M', 'S'], ['',':',':',''], $time);
 
-				return ["views" => number_format($views), "likes" => number_format($likes), "dislikes" => number_format($dislikes), "comments" => number_format($comments), "description" => $video_description];
+				//seconds
+				if (substr_count($d_colon, ':') == 0)
+				{
+					$d_zeros = '00:00:'.$d_colon;
+					$video_duration = '0:'.date("s", strtotime($d_zeros));
+				}
+				//minutes
+				elseif (substr_count($d_colon, ':') == 1)
+				{
+					$d_zeros = "00:".$d_colon;
+					$video_duration = date("i:s", strtotime($d_zeros));
+				}
+				//hours
+				else
+				{
+					$video_duration = date("H:i:s", strtotime($d_colon));
+				}
+
+				return [
+					"views" => number_format($views),
+					"likes" => number_format($likes),
+					"dislikes" => number_format($dislikes),
+					"comments" => number_format($comments),
+					"description" => $video_description,
+					"video_duration" => $video_duration
+				];
 			}
 		}
 	}
@@ -303,6 +330,7 @@ class functions
 				'VIDEO_VIEWS_YOUTUBE_COMMENTS'	=> isset($video_info['comments']) ? $video_info['comments'] : '',
 				'U_CAT'							=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'cat', 'id' => $row['video_cat_id']]),
 				'VIDEO_TIME'					=> $this->user->format_date($row['create_time']),
+				'VIDEO_SHORT_DESCRIPTION'		=> $row['video_short_description'],
 				'VIDEO_ID'						=> censor_text($row['video_id']),
 				'U_VIEW_VIDEO'					=> $this->helper->route('dmzx_youtubegallery_controller', ['mode' => 'view', 'id' => $row['video_id']]),
 				'U_POSTER'						=> append_sid("{$this->root_path}memberlist.$this->php_ext", ['mode' => 'viewprofile', 'u' => $row['user_id']]),

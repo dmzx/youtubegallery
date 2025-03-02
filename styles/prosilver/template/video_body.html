@@ -25,7 +25,7 @@
 <div class="panel bg3">
 	<div class="inner">
 		{% for video in loops.video %}
-			<div id="video{{ video.VIDEO_ID }}" class="video_item {% if video.S_ROW_COUNT is even %}column11{% else %}column22{% endif %}">
+			<div id="video{{ video.VIDEO_ID }}" class="video_item {% if video.S_ROW_COUNT is even %}column11{% else %}column22{% endif %}" style="position: relative;">
 				<a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}"><img src="{{ video.VIDEO_THUMBNAIL }}" alt="{{ video.VIDEO_TITLE }}" /></a>
 				<h3 class="center"><a href="{{ video.U_VIEW_VIDEO }}" title="{{ video.VIDEO_TITLE }}">{{ video.VIDEO_TITLE }}</a></h3>
 				<div>
@@ -33,7 +33,10 @@
 					{{ lang('VIDEO_CAT') ~ lang('COLON') }} <a href="{{ video.U_CAT }}" title="{{ video.VIDEO_CAT_TITLE }}">{{ video.VIDEO_CAT_TITLE }}</a><br>
 					{{ lang('VIDEO_DATE') ~ lang('COLON') }} {{ video.VIDEO_TIME }}<br>
 					{{ lang('VIDEO_VIEWS') ~ lang('COLON') }} {{ video.VIDEO_VIEWS }}<br>
-					{{ lang('VIDEO_DURATION') ~ lang('COLON') }} {{ video.VIDEO_DURATION }}
+					{{ lang('VIDEO_DURATION') ~ lang('COLON') }} {{ video.VIDEO_DURATION }}<br>
+					{% if video.VIDEO_SHORT_DESCRIPTION|trim('<t></t>') is not empty %}
+						<span class="video-date-span">{{ video.VIDEO_SHORT_DESCRIPTION }}</span>
+					{% endif %}
 					{% if ENABLE_VIDEO_YOUTUBE_STATS %}
 					 <h3 class="center" style="text-transform: lowercase">{{ lang('STATS_FROM_YOUTUBE') }}</h3>
 						<div class="post-meta d-flex justify-content-between">
@@ -84,6 +87,27 @@
 		<p>{{ TOTAL_VIDEOS_INDEX }} &bull; {{ TOTAL_CATEGORIES }} &bull; {{ TOTAL_VIEWS }} &bull; {{ TOTAL_COMMENTS }}</p>
 	</div>
 </div>
+
+<style>
+.video-date-span {
+	position: absolute;
+	top: 22px;
+	right: 1px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 2px 5px;
+	font-size: 12px;
+	color: #555;
+	background-color: #f9f9f9;
+	max-width: 265px;
+	max-height: 60px;
+}
+@media (max-width: 768px) {
+	.video-date-span {
+		display: none;
+	}
+}
+</style>
 
 {% INCLUDE 'jumpbox.html' %}
 

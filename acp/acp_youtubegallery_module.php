@@ -36,7 +36,7 @@ class acp_youtubegallery_module
 				$this->page_title = $user->lang['ACP_VIDEO'];
 				// Load the display settings handle in the admin controller
 				$admin_controller->display_settings();
-			break;
+		 	break;
 
 			case 'cat':
 				// Load a template from adm/style for our ACP page

@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "This extension adds a new page to your phpBB3, on this page is possible add YouTube videos simply by submitting the video URL and watch the videos directly on your phpBB3.",
 	"homepage": "https://www.dmzx-web.net",
-	"version": "1.0.9",
-	"time": "2021-04-30",
+	"version": "1.1.0",
+	"time": "2025-02-28",
 	"keywords": [
 		"phpbb",
 		"extension",
@@ -26,8 +26,8 @@
 		}
 	],
 	"require": {
-		"php": ">=7.1.3",
-        	"composer/installers": "~1.0"
+		"php": ">=5.4",
+		"composer/installers": "~1.0"
 	},
 	"require-dev": {
 		"phpbb/epv": "dev-master"

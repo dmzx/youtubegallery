@@ -1,0 +1,129 @@
+.youtubegallery-container {
+    width: 100%;
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+}
+
+.youtubegallery-header, .youtubegallery-row {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+}
+
+.youtubegallery-cell {
+    flex: 1;
+    padding: 8px;
+    text-align: left;
+}
+
+.youtubegallery-header .youtubegallery-cell {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+
+.action-cell {
+    text-align: right;
+}
+
+.row1 {
+    background-color: #f9f9f9;
+}
+
+.row2 {
+    background-color: #ffffff;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 600px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: -5px; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.submit-buttons .button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .youtubegallery-header, .youtubegallery-row {
+        flex-direction: column;
+    }
+
+    .youtubegallery-cell {
+        width: 100%;
+        text-align: left;
+        padding: 8px 0;
+    }
+
+    .youtubegallery-header .youtubegallery-cell, .youtubegallery-row .youtubegallery-cell {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+	
+	.action-cell {
+        text-align: left;
+    }
+
+    .tooltip .tooltiptext {
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+    }
+
+    .tooltip .tooltiptext::after {
+        top: auto;
+        bottom: -5px;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #555 transparent;
+    }
+    }

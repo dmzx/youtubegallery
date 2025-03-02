@@ -1,5 +1,12 @@
 ## Youtube Videos Gallery Changelog
 
+### 1.1.0 - 2025-02-28
+
+- ACP code update.
+- Added short description.
+- Hover image scale.
+- Renew video code update in ACP.
+
 ### 1.0.9 - 2021-04-30
 
 - HTML code update.
