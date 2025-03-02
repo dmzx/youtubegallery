@@ -1,6 +1,6 @@
 # Youtube Videos Gallery Extension
 
-[![Build Status](https://travis-ci.org/dmzx/youtubegallery.svg?branch=master)](https://travis-ci.org/dmzx/youtubegallery)
+[![Build Status](https://github.com/dmzx/youtubegallery/workflows/Tests/badge.svg)](https://github.com/phpbb-extensions/dmzx/youtubegallery)
 
 ## Install
 
